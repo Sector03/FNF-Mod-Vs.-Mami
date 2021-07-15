@@ -182,7 +182,8 @@ class MainMenuState extends MusicBeatState
 			{
 				if (optionShit[curSelected] == 'donate')
 				{
-					fancyOpenURL("https://ninja-muffin24.itch.io/funkin");
+					FlxG.sound.play(Paths.sound('Dun'));
+					FlxFlicker.flicker(magenta, 1.1, 0.15, false);
 				}
 				else
 				{

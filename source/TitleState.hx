@@ -1,3 +1,27 @@
+
+/** 
+░░░░░▄▄▄▄▀▀▀▀▀▀▀▀▄▄▄▄▄▄░░░░░░░
+░░░░░█░░░░▒▒▒▒▒▒▒▒▒▒▒▒░░▀▀▄░░░░
+░░░░█░░░▒▒▒▒▒▒░░░░░░░░▒▒▒░░█░░░
+░░░█░░░░░░▄██▀▄▄░░░░░▄▄▄░░░░█░░
+░▄▀▒▄▄▄▒░█▀▀▀▀▄▄█░░░██▄▄█░░░░█░
+█░▒█▒▄░▀▄▄▄▀░░░░░░░░█░░░▒▒▒▒▒░█
+█░▒█░█▀▄▄░░░░░█▀░░░░▀▄░░▄▀▀▀▄▒█
+░█░▀▄░█▄░█▀▄▄░▀░▀▀░▄▄▀░░░░█░░█░
+░░█░░░▀▄▀█▄▄░█▀▀▀▄▄▄▄▀▀█▀██░█░░
+░░░█░░░░██░░▀█▄▄▄█▄▄█▄████░█░░░
+░░░░█░░░░▀▀▄░█░░░█░█▀██████░█░░
+░░░░░▀▄░░░░░▀▀▄▄▄█▄█▄█▄█▄▀░░█░░
+░░░░░░░▀▄▄░▒▒▒▒░░░░░░░░░░▒░░░█░
+░░░░░░░░░░▀▀▄▄░▒▒▒▒▒▒▒▒▒▒░░░░█░
+░░░░░░░░░░░░░░▀▄▄▄▄▄░░░░░░░░█░░
+
+
+Play the Blueballs Incident
+
+Its very good :troll:
+**/
+
 package;
 
 #if sys
@@ -46,6 +70,7 @@ class TitleState extends MusicBeatState
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
+	var theFools:FlxSprite;
 
 	var curWacky:Array<String> = [];
 
@@ -240,6 +265,15 @@ class TitleState extends MusicBeatState
 		ngSpr.screenCenter(X);
 		ngSpr.antialiasing = true;
 
+		theFools = new FlxSprite(0, FlxG.height * 0.55).loadGraphic(Paths.image('theFools'));
+		add(theFools);
+		theFools.visible = false;
+		theFools.setGraphicSize(Std.int(ngSpr.width * 2.6));
+		theFools.updateHitbox();
+		theFools.screenCenter(X);
+		theFools.y += 25;
+		theFools.antialiasing = true;
+
 		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
 
 		FlxG.mouse.visible = false;
@@ -401,33 +435,17 @@ class TitleState extends MusicBeatState
 
 		switch (curBeat)
 		{
-			case 1:
-				createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
-			// credTextShit.visible = true;
-			case 3:
-				addMoreText('present');
-			// credTextShit.text += '\npresent...';
-			// credTextShit.addText();
 			case 4:
-				deleteCoolText();
-			// credTextShit.visible = false;
-			// credTextShit.text = 'In association \nwith';
-			// credTextShit.screenCenter();
-			case 5:
-				if (Main.watermarks)
-					createCoolText(['Kade Engine', 'by']);
-				else
-					createCoolText(['In Partnership', 'with']);
+				createCoolText(['Mod made by']);
+				
+			case 5: 
+				addMoreText("uhhhh");
 			case 7:
-				if (Main.watermarks)
-					addMoreText('KadeDeveloper');
-				else
-				{
-					addMoreText('Newgrounds');
-					ngSpr.visible = true;
-				}
-			// credTextShit.text += '\nNewgrounds';
+				addMoreText('these fools');
+				theFools.visible = true;
+				
 			case 8:
+				theFools.visible = false;
 				deleteCoolText();
 				ngSpr.visible = false;
 			// credTextShit.visible = false;
@@ -446,13 +464,13 @@ class TitleState extends MusicBeatState
 			// credTextShit.text = "Friday";
 			// credTextShit.screenCenter();
 			case 13:
-				addMoreText('Friday');
+				addMoreText('Vs');
 			// credTextShit.visible = true;
 			case 14:
-				addMoreText('Night');
+				addMoreText('Mami');
 			// credTextShit.text += '\nNight';
 			case 15:
-				addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+				addMoreText('Bruv'); // credTextShit.text += '\nFunkin';
 
 			case 16:
 				skipIntro();
