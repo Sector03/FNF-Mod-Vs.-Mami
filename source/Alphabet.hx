@@ -1,7 +1,5 @@
 package;
 
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -38,20 +36,12 @@ class Alphabet extends FlxSpriteGroup
 	var xPosResetted:Bool = false;
 	var lastWasSpace:Bool = false;
 
-	var listOAlphabets:List<AlphaCharacter> = new List<AlphaCharacter>();
-
 	var splitWords:Array<String> = [];
 
 	var isBold:Bool = false;
 
-	var pastX:Float = 0;
-	var pastY:Float  = 0;
-
-	public function new(x:Float, y:Float, text:String = "", ?bold:Bool = false, typed:Bool = false, shouldMove:Bool = false)
+	public function new(x:Float, y:Float, text:String = "", ?bold:Bool = false, typed:Bool = false)
 	{
-		pastX = x;
-		pastY = y;
-
 		super(x, y);
 
 		_finalText = text;
@@ -68,26 +58,7 @@ class Alphabet extends FlxSpriteGroup
 			{
 				addText();
 			}
-
 		}
-	}
-
-	public function reType(text)
-	{
-		for (i in listOAlphabets)
-			remove(i);
-		_finalText = text;
-		this.text = text;
-
-		lastSprite = null;
-
-		updateHitbox();
-
-		listOAlphabets.clear();
-		x = pastX;
-		y = pastY;
-		
-		addText();
 	}
 
 	public function addText()
@@ -122,7 +93,6 @@ class Alphabet extends FlxSpriteGroup
 
 				// var letter:AlphaCharacter = new AlphaCharacter(30 * loopNum, 0);
 				var letter:AlphaCharacter = new AlphaCharacter(xPos, 0);
-				listOAlphabets.add(letter);
 
 				if (isBold)
 					letter.createBold(character);
@@ -208,7 +178,6 @@ class Alphabet extends FlxSpriteGroup
 
 				// var letter:AlphaCharacter = new AlphaCharacter(30 * loopNum, 0);
 				var letter:AlphaCharacter = new AlphaCharacter(xPos, 55 * yMulti);
-				listOAlphabets.add(letter);
 				letter.row = curRow;
 				if (isBold)
 				{
@@ -269,7 +238,7 @@ class AlphaCharacter extends FlxSprite
 
 	public static var numbers:String = "1234567890";
 
-	public static var symbols:String = "|~#$%()*+-:;<=>@[]^_.,'!? ";
+	public static var symbols:String = "|~#$%()*+-:;<=>@[]^_.,'!?";
 
 	public var row:Int = 0;
 
@@ -332,48 +301,6 @@ class AlphaCharacter extends FlxSprite
 				animation.play(letter);
 			case "!":
 				animation.addByPrefix(letter, 'exclamation point', 24);
-				animation.play(letter);
-			case '_':
-				animation.addByPrefix(letter, '_', 24);
-				animation.play(letter);
-				y += 50;
-			case "#":
-				animation.addByPrefix(letter, '#', 24);
-				animation.play(letter);
-			case "$":
-				animation.addByPrefix(letter, '$', 24);
-				animation.play(letter);
-			case "%":
-				animation.addByPrefix(letter, '%', 24);
-				animation.play(letter);
-			case "&":
-				animation.addByPrefix(letter, '&', 24);
-				animation.play(letter);
-			case "(":
-				animation.addByPrefix(letter, '(', 24);
-				animation.play(letter);
-			case ")":
-				animation.addByPrefix(letter, ')', 24);
-				animation.play(letter);
-			case "+":
-				animation.addByPrefix(letter, '+', 24);
-				animation.play(letter);
-			case "-":
-				animation.addByPrefix(letter, '-', 24);
-				animation.play(letter);
-			case '"':
-				animation.addByPrefix(letter, '"', 24);
-				animation.play(letter);
-				y -= 0;
-			case '@':
-				animation.addByPrefix(letter, '@', 24);
-				animation.play(letter);
-			case "^":
-				animation.addByPrefix(letter, '^', 24);
-				animation.play(letter);
-				y -= 0;
-			case ' ':
-				animation.addByPrefix(letter, 'space', 24);
 				animation.play(letter);
 		}
 

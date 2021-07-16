@@ -13,9 +13,9 @@ class HealthIcon extends FlxSprite
 	{
 		super();
 		
-		loadGraphic(Paths.image('iconGrid'), true, 150, 150);
+		loadGraphic(Paths.image('iconGrid', 'shared'), true, 150, 150);
 
-		antialiasing = true;
+
 		animation.add('bf', [0, 1], 0, false, isPlayer);
 		animation.add('bf-car', [0, 1], 0, false, isPlayer);
 		animation.add('bf-christmas', [0, 1], 0, false, isPlayer);
@@ -38,14 +38,18 @@ class HealthIcon extends FlxSprite
 		animation.add('monster', [19, 20], 0, false, isPlayer);
 		animation.add('monster-christmas', [19, 20], 0, false, isPlayer);
 		animation.add('mami', [24, 25], 0, false, isPlayer);
+
 		animation.play(char);
-
-		switch(char)
-		{
+		switch(char){
 			case 'bf-pixel' | 'senpai' | 'senpai-angry' | 'spirit' | 'gf-pixel':
-				antialiasing = false;
-		}
+				{
 
+				}
+			default:
+				{
+					antialiasing = true;
+				}
+		}
 		scrollFactor.set();
 	}
 

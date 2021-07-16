@@ -18,7 +18,6 @@ install:
   - haxelib setup "%HAXELIB_ROOT%"
   # Install project dependencies
   - haxelib install lime 7.9.0
-  - RefreshEnv
   - haxelib install openfl
   - haxelib install flixel
   - haxelib run lime setup flixel
@@ -33,10 +32,7 @@ install:
   - haxelib git faxe https://github.com/uhrobots/faxe
   - haxelib git polymod https://github.com/larsiusprime/polymod.git
   - haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
-  - haxelib git extension-webm https://github.com/KadeDev/extension-webm
-  - haxelib run lime rebuild extension-webm windows
   - haxelib install linc_luajit
-  - haxelib install actuate
   - haxelib list
 
 # No tests idk lol
@@ -46,5 +42,5 @@ build_script:
 
 artifacts:
   - path: export/release/windows/bin
-    name: KadeEngine-Windows
+    name: Windows release
     type: zip
