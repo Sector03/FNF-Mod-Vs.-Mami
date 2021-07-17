@@ -118,12 +118,20 @@ class TitleState extends MusicBeatState
 			startIntro();
 		});
 		#end
+
+		bgFlash = new FlxSprite(0, 0).loadGraphic(Paths.image('bgFlash'));
+		bgFlash.visible = true;
+		bgFlash.alpha = 0.0;
+		bgFlash.updateHitbox();
+		bgFlash.antialiasing = true;
+		add(bgFlash);
 	}
 
 	var logoBl:FlxSprite;
 	var gfDance:FlxSprite;
 	var danceLeft:Bool = false;
 	var titleText:FlxSprite;
+	var bgFlash:FlxSprite;
 
 	function startIntro()
 	{
@@ -157,14 +165,8 @@ class TitleState extends MusicBeatState
 		Conductor.changeBPM(102);
 		persistentUpdate = true;
 
-		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-		// bg.antialiasing = true;
-		// bg.setGraphicSize(Std.int(bg.width * 0.6));
-		// bg.updateHitbox();
-		add(bg);
-
-		logoBl = new FlxSprite(-150, -100);
-		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
+		logoBl = new FlxSprite(-150, -45);
+		logoBl.frames = Paths.getSparrowAtlas('mamilogo');
 		logoBl.antialiasing = true;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24);
 		logoBl.animation.play('bump');
@@ -251,6 +253,11 @@ class TitleState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		if (bgFlash.alpha >= .25)
+			bgFlash.alpha -= 0.003;
+
+		trace(bgFlash.alpha);
+
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
@@ -313,7 +320,12 @@ class TitleState extends MusicBeatState
 				http.onData = function (data:String) {
 				  
 				  	if (!MainMenuState.kadeEngineVer.contains(data.trim()) && !OutdatedSubState.leftState && MainMenuState.nightly == "")
-
+					{
+						trace('outdated lmao! ' + data.trim() + ' != ' + MainMenuState.kadeEngineVer);
+						OutdatedSubState.needVer = data;
+						FlxG.switchState(new MainMenuState());
+					}
+					else
 					{
 						FlxG.switchState(new MainMenuState());
 					}
@@ -371,6 +383,8 @@ class TitleState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
+
+		bgFlash.alpha += 0.3;
 
 		logoBl.animation.play('bump');
 		danceLeft = !danceLeft;
@@ -441,7 +455,7 @@ class TitleState extends MusicBeatState
 				skipIntro();
 		}
 	}
-
+	
 	var skippedIntro:Bool = false;
 
 	function skipIntro():Void

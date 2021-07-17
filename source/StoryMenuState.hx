@@ -28,14 +28,14 @@ class StoryMenuState extends MusicBeatState
 	];
 	var curDifficulty:Int = 1;
 
-	public static var weekUnlocked:Array<Bool> = [true];
+	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true];
 
 	var weekCharacters:Array<Dynamic> = [
-		['mami', 'bf', 'gf'],
+		['', 'bf', 'gf']
 	];
 
 	var weekNames:Array<String> = [
-		"UwU Sugoi"
+		"Mami"
 	];
 
 	var txtWeekTitle:FlxText;
@@ -284,15 +284,7 @@ class StoryMenuState extends MusicBeatState
 			PlayState.campaignScore = 0;
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
-				if (curWeek == 0)
-					{
-						FlxG.switchState(new VideoState('assets/videos/Uno.webm', new PlayState()));
-					}
-					else
-					{
-						LoadingState.loadAndSwitchState(new PlayState(), true);
-					}
-				
+				LoadingState.loadAndSwitchState(new PlayState(), true);
 			});
 		}
 	}
@@ -377,7 +369,6 @@ class StoryMenuState extends MusicBeatState
 			txtTracklist.text += "\n" + i;
 		}
 
-		txtTracklist.text += "\n";
 		txtTracklist.text = txtTracklist.text.toUpperCase();
 
 		txtTracklist.screenCenter(X);
