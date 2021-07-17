@@ -118,6 +118,8 @@
 	<haxelib name="polymod"/>
 	<haxelib name="discord_rpc" if="windows"/>
 	<haxelib name="linc_luajit"/>
+	<haxelib name="actuate" />
+	<haxelib name="extension-webm" if="desktop" />
 
 	<!-- <haxelib name="hxcpp-debug-server" if="desktop"/> -->
 
