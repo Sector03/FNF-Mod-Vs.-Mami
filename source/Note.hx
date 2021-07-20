@@ -17,6 +17,7 @@ class Note extends FlxSprite
 	public var strumTime:Float = 0;
 
 	public var mustPress:Bool = false;
+	public var holy:Bool = false;
 	public var noteData:Int = 0;
 	public var canBeHit:Bool = false;
 	public var tooLate:Bool = false;
@@ -36,25 +37,29 @@ class Note extends FlxSprite
 
 	public var rating:String = "shit";
 
-	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false)
+	public function new(_strumTime:Float, _noteData:Int, ?_prevNote:Note, ?sustainNote:Bool = false)
 	{
 		super();
 
-		if (prevNote == null)
-			prevNote = this;
+		if (_prevNote == null)
+			_prevNote = this;
 
-		this.prevNote = prevNote;
+		this.prevNote = _prevNote;
 		isSustainNote = sustainNote;
 
 		x += 50;
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
 		y -= 2000;
-		this.strumTime = strumTime;
+		strumTime = _strumTime + FlxG.save.data.offset;
+		strumTime = strumTime < 0 ? 0 : strumTime;
 
-		if (this.strumTime < 0 )
-			this.strumTime = 0;
+		holy = _noteData > 7;
 
-		this.noteData = noteData;
+		noteData = _noteData % 4;
+
+		if(isSustainNote && prevNote.holy) { 
+			holy = true;
+		}
 
 		var daStage:String = PlayState.curStage;
 
@@ -87,22 +92,29 @@ class Note extends FlxSprite
 				updateHitbox();
 
 			default:
-				frames = Paths.getSparrowAtlas('NOTE_assets');
+				if(!holy)
+					{
+						frames = Paths.getSparrowAtlas('NOTE_assets');
 
-				animation.addByPrefix('greenScroll', 'green0');
-				animation.addByPrefix('redScroll', 'red0');
-				animation.addByPrefix('blueScroll', 'blue0');
-				animation.addByPrefix('purpleScroll', 'purple0');
-
-				animation.addByPrefix('purpleholdend', 'pruple end hold');
-				animation.addByPrefix('greenholdend', 'green hold end');
-				animation.addByPrefix('redholdend', 'red hold end');
-				animation.addByPrefix('blueholdend', 'blue hold end');
-
-				animation.addByPrefix('purplehold', 'purple hold piece');
-				animation.addByPrefix('greenhold', 'green hold piece');
-				animation.addByPrefix('redhold', 'red hold piece');
-				animation.addByPrefix('bluehold', 'blue hold piece');
+						animation.addByPrefix('greenScroll', 'green0');
+						animation.addByPrefix('redScroll', 'red0');
+						animation.addByPrefix('blueScroll', 'blue0');
+						animation.addByPrefix('purpleScroll', 'purple0');
+	
+						animation.addByPrefix('purpleholdend', 'pruple end hold');
+						animation.addByPrefix('greenholdend', 'green hold end');
+						animation.addByPrefix('redholdend', 'red hold end');
+						animation.addByPrefix('blueholdend', 'blue hold end');
+	
+						animation.addByPrefix('purplehold', 'purple hold piece');
+						animation.addByPrefix('greenhold', 'green hold piece');
+						animation.addByPrefix('redhold', 'red hold piece');
+						animation.addByPrefix('bluehold', 'blue hold piece');
+					}
+				else
+					{
+						loadGraphic(Paths.image('holynote', 'shared'));
+					}
 
 				setGraphicSize(Std.int(width * 0.7));
 				updateHitbox();
@@ -184,6 +196,10 @@ class Note extends FlxSprite
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		if(isSustainNote && prevNote.holy) { 
+			this.kill(); 
+		}
 
 		if (mustPress)
 		{

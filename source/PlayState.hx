@@ -1446,15 +1446,21 @@ class PlayState extends MusicBeatState
 		for (section in noteData)
 		{
 			var coolSection:Int = Std.int(section.lengthInSteps / 4);
+			var playerNotes:Array<Int> = [0, 1, 2, 3, 8, 9, 10, 11];
 
 			for (songNotes in section.sectionNotes)
 			{
 				var daStrumTime:Float = songNotes[0] + FlxG.save.data.offset + songOffset;
 				if (daStrumTime < 0)
 					daStrumTime = 0;
-				var daNoteData:Int = Std.int(songNotes[1] % 4);
+				var daNoteData:Int = Std.int(songNotes[1]);
 
 				var gottaHitNote:Bool = section.mustHitSection;
+
+				if (!playerNotes.contains(songNotes[1]))
+					{
+						gottaHitNote = !section.mustHitSection;
+					}
 
 				if (songNotes[1] > 3)
 				{
@@ -2331,6 +2337,10 @@ class PlayState extends MusicBeatState
 						else
 						{
 							health -= 0.075;
+							if (daNote.holy)
+							{
+								health -= 2;
+							}
 							vocals.volume = 0;
 							if (theFunne)
 								noteMiss(daNote.noteData, daNote);
