@@ -100,6 +100,9 @@ class Character extends FlxSprite
 
 				animation.addByPrefix('scared', 'BF idle shaking', 24);
 
+				animation.addByPrefix('dodge', 'boyfriend dodge', 24, false);
+				animation.addByPrefix('hit', 'BF hit', 24, false);
+
 				addOffset('idle', -5);
 				addOffset("singUP", -29, 27);
 				addOffset("singRIGHT", -38, -7);
@@ -114,6 +117,9 @@ class Character extends FlxSprite
 				addOffset('deathLoop', 37, 5);
 				addOffset('deathConfirm', 37, 69);
 				addOffset('scared', -4);
+
+				addOffset("dodge", 7, -6);
+				addOffset("hit", 26, 26);
 
 				playAnim('idle');
 

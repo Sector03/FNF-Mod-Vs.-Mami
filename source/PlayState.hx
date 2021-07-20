@@ -133,6 +133,8 @@ class PlayState extends MusicBeatState
 	private var totalPlayed:Int = 0;
 	private var ss:Bool = false;
 
+	private var holyMisses:Int = 1;
+	public var godmodecheat:Bool = false;
 
 	private var healthBarBG:FlxSprite;
 	private var healthBar:FlxBar;
@@ -417,6 +419,8 @@ class PlayState extends MusicBeatState
 
 		repPresses = 0;
 		repReleases = 0;
+
+		holyMisses = 1;
 
 		#if sys
 		executeModchart = FileSystem.exists(Paths.lua(PlayState.SONG.song.toLowerCase()  + "/modchart"));
@@ -1959,6 +1963,19 @@ class PlayState extends MusicBeatState
 			FlxG.switchState(new Charting()); */
 
 		#if debug
+		// health changer cheat debug
+		if (FlxG.keys.pressed.N)
+			health += 0.02;
+
+		if (FlxG.keys.pressed.M)
+			health -= 0.02;
+
+		//god mode
+		if (FlxG.keys.justPressed.G)
+			godmodecheat = !godmodecheat;
+		#end
+
+		#if debug
 		if (FlxG.keys.justPressed.EIGHT)
 		{
 			FlxG.switchState(new AnimationDebug(SONG.player2));
@@ -2202,7 +2219,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (health <= 0)
+		if (health <= 0 && godmodecheat == false)
 		{
 			boyfriend.stunned = true;
 
@@ -2332,13 +2349,24 @@ class PlayState extends MusicBeatState
 							health -= 0.075;
 							if (daNote.holy)
 							{
-								health -= 2;
+								health -= 0.5 * holyMisses; //0.5 for first time, 1.0 for second time, 1.5 for third time, kinda like a strike system but with 4 strikes?
+								//iconP1.animation.play('bf2');
+								//dad.playAnim('shoot', true); //no animation bruh
+								FlxG.sound.play(Paths.sound('MAMI_shoot','shared'));
+								FlxG.camera.shake(0.02, 0.2);
+								boyfriend.playAnim('hit', true);
+								holyMisses += 1; //start at 1
+								new FlxTimer().start(.6, function(tmr:FlxTimer)
+									{
+										//allowBFanimupdate = true;
+										iconP1.animation.play('bf');
+									});
 							}
 							vocals.volume = 0;
 							if (theFunne)
 								noteMiss(daNote.noteData, daNote);
 						}
-	
+						
 						daNote.active = false;
 						daNote.visible = false;
 	
@@ -2975,6 +3003,12 @@ class PlayState extends MusicBeatState
 					 */
 					if (daNote.wasGoodHit)
 					{
+						if (daNote.holy)
+							{
+								FlxG.sound.play(Paths.sound('MAMI_shoot','shared'));
+								boyfriend.playAnim('dodge', true); //its just here i will make it work propperly tomorrow or smth
+								FlxG.camera.shake(0.02, 0.2);
+							}
 						daNote.kill();
 						notes.remove(daNote, true);
 						daNote.destroy();
