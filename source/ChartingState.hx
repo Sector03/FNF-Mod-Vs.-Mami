@@ -991,13 +991,41 @@ class ChartingState extends MusicBeatState
 	{
 		if (check_mustHitSection.checked)
 		{
-			leftIcon.animation.play('bf');
-			rightIcon.animation.play('dad');
+			remove(leftIcon);
+			leftIcon = new HealthIcon(_song.player1);
+			add(leftIcon);
+
+			remove(rightIcon);
+			rightIcon = new HealthIcon(_song.player2);
+			add(rightIcon);
+
+			leftIcon.scrollFactor.set(1, 1);
+			rightIcon.scrollFactor.set(1, 1);
+
+			leftIcon.setGraphicSize(0, 45);
+			rightIcon.setGraphicSize(0, 45);
+
+			leftIcon.setPosition(0, -100);
+			rightIcon.setPosition(gridBG.width / 2, -100);
 		}
 		else
 		{
-			leftIcon.animation.play('dad');
-			rightIcon.animation.play('bf');
+			remove(leftIcon);
+			leftIcon = new HealthIcon(_song.player2);
+			add(leftIcon);
+
+			remove(rightIcon);
+			rightIcon = new HealthIcon(_song.player1);
+			add(rightIcon);
+
+			leftIcon.scrollFactor.set(1, 1);
+			rightIcon.scrollFactor.set(1, 1);
+
+			leftIcon.setGraphicSize(0, 45);
+			rightIcon.setGraphicSize(0, 45);
+
+			leftIcon.setPosition(0, -100);
+			rightIcon.setPosition(gridBG.width / 2, -100);
 		}
 	}
 

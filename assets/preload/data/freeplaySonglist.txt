@@ -1,2 +1,1 @@
-Tutorial:gf:1
-Connect:mami:2
+Connect:mami:1

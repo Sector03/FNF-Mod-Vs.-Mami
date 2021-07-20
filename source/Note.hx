@@ -94,7 +94,10 @@ class Note extends FlxSprite
 			default:
 				if(!holy)
 					{
-						frames = Paths.getSparrowAtlas('NOTE_assets');
+						if(FlxG.save.data.arrowColorCustom)
+							frames = Paths.getSparrowAtlas('NOTE_assets-alt');
+						else
+							frames = Paths.getSparrowAtlas('NOTE_assets');
 
 						animation.addByPrefix('greenScroll', 'green0');
 						animation.addByPrefix('redScroll', 'red0');

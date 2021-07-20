@@ -60,6 +60,12 @@ class KadeEngineData
 		if (FlxG.save.data.watermark == null)
 			FlxG.save.data.watermark = true;
 
+		if (FlxG.save.data.arrowColorCustom == null)
+			FlxG.save.data.arrowColorCustom = true;
+
+		if (FlxG.save.data.kadeEngineOldHealthSystem == null)
+			FlxG.save.data.kadeEngineOldHealthSystem = true;
+
 		Conductor.recalculateTimings();
 
 		Main.watermarks = FlxG.save.data.watermark;

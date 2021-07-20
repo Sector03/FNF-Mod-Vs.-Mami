@@ -522,7 +522,7 @@ class PlayState extends MusicBeatState
 		{
 			case 'connect':
 				{
-						defaultCamZoom = 0.6;
+						defaultCamZoom = 0.7;
 						curStage = 'subway';
 						var bg:FlxSprite = new FlxSprite(-500, -500).loadGraphic(Paths.image('mami/BG/BGSky'));
 						bg.antialiasing = true;
@@ -1449,66 +1449,59 @@ class PlayState extends MusicBeatState
 			var playerNotes:Array<Int> = [0, 1, 2, 3, 8, 9, 10, 11];
 
 			for (songNotes in section.sectionNotes)
-			{
-				var daStrumTime:Float = songNotes[0] + FlxG.save.data.offset + songOffset;
-				if (daStrumTime < 0)
-					daStrumTime = 0;
-				var daNoteData:Int = Std.int(songNotes[1]);
-
-				var gottaHitNote:Bool = section.mustHitSection;
-
-				if (!playerNotes.contains(songNotes[1]))
+				{
+					var daStrumTime:Float = songNotes[0];
+					var daNoteData:Int = Std.int(songNotes[1]);
+	
+					var gottaHitNote:Bool = section.mustHitSection;
+	
+					if (!playerNotes.contains(songNotes[1]))
 					{
 						gottaHitNote = !section.mustHitSection;
 					}
-
-				if (songNotes[1] > 3)
-				{
-					gottaHitNote = !section.mustHitSection;
-				}
-
-				var oldNote:Note;
-				if (unspawnNotes.length > 0)
-					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
-				else
-					oldNote = null;
-
-				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
-				swagNote.sustainLength = songNotes[2];
-				swagNote.scrollFactor.set(0, 0);
-
-				var susLength:Float = swagNote.sustainLength;
-
-				susLength = susLength / Conductor.stepCrochet;
-				unspawnNotes.push(swagNote);
-
-				for (susNote in 0...Math.floor(susLength))
-				{
-					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
-
-					var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, oldNote, true);
-					sustainNote.scrollFactor.set();
-					unspawnNotes.push(sustainNote);
-
-					sustainNote.mustPress = gottaHitNote;
-
-					if (sustainNote.mustPress)
+	
+					var oldNote:Note;
+					if (unspawnNotes.length > 0)
+						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
+					else
+						oldNote = null;
+	
+					var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
+					swagNote.sustainLength = songNotes[2];
+					swagNote.scrollFactor.set(0, 0);
+	
+					var susLength:Float = swagNote.sustainLength;
+	
+					susLength = susLength / Conductor.stepCrochet;
+					unspawnNotes.push(swagNote);
+	
+					for (susNote in 0...Math.floor(susLength))
 					{
-						sustainNote.x += FlxG.width / 2; // general offset
+						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
+	
+						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, oldNote, true);
+						sustainNote.scrollFactor.set();
+						unspawnNotes.push(sustainNote);
+	
+						sustainNote.mustPress = gottaHitNote;
+	
+						if (sustainNote.mustPress)
+						{
+							sustainNote.x += FlxG.width / 2; // general offset
+						}
+					}
+	
+					swagNote.mustPress = gottaHitNote;
+	
+					if (swagNote.mustPress)
+					{
+						swagNote.x += FlxG.width / 2; // general offset
+					}
+					else
+					{
 					}
 				}
-
-				swagNote.mustPress = gottaHitNote;
-
-				if (swagNote.mustPress)
-				{
-					swagNote.x += FlxG.width / 2; // general offset
-				}
-				else
-				{
-				}
-			}
-			daBeats += 1;
+				daBeats += 1;
 		}
 
 		// trace(unspawnNotes.length);
