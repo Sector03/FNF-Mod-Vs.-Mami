@@ -135,6 +135,8 @@ class PlayState extends MusicBeatState
 
 	private var holyMisses:Int = 1;
 	public var godmodecheat:Bool = false;
+	public var allowBFanimupdate = true;
+
 
 	private var healthBarBG:FlxSprite;
 	private var healthBar:FlxBar;
@@ -514,12 +516,8 @@ class PlayState extends MusicBeatState
 					"If you can beat me here...",
 					"Only then I will even CONSIDER letting you\ndate my daughter!"
 				];
-			case 'senpai':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('senpai/senpaiDialogue'));
-			case 'roses':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('roses/rosesDialogue'));
-			case 'thorns':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('thorns/thornsDialogue'));
+			case 'connect':
+				dialogue = CoolUtil.coolTextFile(Paths.txt('connect/ENG_connectdio'));
 		}
 
 		switch(SONG.song.toLowerCase())
@@ -762,7 +760,7 @@ class PlayState extends MusicBeatState
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
-		healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
+		healthBar.createFilledBar(0xFFFFF6B3, 0xFF36A1BC);
 		// healthBar
 		add(healthBar);
 
@@ -856,12 +854,7 @@ class PlayState extends MusicBeatState
 							});
 						});
 					});
-				case 'senpai':
-					schoolIntro(doof);
-				case 'roses':
-					FlxG.sound.play(Paths.sound('ANGRY'));
-					schoolIntro(doof);
-				case 'thorns':
+				case 'connect':
 					schoolIntro(doof);
 				default:
 					startCountdown();
@@ -1234,7 +1227,8 @@ class PlayState extends MusicBeatState
 		{
 			dad.dance();
 			gf.dance();
-			boyfriend.playAnim('idle');
+			if (allowBFanimupdate)
+				boyfriend.playAnim('idle');
 
 			var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
 			introAssets.set('default', ['ready', "set", "go"]);
@@ -1949,6 +1943,9 @@ class PlayState extends MusicBeatState
 		if (health > 2)
 			health = 2;
 
+		if (health < -0.1)
+			health = 0;
+
 		if (healthBar.percent < 20)
 			iconP1.animation.curAnim.curFrame = 1;
 		else
@@ -2349,6 +2346,7 @@ class PlayState extends MusicBeatState
 							health -= 0.075;
 							if (daNote.holy)
 							{
+								allowBFanimupdate = false;
 								health -= 0.5 * holyMisses; //0.5 for first time, 1.0 for second time, 1.5 for third time, kinda like a strike system but with 4 strikes?
 								//iconP1.animation.play('bf2');
 								//dad.playAnim('shoot', true); //no animation bruh
@@ -2358,7 +2356,7 @@ class PlayState extends MusicBeatState
 								holyMisses += 1; //start at 1
 								new FlxTimer().start(.6, function(tmr:FlxTimer)
 									{
-										//allowBFanimupdate = true;
+										allowBFanimupdate = true;
 										iconP1.animation.play('bf');
 									});
 							}
@@ -3046,7 +3044,8 @@ class PlayState extends MusicBeatState
 			{
 				if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 				{
-					boyfriend.playAnim('idle');
+					if (allowBFanimupdate)
+						boyfriend.playAnim('idle');
 				}
 			}
 	
@@ -3185,18 +3184,18 @@ class PlayState extends MusicBeatState
 			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
 			// FlxG.sound.play(Paths.sound('missnote1'), 1, false);
 			// FlxG.log.add('played imss note');
-
-			switch (direction)
-			{
-				case 0:
-					boyfriend.playAnim('singLEFTmiss', true);
-				case 1:
-					boyfriend.playAnim('singDOWNmiss', true);
-				case 2:
-					boyfriend.playAnim('singUPmiss', true);
-				case 3:
-					boyfriend.playAnim('singRIGHTmiss', true);
-			}
+			if (allowBFanimupdate)
+				switch (direction)
+				{
+					case 0:
+						boyfriend.playAnim('singLEFTmiss', true);
+					case 1:
+						boyfriend.playAnim('singDOWNmiss', true);
+					case 2:
+						boyfriend.playAnim('singUPmiss', true);
+					case 3:
+						boyfriend.playAnim('singRIGHTmiss', true);
+				}
 
 			updateAccuracy();
 		}
@@ -3337,12 +3336,16 @@ class PlayState extends MusicBeatState
 					switch (note.noteData)
 					{
 						case 2:
+							allowBFanimupdate = true;
 							boyfriend.playAnim('singUP', true);
 						case 3:
+							allowBFanimupdate = true;
 							boyfriend.playAnim('singRIGHT', true);
 						case 1:
+							allowBFanimupdate = true;
 							boyfriend.playAnim('singDOWN', true);
 						case 0:
+							allowBFanimupdate = true;
 							boyfriend.playAnim('singLEFT', true);
 					}
 		
@@ -3549,7 +3552,8 @@ class PlayState extends MusicBeatState
 
 		if (!boyfriend.animation.curAnim.name.startsWith("sing"))
 		{
-			boyfriend.playAnim('idle');
+			if (allowBFanimupdate)
+				boyfriend.playAnim('idle');
 		}
 
 		if (curBeat % 8 == 7 && curSong == 'Bopeebo')
