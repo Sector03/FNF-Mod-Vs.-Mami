@@ -235,6 +235,7 @@ class DialogueBox extends FlxSpriteGroup
 						portraitBoyfriendNormal.visible = false;
 						arrowShadow.visible = false;
 						arrowDio.visible = false;
+						nameDialogue.visible = false;
 						swagDialogue.alpha -= 1 / 5;
 						dropText.alpha = swagDialogue.alpha;
 					}, 5);
