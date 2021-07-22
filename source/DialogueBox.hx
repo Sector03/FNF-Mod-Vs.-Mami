@@ -62,7 +62,7 @@ class DialogueBox extends FlxSpriteGroup
 		switch (PlayState.SONG.song.toLowerCase())
 		{
 			case 'connect':
-				FlxG.sound.playMusic(Paths.music('cutscenes/LunchboxScary'), 0);
+				FlxG.sound.playMusic(Paths.music('cutscenes/NoFear'), 0);
 				FlxG.sound.music.fadeIn(1, 0, 0.8);
 		}
 
