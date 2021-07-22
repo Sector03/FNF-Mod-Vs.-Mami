@@ -27,6 +27,7 @@ class DialogueBox extends FlxSpriteGroup
 	var swagDialogue:FlxTypeText;
 
 	var dropText:FlxText;
+	var nameDialogue:FlxText;
 
 	public var finishThing:Void->Void;
 
@@ -35,6 +36,7 @@ class DialogueBox extends FlxSpriteGroup
 	var portraitMamiConcern:FlxSprite;
 	var portraitMamiHappy:FlxSprite;
 	var portraitHomuraTalk:FlxSprite;
+	var portraitBoyfriendNormal:FlxSprite;
 
 	var arrowShadow:FlxSprite;
 	var arrowDio:FlxSprite;
@@ -126,6 +128,17 @@ class DialogueBox extends FlxSpriteGroup
 		add(portraitHomuraTalk);
 		portraitHomuraTalk.visible = false;
 
+		//BOYFRIEND PORTRAITS
+
+		portraitBoyfriendNormal = new FlxSprite(620, 60);
+		portraitBoyfriendNormal.loadGraphic(Paths.image('cutscene/images/PORTRAITS/BF_NORMAL'));
+		portraitBoyfriendNormal.setGraphicSize(Std.int(portraitBoyfriendNormal.width * 1.25));
+		portraitBoyfriendNormal.updateHitbox();
+		portraitBoyfriendNormal.scrollFactor.set();
+		portraitBoyfriendNormal.antialiasing = true;
+		add(portraitBoyfriendNormal);
+		portraitBoyfriendNormal.visible = false;
+
 		add(box);
 
 		box.screenCenter(X);
@@ -140,11 +153,6 @@ class DialogueBox extends FlxSpriteGroup
 		FlxTween.tween(arrowDio, {y: 580}, 1, {type: FlxTween.PINGPONG, ease: FlxEase.quadInOut});
 		FlxTween.tween(arrowShadow, {alpha: 1}, 1, {type: FlxTween.PINGPONG, ease: FlxEase.quadInOut});
 
-		if (!talkingRight)
-		{
-			// box.flipX = true;
-		}
-
 		dropText = new FlxText(181, 501, Std.int(FlxG.width * 0.75), "", 39);
 		dropText.font = 'Koruri Regular';
 		dropText.setFormat(Paths.font("koruri.ttf"), 39);
@@ -157,6 +165,12 @@ class DialogueBox extends FlxSpriteGroup
 		swagDialogue.color = 0xFF3F2021;
 		swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
 		add(swagDialogue);
+
+		nameDialogue = new FlxText(225, 432, Std.int(FlxG.width * 0.5), "Mami", 39);
+		nameDialogue.font = 'Korui';
+		nameDialogue.setFormat(Paths.font("koruri.ttf"), 34);
+		nameDialogue.color = 0xFFFFFFFF;
+		add(nameDialogue);
 
 		dialogue = new Alphabet(0, 80, "", false, true);
 		// dialogue.x = 90;
@@ -204,6 +218,7 @@ class DialogueBox extends FlxSpriteGroup
 						portraitMamiConcern.visible = false;
 						portraitMamiHappy.visible = false;
 						portraitHomuraTalk.visible = false;
+						portraitBoyfriendNormal.visible = false;
 						arrowShadow.visible = false;
 						arrowDio.visible = false;
 						swagDialogue.alpha -= 1 / 5;
@@ -239,53 +254,78 @@ class DialogueBox extends FlxSpriteGroup
 		// swagDialogue.text = ;
 		swagDialogue.resetText(dialogueList[0]);
 		swagDialogue.start(0.04, true);
-
+		box.flipX = false;
+		nameDialogue.x = 225;
 		switch (curCharacter)
 		{
 			case 'mami-normal':
+				nameDialogue.text = 'Mami';
 				portraitMamiAnnoyed.visible = false;
 				portraitMamiConcern.visible = false;
 				portraitMamiHappy.visible = false;
 				portraitHomuraTalk.visible = false;
+				portraitBoyfriendNormal.visible = false;
 				if (!portraitMamiNormal.visible)
 				{
 					portraitMamiNormal.visible = true;
 				}
 			case 'mami-annoyed':
+				nameDialogue.text = 'Mami';
 				portraitMamiNormal.visible = false;
 				portraitMamiConcern.visible = false;
 				portraitMamiHappy.visible = false;
 				portraitHomuraTalk.visible = false;
+				portraitBoyfriendNormal.visible = false;
 				if (!portraitMamiAnnoyed.visible)
 				{
 					portraitMamiAnnoyed.visible = true;
 				}
 			case 'mami-concern':
+				nameDialogue.text = 'Mami';
 				portraitMamiNormal.visible = false;
 				portraitMamiAnnoyed.visible = false;
 				portraitMamiHappy.visible = false;
 				portraitHomuraTalk.visible = false;
+				portraitBoyfriendNormal.visible = false;
 				if (!portraitMamiConcern.visible)
 				{
 					portraitMamiConcern.visible = true;
 				}
 			case 'mami-happy':
+				FlxTween.tween(portraitMamiHappy, {y: 45}, .1, {type: FlxTween.PINGPONG, ease: FlxEase.quadInOut}); //oncomplete dumb stuff, the bounce motion is supposed to do it once but its 9pm here lol
+				nameDialogue.text = 'Mami';
 				portraitMamiNormal.visible = false;
 				portraitMamiAnnoyed.visible = false;
 				portraitMamiConcern.visible = false;
 				portraitHomuraTalk.visible = false;
+				portraitBoyfriendNormal.visible = false;
 				if (!portraitMamiHappy.visible)
 				{
 					portraitMamiHappy.visible = true;
 				}
 			case 'homura-talk':
+				nameDialogue.text = 'Homura';
 				portraitMamiNormal.visible = false;
 				portraitMamiAnnoyed.visible = false;
 				portraitMamiConcern.visible = false;
 				portraitMamiHappy.visible = false;
+				portraitBoyfriendNormal.visible = false;
 				if (!portraitHomuraTalk.visible)
 				{
 					portraitHomuraTalk.visible = true;
+				}
+			case 'boyfriend-normal':
+				nameDialogue.x = 875;
+				nameDialogue.text = 'Boyfriend';
+				box.flipX = true;
+				portraitMamiNormal.visible = false;
+				portraitMamiAnnoyed.visible = false;
+				portraitMamiConcern.visible = false;
+				portraitMamiHappy.visible = false;
+				portraitHomuraTalk.visible = false;
+				if (!portraitBoyfriendNormal.visible)
+				{
+					portraitBoyfriendNormal.visible = true;
 				}
 		}
 	}
