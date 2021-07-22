@@ -42,9 +42,22 @@ class DialogueBox extends FlxSpriteGroup
 	var arrowDio:FlxSprite;
 	var bgFade:FlxSprite;
 
+	var ohName:Bool = false;
+	var bonk:Bool = false;
+
 	public function new(talkingRight:Bool = true, ?dialogueList:Array<String>)
 	{
 		super();
+
+		if (FlxG.random.bool(1)) //1 out of 100 for "Oh?" translation error in Magia Record EN, thanks TAU.
+			{
+				ohName = true;
+			}
+
+		if (FlxG.random.bool(1)) //bonk
+			{
+				bonk = true;
+			}	
 
 		switch (PlayState.SONG.song.toLowerCase())
 		{
@@ -120,7 +133,10 @@ class DialogueBox extends FlxSpriteGroup
 		//HOMURA PORTRAITS
 
 		portraitHomuraTalk = new FlxSprite(-50, 60);
-		portraitHomuraTalk.loadGraphic(Paths.image('cutscene/images/PORTRAITS/HOMURA_TALK'));
+		if (bonk)
+			portraitHomuraTalk.loadGraphic(Paths.image('cutscene/images/PORTRAITS/HOMURA_TALK_BONK'));
+		else
+			portraitHomuraTalk.loadGraphic(Paths.image('cutscene/images/PORTRAITS/HOMURA_TALK'));
 		portraitHomuraTalk.setGraphicSize(Std.int(portraitHomuraTalk.width * 1.25));
 		portraitHomuraTalk.updateHitbox();
 		portraitHomuraTalk.scrollFactor.set();
@@ -182,8 +198,6 @@ class DialogueBox extends FlxSpriteGroup
 	
 	override function update(elapsed:Float)
 	{
-		// HARD CODING CUZ IM STUPDI
-
 		dropText.text = swagDialogue.text;
 
 		if (dialogueOpened && !dialogueStarted)
@@ -328,6 +342,8 @@ class DialogueBox extends FlxSpriteGroup
 					portraitBoyfriendNormal.visible = true;
 				}
 		}
+		if (ohName)
+			nameDialogue.text = 'Oh?';
 	}
 
 	function cleanDialog():Void
