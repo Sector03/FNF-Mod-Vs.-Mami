@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="names.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="ascentitext basic0000" x="50" y="50" width="456" height="51"/>
+	<SubTexture name="ascentitext white0000" x="556" y="50" width="456" height="51"/>
+	<SubTexture name="boinkbonktext basic0000" x="1062" y="50" width="456" height="51"/>
+	<SubTexture name="boinkbonktext white0000" x="50" y="151" width="456" height="51"/>
+	<SubTexture name="eggoverlordtext basic0000" x="556" y="151" width="456" height="51"/>
+	<SubTexture name="eggoverlordtext white0000" x="1062" y="151" width="456" height="51"/>
+	<SubTexture name="faderevampedtext basic0000" x="50" y="252" width="456" height="51"/>
+	<SubTexture name="faderevampedtext white0000" x="556" y="252" width="456" height="51"/>
+	<SubTexture name="magbrostext basic0000" x="1062" y="252" width="456" height="51"/>
+	<SubTexture name="magbrostext white0000" x="50" y="353" width="456" height="51"/>
+	<SubTexture name="sectortext basic0000" x="556" y="353" width="456" height="51"/>
+	<SubTexture name="sectortext white0000" x="1062" y="353" width="456" height="51"/>
+	<SubTexture name="theawfulusernametext basic0000" x="50" y="454" width="456" height="51"/>
+	<SubTexture name="theawfulusernametext white0000" x="556" y="454" width="456" height="51"/>
+	<SubTexture name="vidztext basic0000" x="1062" y="454" width="456" height="51"/>
+	<SubTexture name="vidztext white0000" x="50" y="555" width="456" height="51"/>
+</TextureAtlas>

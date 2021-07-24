@@ -54,7 +54,7 @@ class DialogueBox extends FlxSpriteGroup
 				ohName = true;
 			}
 
-		if (FlxG.random.bool(1)) //bonk
+		if (FlxG.random.bool(.1)) //bonk
 			{
 				bonk = true;
 			}	
@@ -166,8 +166,8 @@ class DialogueBox extends FlxSpriteGroup
 		arrowDio = new FlxSprite(1050, 560).loadGraphic(Paths.image('cutscene/images/next_arrow'));
 		add(arrowDio);
 
-		FlxTween.tween(arrowDio, {y: 580}, 1, {type: FlxTween.PINGPONG, ease: FlxEase.quadInOut});
-		FlxTween.tween(arrowShadow, {alpha: 1}, 1, {type: FlxTween.PINGPONG, ease: FlxEase.quadInOut});
+		FlxTween.tween(arrowDio, {y: 580}, 1, {type: FlxTweenType.PINGPONG, ease: FlxEase.quadInOut});
+		FlxTween.tween(arrowShadow, {alpha: 1}, 1, {type: FlxTweenType.PINGPONG, ease: FlxEase.quadInOut});
 
 		dropText = new FlxText(181, 501, Std.int(FlxG.width * 0.75), "", 39);
 		dropText.font = 'Koruri Regular';
@@ -208,11 +208,11 @@ class DialogueBox extends FlxSpriteGroup
 
 		dialogueOpened = true;
 
-		if (FlxG.keys.justPressed.ANY && dialogueStarted == true)
+		if (FlxG.keys.justPressed.ENTER && dialogueStarted == true)
 		{
 			remove(dialogue);
 				
-			FlxG.sound.play(Paths.sound('clickText'), 0.8);
+			FlxG.sound.play(Paths.sound('CUTSCENE_next'), 0.8);
 
 			if (dialogueList[1] == null && dialogueList[0] != null)
 			{
@@ -307,7 +307,12 @@ class DialogueBox extends FlxSpriteGroup
 					portraitMamiConcern.visible = true;
 				}
 			case 'mami-happy':
-				FlxTween.tween(portraitMamiHappy, {y: 45}, .1, {type: FlxTween.PINGPONG, ease: FlxEase.quadInOut}); //oncomplete dumb stuff, the bounce motion is supposed to do it once but its 9pm here lol
+				FlxTween.tween(portraitMamiHappy, {y: 45}, .1, {type: FlxTweenType.PINGPONG, ease: FlxEase.quadInOut, onComplete:
+					function(tween:FlxTween):Void {
+						if(tween.executions == 2) {
+						 tween.cancel();
+						}
+				}}); //oncomplete dumb stuff, the bounce motion is supposed to do it once but its 9pm here lol
 				nameDialogue.text = 'Mami';
 				portraitMamiNormal.visible = false;
 				portraitMamiAnnoyed.visible = false;

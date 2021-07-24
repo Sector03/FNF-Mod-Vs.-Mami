@@ -1855,6 +1855,7 @@ class PlayState extends MusicBeatState
 		else
 			currentFrames++;
 
+		/*
 		if (FlxG.keys.justPressed.NINE)
 		{
 			if (iconP1.animation.curAnim.name == 'bf-old')
@@ -1862,6 +1863,7 @@ class PlayState extends MusicBeatState
 			else
 				iconP1.animation.play('bf-old');
 		}
+		*/
 
 		switch (curStage)
 		{
@@ -1948,13 +1950,19 @@ class PlayState extends MusicBeatState
 
 		if (healthBar.percent < 20)
 			iconP1.animation.curAnim.curFrame = 1;
+		else if (healthBar.percent > 80)
+			iconP1.animation.curAnim.curFrame = 2;
 		else
 			iconP1.animation.curAnim.curFrame = 0;
 
 		if (healthBar.percent > 80)
 			iconP2.animation.curAnim.curFrame = 1;
+		else if (healthBar.percent < 20)
+			iconP2.animation.curAnim.curFrame = 2;
 		else
 			iconP2.animation.curAnim.curFrame = 0;
+
+		//anim 0 = normal, anim 1 = defeat, anim 2 = winning
 
 		/* if (FlxG.keys.justPressed.NINE)
 			FlxG.switchState(new Charting()); */
@@ -2343,12 +2351,16 @@ class PlayState extends MusicBeatState
 						}
 						else
 						{
+							healthbarshake();
 							health -= 0.075;
 							if (daNote.holy)
 							{
 								allowBFanimupdate = false;
+								healthbarshake();
+								healthbarshake();
+								healthbarshake();
 								health -= 0.5 * holyMisses; //0.5 for first time, 1.0 for second time, 1.5 for third time, kinda like a strike system but with 4 strikes?
-								//iconP1.animation.play('bf2');
+								//iconP1.animation.play('bf-shot');
 								//dad.playAnim('shoot', true); //no animation bruh
 								FlxG.sound.play(Paths.sound('MAMI_shoot','shared'));
 								FlxG.camera.shake(0.02, 0.2);
@@ -2357,7 +2369,7 @@ class PlayState extends MusicBeatState
 								new FlxTimer().start(.6, function(tmr:FlxTimer)
 									{
 										allowBFanimupdate = true;
-										iconP1.animation.play('bf');
+										//iconP1.animation.play('bf');
 									});
 							}
 							vocals.volume = 0;
@@ -2499,6 +2511,52 @@ class PlayState extends MusicBeatState
 
 	var timeShown = 0;
 	var currentTimingShown:FlxText = null;
+
+	public function healthbarshake()
+		{
+		new FlxTimer().start(0.01, function(tmr:FlxTimer)
+			{
+				iconP1.y += 10;
+				iconP2.y += 10;
+				healthBar.y += 10;
+				healthBarBG.y += 10;
+			});
+			new FlxTimer().start(0.05, function(tmr:FlxTimer)
+			{
+				iconP1.y -= 15;
+				iconP2.y -= 15;
+				healthBar.y -= 15;
+				healthBarBG.y -= 15;
+			});
+			new FlxTimer().start(0.10, function(tmr:FlxTimer)
+			{
+				iconP1.y += 8;
+				iconP2.y += 8;
+				healthBar.y += 8;
+				healthBarBG.y += 8;
+			});
+			new FlxTimer().start(0.15, function(tmr:FlxTimer)
+			{
+				iconP1.y -= 5;
+				iconP2.y -= 5;
+				healthBar.y -= 5;
+				healthBarBG.y -= 5;
+			});
+			new FlxTimer().start(0.20, function(tmr:FlxTimer)
+			{
+				iconP1.y += 3;
+				iconP2.y += 3;
+				healthBar.y += 3;
+				healthBarBG.y += 3;
+			});
+			new FlxTimer().start(0.25, function(tmr:FlxTimer)
+			{
+				iconP1.y -= 1;
+				iconP2.y -= 1;
+				healthBar.y -= 1;
+				healthBarBG.y -= 1;
+			});
+		}
 
 	private function popUpScore(daNote:Note):Void
 		{
@@ -3165,6 +3223,7 @@ class PlayState extends MusicBeatState
 	{
 		if (!boyfriend.stunned)
 		{
+			healthbarshake();
 			health -= 0.04;
 			if (combo > 5 && gf.animOffsets.exists('sad'))
 			{
@@ -3298,6 +3357,7 @@ class PlayState extends MusicBeatState
 						playerStrums.members[1].animation.play('static');
 						playerStrums.members[2].animation.play('static');
 						playerStrums.members[3].animation.play('static');
+						healthbarshake();
 						health -= 0.2;
 						trace('mash ' + mashing);
 					}

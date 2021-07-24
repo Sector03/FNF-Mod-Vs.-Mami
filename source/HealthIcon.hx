@@ -24,8 +24,7 @@ class HealthIcon extends FlxSprite
 		scrollFactor.set();
 
 		loadGraphic(Paths.image('healthIcons/' + curchar, 'shared'), true, 150, 150);
-		animation.add(curchar, [0, 1], 0, false, isPlayer);
-
+		animation.add(curchar, [0, 1, 2], 0, false, isPlayer);
 		animation.play(curchar);
 	}
 
@@ -36,6 +35,7 @@ class HealthIcon extends FlxSprite
 		if (sprTracker != null)
 			setPosition(sprTracker.x + sprTracker.width + 10, sprTracker.y - 30);
 	}
+
 }
 
 /**
