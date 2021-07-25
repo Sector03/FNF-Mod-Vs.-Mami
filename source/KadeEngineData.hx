@@ -66,6 +66,9 @@ class KadeEngineData
 		if (FlxG.save.data.kadeEngineOldHealthSystem == null)
 			FlxG.save.data.kadeEngineOldHealthSystem = true;
 
+		if (FlxG.save.data.resetButton == null)
+			FlxG.save.data.resetButton = true;
+
 		Conductor.recalculateTimings();
 
 		Main.watermarks = FlxG.save.data.watermark;

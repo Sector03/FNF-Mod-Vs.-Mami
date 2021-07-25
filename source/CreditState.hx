@@ -198,7 +198,7 @@ class CreditState extends MusicBeatState
 		creditRoleText.scrollFactor.set();
 		add(creditRoleText);
 	
-		creditNameText = new FlxText(680, 100, 440, "Fade Revamped", 48);
+		creditNameText = new FlxText(680, 100, 460, "Fade Revamped", 48);
 		creditNameText.setFormat(Paths.font("vcr.ttf"), 48, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		creditNameText.text = "Fade Revamped";
 		creditNameText.scrollFactor.set();

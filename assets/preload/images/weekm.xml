@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="weekm.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Symbol 2 instance 10000" x="0" y="0" width="305" height="342" frameX="-38" frameY="-42" frameWidth="380" frameHeight="425"/>
+	<SubTexture name="Symbol 2 instance 10001" x="305" y="0" width="380" height="425"/>
+	<SubTexture name="Symbol 2 instance 10002" x="305" y="0" width="380" height="425"/>
+	<SubTexture name="Symbol 2 instance 10003" x="0" y="425" width="342" height="382" frameX="-19" frameY="-22" frameWidth="380" frameHeight="425"/>
+	<SubTexture name="Symbol 2 instance 10004" x="0" y="425" width="342" height="382" frameX="-19" frameY="-22" frameWidth="380" frameHeight="425"/>
+	<SubTexture name="Symbol 2 instance 10005" x="342" y="425" width="330" height="370" frameX="-25" frameY="-28" frameWidth="380" frameHeight="425"/>
+	<SubTexture name="Symbol 2 instance 10006" x="342" y="425" width="330" height="370" frameX="-25" frameY="-28" frameWidth="380" frameHeight="425"/>
+	<SubTexture name="Symbol 2 instance 10007" x="342" y="425" width="330" height="370" frameX="-25" frameY="-28" frameWidth="380" frameHeight="425"/>
+	<SubTexture name="Symbol 2 instance 10008" x="342" y="425" width="330" height="370" frameX="-25" frameY="-28" frameWidth="380" frameHeight="425"/>
+	<SubTexture name="Symbol 2 instance 10009" x="342" y="425" width="330" height="370" frameX="-25" frameY="-28" frameWidth="380" frameHeight="425"/>
+	<SubTexture name="Symbol 2 instance 10010" x="342" y="425" width="330" height="370" frameX="-25" frameY="-28" frameWidth="380" frameHeight="425"/>
+	<SubTexture name="Symbol 2 instance 10011" x="342" y="425" width="330" height="370" frameX="-25" frameY="-28" frameWidth="380" frameHeight="425"/>
+	<SubTexture name="Symbol 2 instance 10012" x="342" y="425" width="330" height="370" frameX="-25" frameY="-28" frameWidth="380" frameHeight="425"/>
+	<SubTexture name="Symbol 2 instance 10013" x="342" y="425" width="330" height="370" frameX="-25" frameY="-28" frameWidth="380" frameHeight="425"/>
+</TextureAtlas>

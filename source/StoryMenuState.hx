@@ -53,6 +53,7 @@ class StoryMenuState extends MusicBeatState
 	var sprDifficulty:FlxSprite;
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
+	var flower:FlxSprite;
 
 	override function create()
 	{
@@ -164,6 +165,12 @@ class StoryMenuState extends MusicBeatState
 
 		add(yellowBG);
 		add(grpWeekCharacters);
+
+		flower = new FlxSprite(50, 50);
+		flower.frames = Paths.getSparrowAtlas('weekm', 'preload');
+		flower.animation.addByPrefix('woah', "Symbol 2 instance 1", 24, true);
+		flower.animation.play('woah');
+		add(flower);
 
 		txtTracklist = new FlxText(FlxG.width * 0.05, yellowBG.x + yellowBG.height + 100, 0, "Tracks", 32);
 		txtTracklist.alignment = CENTER;

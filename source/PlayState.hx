@@ -174,6 +174,7 @@ class PlayState extends MusicBeatState
 
 	//subwayarea
 	var gorls:FlxSprite;
+	var connectLight:FlxSprite;
 
 	var fc:Bool = true;
 
@@ -577,18 +578,19 @@ class PlayState extends MusicBeatState
 						gorls = new FlxSprite(-360, 150);
 						gorls.frames = Paths.getSparrowAtlas('mami/BG/BGGirlsDance', 'shared');
 						gorls.animation.addByPrefix('move', "girls dancing instance 1", 24, false);
-
 						gorls.antialiasing = true;
-
 						gorls.scrollFactor.set(0.9, 0.9);
-
 						gorls.updateHitbox();
-
 						gorls.active = true;
-
-						
 						add(gorls);
-						
+
+						connectLight = new FlxSprite(-350, 0).loadGraphic(Paths.image('mami/BG/connect_flash', 'shared'));
+						connectLight.setGraphicSize(Std.int(connectLight.width * 4));
+						connectLight.updateHitbox();
+						connectLight.antialiasing = true;
+						connectLight.scrollFactor.set(0, 0);
+						connectLight.active = false;
+						connectLight.alpha = 0.0;
 					}
 			default:
 			{
@@ -678,6 +680,9 @@ class PlayState extends MusicBeatState
 
 		add(dad);
 		add(boyfriend);
+
+		if (curStage == 'subway')
+			add(connectLight);
 
 		var doof:DialogueBox = new DialogueBox(false, dialogue);
 		// doof.x += 70;
@@ -1967,6 +1972,10 @@ class PlayState extends MusicBeatState
 		/* if (FlxG.keys.justPressed.NINE)
 			FlxG.switchState(new Charting()); */
 
+		if (FlxG.keys.pressed.R)
+			if (FlxG.save.data.resetButton)
+				health -= 2;
+
 		#if debug
 		// health changer cheat debug
 		if (FlxG.keys.pressed.N)
@@ -2352,7 +2361,11 @@ class PlayState extends MusicBeatState
 						else
 						{
 							healthbarshake();
-							health -= 0.075;
+							if (FlxG.save.data.kadeEngineOldHealthSystem)
+								health -= 0.075;
+							else
+								health -= 0.1;
+
 							if (daNote.holy)
 							{
 								allowBFanimupdate = false;
@@ -2588,7 +2601,11 @@ class PlayState extends MusicBeatState
 					score = -300;
 					combo = 0;
 					misses++;
-					health -= 0.2;
+					if (FlxG.save.data.kadeEngineOldHealthSystem)
+						health -= 0.2;
+					else
+						health -= 0.06;
+
 					ss = false;
 					shits++;
 					if (FlxG.save.data.accuracyMod == 0)
@@ -2596,7 +2613,11 @@ class PlayState extends MusicBeatState
 				case 'bad':
 					daRating = 'bad';
 					score = 0;
-					health -= 0.06;
+					if (FlxG.save.data.kadeEngineOldHealthSystem)
+						health -= 0.06;
+					else
+						health -= 0.03;
+
 					ss = false;
 					bads++;
 					if (FlxG.save.data.accuracyMod == 0)
@@ -2606,13 +2627,27 @@ class PlayState extends MusicBeatState
 					score = 200;
 					ss = false;
 					goods++;
-					if (health < 2)
-						health += 0.04;
+					if (FlxG.save.data.kadeEngineOldHealthSystem)
+						{
+						if (health < 2)
+							health += 0.04;
+						}
+
+
 					if (FlxG.save.data.accuracyMod == 0)
 						totalNotesHit += 0.75;
 				case 'sick':
-					if (health < 2)
-						health += 0.1;
+					if (FlxG.save.data.kadeEngineOldHealthSystem)
+						{
+						if (health < 2)
+							health += 0.04;
+						}
+					else
+						{
+						if (health < 2)
+							health += 0.1;
+						}
+
 					if (FlxG.save.data.accuracyMod == 0)
 						totalNotesHit += 1;
 					sicks++;
@@ -3224,7 +3259,14 @@ class PlayState extends MusicBeatState
 		if (!boyfriend.stunned)
 		{
 			healthbarshake();
-			health -= 0.04;
+			if (FlxG.save.data.kadeEngineOldHealthSystem)
+				health -= 0.04;
+			else
+				if (daNote.isSustainNote)
+					health -= 0.05; //you lose less health per sustain note you miss
+				else
+					health -= 0.1;
+
 			if (combo > 5 && gf.animOffsets.exists('sad'))
 			{
 				gf.playAnim('sad');
@@ -3627,6 +3669,33 @@ class PlayState extends MusicBeatState
 				dad.playAnim('cheer', true);
 			}
 
+		if (curSong == 'Connect') 
+			{
+				switch (curBeat)
+				{
+					case 2:
+						defaultCamZoom = 0.85;
+						connectLight.alpha = .8;
+						FlxTween.tween(connectLight, {alpha: 0}, 3, {ease: FlxEase.quartOut});
+					case 32:
+						defaultCamZoom = 0.7;
+					case 209:
+						defaultCamZoom = 0.90;
+						connectLight.alpha = .8;
+						FlxTween.tween(connectLight, {alpha: 0}, 3, {ease: FlxEase.quartOut});
+					case 216:
+						defaultCamZoom = 0.7;
+					case 225:
+						defaultCamZoom = 0.90;
+						connectLight.alpha = .8;
+						FlxTween.tween(connectLight, {alpha: 0}, 3, {ease: FlxEase.quartOut});
+					case 240:
+						defaultCamZoom = 0.7;
+					}
+			}
+
+
+			
 		switch (curStage)
 		{
 			case 'subway':

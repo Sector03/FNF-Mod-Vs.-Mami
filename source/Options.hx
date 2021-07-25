@@ -510,3 +510,44 @@ class ArrowColors extends Option
 	}
 }
 
+class HealthSystem extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.kadeEngineOldHealthSystem = !FlxG.save.data.kadeEngineOldHealthSystem;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Health System " + (!FlxG.save.data.kadeEngineOldHealthSystem ? "Old" : "New");
+	}
+}
+
+class ResetButton extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.resetButton = !FlxG.save.data.resetButton;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "R To Reset " + (!FlxG.save.data.resetButton ? "Off" : "On");
+	}
+}

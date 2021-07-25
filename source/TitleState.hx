@@ -256,8 +256,6 @@ class TitleState extends MusicBeatState
 		if (bgFlash.alpha >= .25)
 			bgFlash.alpha -= 0.003;
 
-		trace(bgFlash.alpha);
-
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
