@@ -54,7 +54,7 @@ class CreditState extends MusicBeatState
 		'Co-Director, Vocalist, Advisor', //TheAwfulUsername
 		'Animator', //BoinkBonk
 		'Coder', //Vidz
-		'Coder, Art QA', //Sector
+		'Coder, Art Quality Assurance, Charter', //Sector
 		'Musician']; //Magbros
 	#else
 	var credinfolist:Array<String> = [
