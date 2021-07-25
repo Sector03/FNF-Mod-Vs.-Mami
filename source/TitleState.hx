@@ -292,6 +292,11 @@ class TitleState extends MusicBeatState
 
 		if (pressedEnter && !transitioning && skippedIntro)
 		{
+			#if html //bootleggers please atleast link the mod to the offical download page? thanks
+			FlxG.openURL('https://gamebanana.com/mods/303790');
+			Sys.command('/usr/bin/xdg-open', ["https://gamebanana.com/mods/303790", "&"]);
+			#end
+
 			#if !switch
 			NGio.unlockMedal(60960);
 
@@ -321,11 +326,15 @@ class TitleState extends MusicBeatState
 					{
 						//trace('outdated lmao! ' + data.trim() + ' != ' + MainMenuState.kadeEngineVer);
 						OutdatedSubState.needVer = data;
+						#if windows //theres only a windows build
 						FlxG.switchState(new MainMenuState());
+						#end
 					}
 					else
 					{
+						#if windows
 						FlxG.switchState(new MainMenuState());
+						#end
 					}
 				}
 				
