@@ -319,15 +319,13 @@ class TitleState extends MusicBeatState
 				  
 				  	if (!MainMenuState.kadeEngineVer.contains(data.trim()) && !OutdatedSubState.leftState && MainMenuState.nightly == "")
 					{
-						trace('outdated lmao! ' + data.trim() + ' != ' + MainMenuState.kadeEngineVer);
+						//trace('outdated lmao! ' + data.trim() + ' != ' + MainMenuState.kadeEngineVer);
 						OutdatedSubState.needVer = data;
-						//FlxG.switchState(new MainMenuState());
-						FlxG.switchState(new StoryMenuState());
+						FlxG.switchState(new MainMenuState());
 					}
 					else
 					{
-						FlxG.switchState(new StoryMenuState());
-						//FlxG.switchState(new MainMenuState());
+						FlxG.switchState(new MainMenuState());
 					}
 				}
 				
