@@ -33,8 +33,8 @@ class CreditState extends MusicBeatState
 		'eggoverlordtext', //Egg Overlord
 		'theawfulusernametext', //TheAwfulUsername
 		'boinkbonktext', //BoinkBonk
-		'vidztext', //Vidz
 		'sectortext', //Sector
+		'vidztext', //Vidz
 		'magbrostext']; //Magbros
 	#else
 	var optionShit:Array<String> = [
@@ -42,8 +42,8 @@ class CreditState extends MusicBeatState
 		'Egg Overlord', //Egg Overlord
 		'TheAwfulUsername', //TheAwfulUsername
 		'BoinkBonk', //BoinkBonk
-		'Vidz', //Vidz
 		'Sector', //Sector
+		'Vidz', //Vidz
 		'Magbros']; //Magbros
 	#end
 	//ROLES
@@ -53,8 +53,8 @@ class CreditState extends MusicBeatState
 		'Co-Director, Publisher, Art', //Egg Overlord
 		'Co-Director, Vocalist, Advisor', //TheAwfulUsername
 		'Animator', //BoinkBonk
-		'Coder', //Vidz
 		'Coder, Art Quality Assurance, Charter', //Sector
+		'Coder', //Vidz
 		'Musician']; //Magbros
 	#else
 	var credinfolist:Array<String> = [
@@ -62,8 +62,8 @@ class CreditState extends MusicBeatState
 		'Co-Director, Publisher, Art', //Egg Overlord
 		'Co-Director, Vocalist, Advisor', //TheAwfulUsername
 		'Animator', //BoinkBonk
+		'Lead Coder, Art QA', //Sector
 		'Coder', //Vidz
-		'Coder, Art QA', //Sector
 		'Musician']; //Magbros
 	#end
 	//ICONS
@@ -73,8 +73,8 @@ class CreditState extends MusicBeatState
 		'eggoverlordicon', //Egg Overlord
 		'theawfulusernameicon', //TheAwfulUsername
 		'boinkbonkicon', //BoinkBonk
-		'vidzicon', //Vidz
 		'sectoricon', //Sector
+		'vidzicon', //Vidz
 		'magbrosicon']; //Magbros
 	#else
 	var crediconlist:Array<String> = [
@@ -82,8 +82,8 @@ class CreditState extends MusicBeatState
 		'eggoverlord', //Egg Overlord
 		'theawfulusername', //TheAwfulUsername
 		'boinkbonk', //BoinkBonk
-		'vidz', //Vidz
 		'sector', //Sector
+		'vidz', //Vidz
 		'magbros']; //Magbros
 	#end
 
@@ -286,17 +286,17 @@ class CreditState extends MusicBeatState
 								#else
 								FlxG.openURL('https://gamebanana.com/members/1784261');
 								#end
-							case 'vidztext':
-								#if linux
-								Sys.command('/usr/bin/xdg-open', ["https://twitter.com/ItsVidz3", "&"]);
-								#else
-								FlxG.openURL('https://twitter.com/ItsVidz3');
-								#end
 							case 'sectortext':
 								#if linux
 								Sys.command('/usr/bin/xdg-open', ["https://twitter.com/Sector0003", "&"]);
 								#else
 								FlxG.openURL('https://twitter.com/Sector0003');
+								#end
+							case 'vidztext':
+								#if linux
+								Sys.command('/usr/bin/xdg-open', ["https://twitter.com/ItsVidz3", "&"]);
+								#else
+								FlxG.openURL('https://twitter.com/ItsVidz3');
 								#end
 							case 'magbrostext':
 								#if linux
@@ -368,11 +368,11 @@ class CreditState extends MusicBeatState
 				creditRoleText.text = "Animator";	
 				creditNameText.text = "BoinkBonk";
 			case 4:
+				creditRoleText.text = "Lead Coder, Art QA, Charter";	
+				creditNameText.text = "Sector";
+			case 5:
 				creditRoleText.text = "Coder";
 				creditNameText.text = "Vidz";
-			case 5:
-				creditRoleText.text = "Coder, Art QA";	
-				creditNameText.text = "Sector";
 			case 6:
 				creditRoleText.text = "Musician";
 				creditNameText.text = "Magbros";
