@@ -36,6 +36,8 @@ class DialogueBox extends FlxSpriteGroup
 	var portraitMamiConcern:FlxSprite;
 	var portraitMamiHappy:FlxSprite;
 	var portraitHomuraTalk:FlxSprite;
+	var portraitMamiHoly:FlxSprite;
+	var portraitHomuraHurt:FlxSprite;
 	var portraitBoyfriendNormal:FlxSprite;
 
 	var arrowShadow:FlxSprite;
@@ -129,8 +131,28 @@ class DialogueBox extends FlxSpriteGroup
 		portraitMamiHappy.antialiasing = true;
 		add(portraitMamiHappy);
 		portraitMamiHappy.visible = false;
+		
+
+		portraitMamiHoly = new FlxSprite(-50, 60);
+		portraitMamiHoly.loadGraphic(Paths.image('cutscene/images/PORTRAITS/MAMI_HOLY'));
+		portraitMamiHoly.setGraphicSize(Std.int(portraitMamiHoly.width * 1.25));
+		portraitMamiHoly.updateHitbox();
+		portraitMamiHoly.scrollFactor.set();
+		portraitMamiHoly.antialiasing = true;
+		add(portraitMamiHoly);
+		portraitMamiHoly.visible = false;
 
 		//HOMURA PORTRAITS
+
+		portraitHomuraHurt = new FlxSprite(-50, 60);
+		portraitHomuraHurt.loadGraphic(Paths.image('cutscene/images/PORTRAITS/HOMURA_HURT'));
+		portraitHomuraHurt.setGraphicSize(Std.int(portraitHomuraHurt.width * 1.25));
+		portraitHomuraHurt.updateHitbox();
+		portraitHomuraHurt.scrollFactor.set();
+		portraitHomuraHurt.antialiasing = true;
+		add(portraitHomuraHurt);
+		portraitHomuraHurt.visible = false;
+
 
 		portraitHomuraTalk = new FlxSprite(-50, 60);
 		if (bonk)
@@ -233,6 +255,8 @@ class DialogueBox extends FlxSpriteGroup
 						portraitMamiHappy.visible = false;
 						portraitHomuraTalk.visible = false;
 						portraitBoyfriendNormal.visible = false;
+						portraitMamiHoly.visible = false;
+						portraitHomuraHurt.visible = false;
 						arrowShadow.visible = false;
 						arrowDio.visible = false;
 						nameDialogue.visible = false;
@@ -280,6 +304,8 @@ class DialogueBox extends FlxSpriteGroup
 				portraitMamiHappy.visible = false;
 				portraitHomuraTalk.visible = false;
 				portraitBoyfriendNormal.visible = false;
+				portraitMamiHoly.visible = false;
+				portraitHomuraHurt.visible = false;
 				if (!portraitMamiNormal.visible)
 				{
 					portraitMamiNormal.visible = true;
@@ -291,6 +317,8 @@ class DialogueBox extends FlxSpriteGroup
 				portraitMamiHappy.visible = false;
 				portraitHomuraTalk.visible = false;
 				portraitBoyfriendNormal.visible = false;
+				portraitMamiHoly.visible = false;
+				portraitHomuraHurt.visible = false;
 				if (!portraitMamiAnnoyed.visible)
 				{
 					portraitMamiAnnoyed.visible = true;
@@ -302,6 +330,8 @@ class DialogueBox extends FlxSpriteGroup
 				portraitMamiHappy.visible = false;
 				portraitHomuraTalk.visible = false;
 				portraitBoyfriendNormal.visible = false;
+				portraitMamiHoly.visible = false;
+				portraitHomuraHurt.visible = false;
 				if (!portraitMamiConcern.visible)
 				{
 					portraitMamiConcern.visible = true;
@@ -319,6 +349,8 @@ class DialogueBox extends FlxSpriteGroup
 				portraitMamiConcern.visible = false;
 				portraitHomuraTalk.visible = false;
 				portraitBoyfriendNormal.visible = false;
+				portraitMamiHoly.visible = false;
+				portraitHomuraHurt.visible = false;
 				if (!portraitMamiHappy.visible)
 				{
 					portraitMamiHappy.visible = true;
@@ -330,6 +362,8 @@ class DialogueBox extends FlxSpriteGroup
 				portraitMamiConcern.visible = false;
 				portraitMamiHappy.visible = false;
 				portraitBoyfriendNormal.visible = false;
+				portraitMamiHoly.visible = false;
+				portraitHomuraHurt.visible = false;
 				if (!portraitHomuraTalk.visible)
 				{
 					portraitHomuraTalk.visible = true;
@@ -343,9 +377,36 @@ class DialogueBox extends FlxSpriteGroup
 				portraitMamiConcern.visible = false;
 				portraitMamiHappy.visible = false;
 				portraitHomuraTalk.visible = false;
+				portraitMamiHoly.visible = false;
+				portraitHomuraHurt.visible = false;
 				if (!portraitBoyfriendNormal.visible)
 				{
 					portraitBoyfriendNormal.visible = true;
+				}
+			case 'mami-holy':
+				nameDialogue.text = 'Mami';
+				portraitMamiAnnoyed.visible = false;
+				portraitMamiConcern.visible = false;
+				portraitMamiHappy.visible = false;
+				portraitHomuraTalk.visible = false;
+				portraitBoyfriendNormal.visible = false;
+				portraitMamiHoly.visible = false;
+				portraitHomuraHurt.visible = false;
+				if (!portraitMamiHoly.visible)
+				{
+					portraitMamiHoly.visible = true;
+				}
+			case 'homura-hurt':
+				nameDialogue.text = 'Homura';
+				portraitMamiNormal.visible = false;
+				portraitMamiAnnoyed.visible = false;
+				portraitMamiConcern.visible = false;
+				portraitMamiHappy.visible = false;
+				portraitBoyfriendNormal.visible = false;
+				portraitMamiHoly.visible = false;
+				if (!portraitHomuraHurt.visible)
+				{
+					portraitHomuraHurt.visible = true;
 				}
 		}
 		if (ohName)
