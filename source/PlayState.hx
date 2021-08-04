@@ -592,6 +592,145 @@ class PlayState extends MusicBeatState
 						connectLight.active = false;
 						connectLight.alpha = 0.0;
 					}
+			case 'salvation': //its the same but i put it here for future implementation
+			{
+					defaultCamZoom = 0.7;
+					curStage = 'subway';
+					var bg:FlxSprite = new FlxSprite(-500, -500).loadGraphic(Paths.image('mami/BG/BGSky'));
+					bg.antialiasing = true;
+					bg.scrollFactor.set(0.9, 0.9);
+					bg.active = false;
+					add(bg);
+
+					var trainSubway:FlxSprite = new FlxSprite(-500, -100).loadGraphic(Paths.image('mami/BG/BGTrain', 'shared'));
+					trainSubway.updateHitbox();
+					trainSubway.antialiasing = true;
+					trainSubway.scrollFactor.set(0.9, 0.9);
+					trainSubway.active = false;
+					add(trainSubway);
+
+					var stageFront:FlxSprite = new FlxSprite(-500, 600).loadGraphic(Paths.image('mami/BG/BGFloor', 'shared'));
+					stageFront.updateHitbox();
+					stageFront.antialiasing = true;
+					stageFront.scrollFactor.set(0.9, 0.9);
+					stageFront.active = false;
+					add(stageFront);
+
+					var lampsSubway:FlxSprite = new FlxSprite(-500, -400).loadGraphic(Paths.image('mami/BG/BGLamps', 'shared'));
+					lampsSubway.updateHitbox();
+					lampsSubway.antialiasing = true;
+					lampsSubway.scrollFactor.set(0.9, 0.9);
+					lampsSubway.active = false;
+					add(lampsSubway);
+
+					var lampsLeft:FlxSprite = new FlxSprite(-500, -400).loadGraphic(Paths.image('mami/BG/BGLampLights', 'shared'));
+					lampsLeft.updateHitbox();
+					lampsLeft.antialiasing = true;
+					lampsLeft.scrollFactor.set(0.9, 0.9);
+					lampsLeft.active = false;
+					add(lampsLeft);
+
+					var weebGorl:FlxSprite = new FlxSprite(-530, -20).loadGraphic(Paths.image('mami/BG/BGYes', 'shared'));
+					weebGorl.updateHitbox();
+					weebGorl.antialiasing = true;
+					weebGorl.scrollFactor.set(0.9, 0.9);
+					weebGorl.active = false;
+					add(weebGorl);	
+
+					var otherBGStuff:FlxSprite = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/BGRandomshit', 'shared'));
+					otherBGStuff.updateHitbox();
+					otherBGStuff.antialiasing = true;
+					otherBGStuff.scrollFactor.set(0.9, 0.9);
+					otherBGStuff.active = false;
+					add(otherBGStuff);				
+
+					gorls = new FlxSprite(-360, 150);
+					gorls.frames = Paths.getSparrowAtlas('mami/BG/BGGirlsDance', 'shared');
+					gorls.animation.addByPrefix('move', "girls dancing instance 1", 24, false);
+					gorls.antialiasing = true;
+					gorls.scrollFactor.set(0.9, 0.9);
+					gorls.updateHitbox();
+					gorls.active = true;
+					add(gorls);
+
+					connectLight = new FlxSprite(-350, 0).loadGraphic(Paths.image('mami/BG/connect_flash', 'shared'));
+					connectLight.setGraphicSize(Std.int(connectLight.width * 4));
+					connectLight.updateHitbox();
+					connectLight.antialiasing = true;
+					connectLight.scrollFactor.set(0, 0);
+					connectLight.active = false;
+					connectLight.alpha = 0.0;
+				}
+			case 'tetris': //its the same but i put it here for future implementation
+				{
+						defaultCamZoom = 0.7;
+						curStage = 'subway';
+						var bg:FlxSprite = new FlxSprite(-500, -500).loadGraphic(Paths.image('mami/BG/BGSky'));
+						bg.antialiasing = true;
+						bg.scrollFactor.set(0.9, 0.9);
+						bg.active = false;
+						add(bg);
+
+						var trainSubway:FlxSprite = new FlxSprite(-500, -100).loadGraphic(Paths.image('mami/BG/BGTrain', 'shared'));
+						trainSubway.updateHitbox();
+						trainSubway.antialiasing = true;
+						trainSubway.scrollFactor.set(0.9, 0.9);
+						trainSubway.active = false;
+						add(trainSubway);
+
+						var stageFront:FlxSprite = new FlxSprite(-500, 600).loadGraphic(Paths.image('mami/BG/BGFloor', 'shared'));
+						stageFront.updateHitbox();
+						stageFront.antialiasing = true;
+						stageFront.scrollFactor.set(0.9, 0.9);
+						stageFront.active = false;
+						add(stageFront);
+
+						var lampsSubway:FlxSprite = new FlxSprite(-500, -400).loadGraphic(Paths.image('mami/BG/BGLamps', 'shared'));
+						lampsSubway.updateHitbox();
+						lampsSubway.antialiasing = true;
+						lampsSubway.scrollFactor.set(0.9, 0.9);
+						lampsSubway.active = false;
+						add(lampsSubway);
+
+						var lampsLeft:FlxSprite = new FlxSprite(-500, -400).loadGraphic(Paths.image('mami/BG/BGLampLights', 'shared'));
+						lampsLeft.updateHitbox();
+						lampsLeft.antialiasing = true;
+						lampsLeft.scrollFactor.set(0.9, 0.9);
+						lampsLeft.active = false;
+						add(lampsLeft);
+
+						var weebGorl:FlxSprite = new FlxSprite(-530, -20).loadGraphic(Paths.image('mami/BG/BGYes', 'shared'));
+						weebGorl.updateHitbox();
+						weebGorl.antialiasing = true;
+						weebGorl.scrollFactor.set(0.9, 0.9);
+						weebGorl.active = false;
+						add(weebGorl);	
+
+						var otherBGStuff:FlxSprite = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/BGRandomshit', 'shared'));
+						otherBGStuff.updateHitbox();
+						otherBGStuff.antialiasing = true;
+						otherBGStuff.scrollFactor.set(0.9, 0.9);
+						otherBGStuff.active = false;
+						add(otherBGStuff);				
+
+						gorls = new FlxSprite(-360, 150);
+						gorls.frames = Paths.getSparrowAtlas('mami/BG/BGGirlsDance', 'shared');
+						gorls.animation.addByPrefix('move', "girls dancing instance 1", 24, false);
+						gorls.antialiasing = true;
+						gorls.scrollFactor.set(0.9, 0.9);
+						gorls.updateHitbox();
+						gorls.active = true;
+						add(gorls);
+
+						connectLight = new FlxSprite(-350, 0).loadGraphic(Paths.image('mami/BG/connect_flash', 'shared'));
+						connectLight.setGraphicSize(Std.int(connectLight.width * 4));
+						connectLight.updateHitbox();
+						connectLight.antialiasing = true;
+						connectLight.scrollFactor.set(0, 0);
+						connectLight.active = false;
+						connectLight.alpha = 0.0;
+					}
+
 			default:
 			{
 					defaultCamZoom = 0.9;
