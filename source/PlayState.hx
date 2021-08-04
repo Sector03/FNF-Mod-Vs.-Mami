@@ -592,10 +592,11 @@ class PlayState extends MusicBeatState
 						connectLight.active = false;
 						connectLight.alpha = 0.0;
 					}
-			case 'salvation': //its the same but i put it here for future implementation
+					
+			case 'salvation': //added some shit cuz yes, Sector gaming B))
 			{
 					defaultCamZoom = 0.7;
-					curStage = 'subway';
+					curStage = 'subway-holy';
 					var bg:FlxSprite = new FlxSprite(-500, -500).loadGraphic(Paths.image('mami/BG/BGSky'));
 					bg.antialiasing = true;
 					bg.scrollFactor.set(0.9, 0.9);
@@ -609,7 +610,7 @@ class PlayState extends MusicBeatState
 					trainSubway.active = false;
 					add(trainSubway);
 
-					var stageFront:FlxSprite = new FlxSprite(-500, 600).loadGraphic(Paths.image('mami/BG/BGFloor', 'shared'));
+					var stageFront:FlxSprite = new FlxSprite(-500, 600).loadGraphic(Paths.image('mami/BG/HOLY/HOLY_floor', 'shared'));
 					stageFront.updateHitbox();
 					stageFront.antialiasing = true;
 					stageFront.scrollFactor.set(0.9, 0.9);
@@ -630,14 +631,7 @@ class PlayState extends MusicBeatState
 					lampsLeft.active = false;
 					add(lampsLeft);
 
-					var weebGorl:FlxSprite = new FlxSprite(-530, -20).loadGraphic(Paths.image('mami/BG/BGYes', 'shared'));
-					weebGorl.updateHitbox();
-					weebGorl.antialiasing = true;
-					weebGorl.scrollFactor.set(0.9, 0.9);
-					weebGorl.active = false;
-					add(weebGorl);	
-
-					var otherBGStuff:FlxSprite = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/BGRandomshit', 'shared'));
+					var otherBGStuff:FlxSprite = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/HOLY/HOLY_objects', 'shared'));
 					otherBGStuff.updateHitbox();
 					otherBGStuff.antialiasing = true;
 					otherBGStuff.scrollFactor.set(0.9, 0.9);
@@ -678,7 +672,7 @@ class PlayState extends MusicBeatState
 						trainSubway.active = false;
 						add(trainSubway);
 
-						var stageFront:FlxSprite = new FlxSprite(-500, 600).loadGraphic(Paths.image('mami/BG/BGFloor', 'shared'));
+						var stageFront:FlxSprite = new FlxSprite(-500, 600).loadGraphic(Paths.image('mami/BG/HOLY/HOLY_floor', 'shared'));
 						stageFront.updateHitbox();
 						stageFront.antialiasing = true;
 						stageFront.scrollFactor.set(0.9, 0.9);
@@ -699,28 +693,14 @@ class PlayState extends MusicBeatState
 						lampsLeft.active = false;
 						add(lampsLeft);
 
-						var weebGorl:FlxSprite = new FlxSprite(-530, -20).loadGraphic(Paths.image('mami/BG/BGYes', 'shared'));
-						weebGorl.updateHitbox();
-						weebGorl.antialiasing = true;
-						weebGorl.scrollFactor.set(0.9, 0.9);
-						weebGorl.active = false;
-						add(weebGorl);	
 
-						var otherBGStuff:FlxSprite = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/BGRandomshit', 'shared'));
+						var otherBGStuff:FlxSprite = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/HOLY/HOLY_objects', 'shared'));
 						otherBGStuff.updateHitbox();
 						otherBGStuff.antialiasing = true;
 						otherBGStuff.scrollFactor.set(0.9, 0.9);
 						otherBGStuff.active = false;
 						add(otherBGStuff);				
 
-						gorls = new FlxSprite(-360, 150);
-						gorls.frames = Paths.getSparrowAtlas('mami/BG/BGGirlsDance', 'shared');
-						gorls.animation.addByPrefix('move', "girls dancing instance 1", 24, false);
-						gorls.antialiasing = true;
-						gorls.scrollFactor.set(0.9, 0.9);
-						gorls.updateHitbox();
-						gorls.active = true;
-						add(gorls);
 
 						connectLight = new FlxSprite(-350, 0).loadGraphic(Paths.image('mami/BG/connect_flash', 'shared'));
 						connectLight.setGraphicSize(Std.int(connectLight.width * 4));
@@ -798,7 +778,7 @@ class PlayState extends MusicBeatState
 			case 'mami':
 				dad.x -= 75;
 			case 'mami-holy':
-				camPos.x += 200;
+				camPos.x += -10;
 				dad.x -= 150;
 				dad.y -= 150;
 
@@ -887,7 +867,7 @@ class PlayState extends MusicBeatState
 				songPosBar = new FlxBar(songPosBG.x + 4, songPosBG.y + 4, LEFT_TO_RIGHT, Std.int(songPosBG.width - 8), Std.int(songPosBG.height - 8), this,
 					'songPositionBar', 0, 90000);
 				songPosBar.scrollFactor.set();
-				songPosBar.createFilledBar(FlxColor.GRAY, FlxColor.LIME);
+				songPosBar.createFilledBar(FlxColor.GRAY, FlxColor.YELLOW);
 				add(songPosBar);
 	
 				var songName = new FlxText(songPosBG.x + (songPosBG.width / 2) - 20,songPosBG.y,0,SONG.song, 16);
