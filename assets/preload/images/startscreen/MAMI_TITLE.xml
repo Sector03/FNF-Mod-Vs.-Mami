@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="MAMI_TITLE.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="MAMI_TITLE0000" x="2" y="2" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0001" x="2" y="2" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0002" x="713" y="2" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0003" x="713" y="2" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0004" x="2" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0005" x="2" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0006" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0007" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0008" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0009" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0010" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0011" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0012" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0013" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0014" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0015" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0016" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0017" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0018" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0019" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0020" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0021" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0022" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0023" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0024" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0025" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0026" x="713" y="716" width="709" height="712"/>
+	<SubTexture name="MAMI_TITLE0027" x="713" y="716" width="709" height="712"/>
+</TextureAtlas>

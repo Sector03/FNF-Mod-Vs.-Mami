@@ -119,16 +119,17 @@ class TitleState extends MusicBeatState
 		});
 		#end
 
-		bgFlash = new FlxSprite(0, 0).loadGraphic(Paths.image('bgFlash'));
+		bgFlash = new FlxSprite(0, 0).loadGraphic(Paths.image('startscreen/bgFlash'));
 		bgFlash.visible = true;
-		bgFlash.alpha = 0.0;
+		bgFlash.alpha = 0;
 		bgFlash.updateHitbox();
 		bgFlash.antialiasing = true;
 		add(bgFlash);
 	}
 
 	var logoBl:FlxSprite;
-	var gfDance:FlxSprite;
+	//var gfDance:FlxSprite;
+	var mamiTitle:FlxSprite;
 	var danceLeft:Bool = false;
 	var titleText:FlxSprite;
 	var bgFlash:FlxSprite;
@@ -168,19 +169,27 @@ class TitleState extends MusicBeatState
 		logoBl = new FlxSprite(-150, -45);
 		logoBl.frames = Paths.getSparrowAtlas('mamilogo');
 		logoBl.antialiasing = true;
-		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24);
+		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
 		logoBl.animation.play('bump');
 		logoBl.updateHitbox();
-		// logoBl.screenCenter();
-		// logoBl.color = FlxColor.BLACK;
-
-		gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
-		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
-		gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-		gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-		gfDance.antialiasing = true;
-		add(gfDance);
 		add(logoBl);
+
+
+		//gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
+		//gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
+		//gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
+		//gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
+		//gfDance.antialiasing = true;
+		//add(gfDance);
+
+		mamiTitle = new FlxSprite(425, 50);
+		mamiTitle.frames = Paths.getSparrowAtlas('startscreen/MAMI_TITLE');
+		mamiTitle.antialiasing = true;
+		mamiTitle.animation.addByPrefix('idle', 'MAMI_TITLE', 24);
+		mamiTitle.setGraphicSize(Std.int(mamiTitle.width * 1.1));
+		mamiTitle.animation.play('idle');
+		mamiTitle.updateHitbox();
+		add(mamiTitle);
 
 		titleText = new FlxSprite(100, FlxG.height * 0.8);
 		titleText.frames = Paths.getSparrowAtlas('titleEnter');
@@ -254,7 +263,8 @@ class TitleState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		if (bgFlash.alpha >= .25)
-			bgFlash.alpha -= 0.003;
+			bgFlash.alpha -= 0.0035;
+		//might actually make the alpha a tween so it would be better on pc AND look better
 
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
@@ -391,15 +401,19 @@ class TitleState extends MusicBeatState
 	{
 		super.beatHit();
 
-		bgFlash.alpha += 0.3;
+		if (curBeat % 2 == 1)
+			{
+			bgFlash.alpha += 0.25;
+			logoBl.animation.play('bump');
+			}
 
-		logoBl.animation.play('bump');
-		danceLeft = !danceLeft;
 
-		if (danceLeft)
-			gfDance.animation.play('danceRight');
-		else
-			gfDance.animation.play('danceLeft');
+		//danceLeft = !danceLeft;
+
+		//if (danceLeft)
+		//	gfDance.animation.play('danceRight');
+		//else
+		//	gfDance.animation.play('danceLeft');
 
 		FlxG.log.add(curBeat);
 
@@ -470,7 +484,7 @@ class TitleState extends MusicBeatState
 		if (!skippedIntro)
 		{
 			remove(ngSpr);
-
+			bgFlash.alpha = 0.75;
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			remove(credGroup);
 			skippedIntro = true;
