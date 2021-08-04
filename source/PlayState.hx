@@ -658,6 +658,11 @@ class PlayState extends MusicBeatState
 				camPos.x += 400;
 			case 'mami':
 				dad.x -= 75;
+			case 'mami-holy':
+				camPos.x += 200;
+				dad.x -= 150;
+				dad.y -= 150;
+
 		}
 
 
@@ -765,7 +770,12 @@ class PlayState extends MusicBeatState
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
-		healthBar.createFilledBar(0xFFFFF6B3, 0xFF36A1BC);
+		if (SONG.player2 == "mami")
+			healthBar.createFilledBar(0xFFFFF6B3, 0xFF36A1BC);
+		else if (SONG.player2 == "mami-holy")
+			healthBar.createFilledBar(0xFFFDFFCF, 0xFF36A1BC);
+		else
+			healthBar.createFilledBar(0xFF969696, 0xFF36A1BC);
 		// healthBar
 		add(healthBar);
 

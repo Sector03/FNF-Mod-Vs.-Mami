@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Holy Mami.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="IDLE instance 10000" x="0" y="0" width="852" height="940" frameX="0" frameY="-5" frameWidth="853" frameHeight="945"/>
+	<SubTexture name="IDLE instance 10001" x="0" y="0" width="852" height="940" frameX="0" frameY="-5" frameWidth="853" frameHeight="945"/>
+	<SubTexture name="IDLE instance 10002" x="852" y="0" width="848" height="932" frameX="-5" frameY="-13" frameWidth="853" frameHeight="945"/>
+	<SubTexture name="IDLE instance 10003" x="852" y="0" width="848" height="932" frameX="-5" frameY="-13" frameWidth="853" frameHeight="945"/>
+	<SubTexture name="IDLE instance 10004" x="1700" y="0" width="847" height="933" frameX="-6" frameY="-12" frameWidth="853" frameHeight="945"/>
+	<SubTexture name="IDLE instance 10005" x="2547" y="0" width="846" height="933" frameX="-7" frameY="-12" frameWidth="853" frameHeight="945"/>
+	<SubTexture name="IDLE instance 10006" x="0" y="940" width="845" height="935" frameX="-7" frameY="-10" frameWidth="853" frameHeight="945"/>
+	<SubTexture name="IDLE instance 10007" x="845" y="940" width="845" height="935" frameX="-7" frameY="-10" frameWidth="853" frameHeight="945"/>
+	<SubTexture name="IDLE instance 10008" x="1690" y="940" width="845" height="942" frameX="-7" frameY="-3" frameWidth="853" frameHeight="945"/>
+	<SubTexture name="IDLE instance 10009" x="2535" y="940" width="845" height="942" frameX="-7" frameY="-3" frameWidth="853" frameHeight="945"/>
+	<SubTexture name="IDLE instance 10010" x="0" y="1882" width="845" height="945" frameX="-7" frameY="0" frameWidth="853" frameHeight="945"/>
+	<SubTexture name="IDLE instance 10011" x="845" y="1882" width="845" height="945" frameX="-7" frameY="0" frameWidth="853" frameHeight="945"/>
+	<SubTexture name="IDLE instance 10012" x="845" y="1882" width="845" height="945" frameX="-7" frameY="0" frameWidth="853" frameHeight="945"/>
+	<SubTexture name="IDLE instance 10013" x="845" y="1882" width="845" height="945" frameX="-7" frameY="0" frameWidth="853" frameHeight="945"/>
+</TextureAtlas>

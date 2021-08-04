@@ -141,6 +141,23 @@ class Character extends FlxSprite
 				addOffset("singDOWN", -10, -0);
 	
 				playAnim('idle');
+
+			case 'mami-holy': //these are PLACAEHOLDER
+				tex = Paths.getSparrowAtlas('characters/Holy Mami','shared');
+				frames = tex;
+				animation.addByPrefix('idle', 'IDLE instance 1', 24);
+				animation.addByPrefix('singUP', 'IDLE instance 1', 24);
+				animation.addByPrefix('singRIGHT', 'IDLE instance 1', 24);
+				animation.addByPrefix('singDOWN', 'IDLE instance 1', 24);
+				animation.addByPrefix('singLEFT', 'IDLE instance 1', 24);
+
+				addOffset('idle', -80, -25);
+				addOffset("singUP", -80, -25);
+				addOffset("singRIGHT", -80, -25);
+				addOffset("singLEFT", -80, -25);
+				addOffset("singDOWN", -80, -25);
+	
+				playAnim('idle');	
 		}
 
 		dance();
