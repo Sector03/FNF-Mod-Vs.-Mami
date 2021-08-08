@@ -523,7 +523,7 @@ class PlayState extends MusicBeatState
 
 		switch(SONG.song.toLowerCase())
 		{
-			case 'connect':
+			case 'connect' | 'tetris':
 				{
 						defaultCamZoom = 0.7;
 						curStage = 'subway';
@@ -655,61 +655,6 @@ class PlayState extends MusicBeatState
 					connectLight.active = false;
 					connectLight.alpha = 0.0;
 				}
-			case 'tetris': //its the same but i put it here for future implementation
-				{
-						defaultCamZoom = 0.7;
-						curStage = 'subway';
-						var bg:FlxSprite = new FlxSprite(-500, -500).loadGraphic(Paths.image('mami/BG/BGSky'));
-						bg.antialiasing = true;
-						bg.scrollFactor.set(0.9, 0.9);
-						bg.active = false;
-						add(bg);
-
-						var trainSubway:FlxSprite = new FlxSprite(-500, -100).loadGraphic(Paths.image('mami/BG/BGTrain', 'shared'));
-						trainSubway.updateHitbox();
-						trainSubway.antialiasing = true;
-						trainSubway.scrollFactor.set(0.9, 0.9);
-						trainSubway.active = false;
-						add(trainSubway);
-
-						var stageFront:FlxSprite = new FlxSprite(-500, 600).loadGraphic(Paths.image('mami/BG/HOLY/HOLY_floor', 'shared'));
-						stageFront.updateHitbox();
-						stageFront.antialiasing = true;
-						stageFront.scrollFactor.set(0.9, 0.9);
-						stageFront.active = false;
-						add(stageFront);
-
-						var lampsSubway:FlxSprite = new FlxSprite(-500, -400).loadGraphic(Paths.image('mami/BG/BGLamps', 'shared'));
-						lampsSubway.updateHitbox();
-						lampsSubway.antialiasing = true;
-						lampsSubway.scrollFactor.set(0.9, 0.9);
-						lampsSubway.active = false;
-						add(lampsSubway);
-
-						var lampsLeft:FlxSprite = new FlxSprite(-500, -400).loadGraphic(Paths.image('mami/BG/BGLampLights', 'shared'));
-						lampsLeft.updateHitbox();
-						lampsLeft.antialiasing = true;
-						lampsLeft.scrollFactor.set(0.9, 0.9);
-						lampsLeft.active = false;
-						add(lampsLeft);
-
-
-						var otherBGStuff:FlxSprite = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/HOLY/HOLY_objects', 'shared'));
-						otherBGStuff.updateHitbox();
-						otherBGStuff.antialiasing = true;
-						otherBGStuff.scrollFactor.set(0.9, 0.9);
-						otherBGStuff.active = false;
-						add(otherBGStuff);				
-
-
-						connectLight = new FlxSprite(-350, 0).loadGraphic(Paths.image('mami/BG/connect_flash', 'shared'));
-						connectLight.setGraphicSize(Std.int(connectLight.width * 4));
-						connectLight.updateHitbox();
-						connectLight.antialiasing = true;
-						connectLight.scrollFactor.set(0, 0);
-						connectLight.active = false;
-						connectLight.alpha = 0.0;
-					}
 
 			default:
 			{
@@ -2426,6 +2371,13 @@ class PlayState extends MusicBeatState
 								altAnim = '-alt';
 						}
 	
+						if (curSong == 'Tetris')
+							{
+								health -= 0.0125;
+								FlxG.camera.shake(0.005, 0.25);
+								camHUD.shake(0.0005, 0.25);
+							}
+
 						switch (Math.abs(daNote.noteData))
 						{
 							case 2:
@@ -3230,7 +3182,8 @@ class PlayState extends MusicBeatState
 							{
 								FlxG.sound.play(Paths.sound('MAMI_shoot','shared'));
 								boyfriend.playAnim('dodge', true); //its just here i will make it work propperly tomorrow or smth
-								FlxG.camera.shake(0.02, 0.2);
+								FlxG.camera.shake(0.01, 0.4);
+								camHUD.shake(0.025, 0.4);
 							}
 						daNote.kill();
 						notes.remove(daNote, true);
