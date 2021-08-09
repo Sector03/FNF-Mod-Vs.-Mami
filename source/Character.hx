@@ -158,6 +158,24 @@ class Character extends FlxSprite
 				addOffset("singDOWN", -80, -25);
 	
 				playAnim('idle');	
+
+			case 'mami-tetris':
+				tex = Paths.getSparrowAtlas('characters/Mami Tetris','shared');
+				frames = tex;
+				animation.addByPrefix('idle', 'Mami IDLE', 24);
+				animation.addByPrefix('singUP', 'Mami UP', 24);
+				animation.addByPrefix('singRIGHT', 'Mami RIGHT', 24);
+				animation.addByPrefix('singDOWN', 'Mami DOWN', 24);
+				animation.addByPrefix('singLEFT', 'Mami LEFT', 24);
+	
+				addOffset('idle');
+				addOffset("singUP", -6, 0);
+				addOffset("singRIGHT", 0, -3);
+				addOffset("singLEFT", -30, 0);
+				addOffset("singDOWN", -10, -0);
+	
+				playAnim('idle');
+	
 		}
 
 		dance();

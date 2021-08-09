@@ -27,6 +27,7 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.FlxSubState;
+import flixel.effects.FlxFlicker;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.effects.FlxTrail;
 import flixel.addons.effects.FlxTrailArea;
@@ -124,6 +125,8 @@ class PlayState extends MusicBeatState
 
 	private var gfSpeed:Int = 1;
 	private var health:Float = 1;
+	private var maxhealth:Float = 1;
+	private var healthcap:Float = 0;
 	private var combo:Int = 0;
 	public static var misses:Int = 0;
 	private var accuracy:Float = 0.00;
@@ -487,6 +490,8 @@ class PlayState extends MusicBeatState
 
 		FlxCamera.defaultCameras = [camGame];
 
+		FlxG.camera.setFilters([]);
+
 		persistentUpdate = true;
 		persistentDraw = true;
 
@@ -722,6 +727,8 @@ class PlayState extends MusicBeatState
 				camPos.x += 400;
 			case 'mami':
 				dad.x -= 75;
+			case 'mami-tetris':
+				dad.x -= 75;
 			case 'mami-holy':
 				camPos.x += -10;
 				dad.x -= 150;
@@ -834,7 +841,7 @@ class PlayState extends MusicBeatState
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
-		if (SONG.player2 == "mami")
+		if (SONG.player2 == "mami" || SONG.player2 == "mami-tetris")
 			healthBar.createFilledBar(0xFFFFF6B3, 0xFF36A1BC);
 		else if (SONG.player2 == "mami-holy")
 			healthBar.createFilledBar(0xFFFDFFCF, 0xFF36A1BC);
@@ -2024,11 +2031,13 @@ class PlayState extends MusicBeatState
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
 		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
 
-		if (health > 2)
-			health = 2;
+		if (health > maxhealth)
+			health = maxhealth;
 
 		if (health < -0.1)
 			health = 0;
+
+		maxhealth = 2 - healthcap;
 
 		if (healthBar.percent < 20)
 			iconP1.animation.curAnim.curFrame = 1;
@@ -2374,8 +2383,8 @@ class PlayState extends MusicBeatState
 						if (curSong == 'Tetris')
 							{
 								health -= 0.0125;
-								FlxG.camera.shake(0.005, 0.25);
-								camHUD.shake(0.0005, 0.25);
+								//FlxG.camera.shake(0.005, 0.25);
+								camHUD.shake(0.0010, 0.25);
 							}
 
 						switch (Math.abs(daNote.noteData))
@@ -2609,6 +2618,55 @@ class PlayState extends MusicBeatState
 	var timeShown = 0;
 	var currentTimingShown:FlxText = null;
 
+	//tetris blockage bugs that i know and will prob fix tomorrow
+	//pausing during a blockage will keep the blockage timer going and disappear
+	//tetris block isn't going to the right spot then where its supposed to do (ex: a blockage of 20 happens and it would end up on 20% of the bar on the right when its supposed to be other way)
+
+	public function tetrisblockage(percentageBlockage:Int, duration:Int, instant:Bool = false)
+		{
+			var tetrisBlockagePiece:FlxSprite = new FlxSprite(0, -1080).loadGraphic(Paths.image('tetris/health_blockage'));
+			tetrisBlockagePiece.cameras = [camHUD];
+			tetrisBlockagePiece.antialiasing = false;
+
+			tetrisBlockagePiece.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(percentageBlockage, 0, 100, 100, 0) * 0.01)) - 80;
+			tetrisBlockagePiece.y = -720;
+			tetrisBlockagePiece.setGraphicSize(Std.int(tetrisBlockagePiece.width * 0.075));
+
+			add(tetrisBlockagePiece);
+
+			if(!instant)
+				tetrisBlockagePiece.y = -1080;
+				FlxG.sound.play(Paths.sound('tetris/hpblockage_spawn','shared'));
+				FlxFlicker.flicker(tetrisBlockagePiece, 1, 0.2, true);
+				new FlxTimer().start(1, function(tmr:FlxTimer) //ik this is ugly but it works lol
+					{
+						tetrisBlockagePiece.y += 75;
+						FlxG.sound.play(Paths.sound('tetris/hpblockage_move','shared'));
+						new FlxTimer().start(.15, function(tmr:FlxTimer)
+							{
+								tetrisBlockagePiece.y += 75;
+								FlxG.sound.play(Paths.sound('tetris/hpblockage_move','shared'));
+							},11);
+					},1);
+				new FlxTimer().start(2.65, function(tmr:FlxTimer)
+					{
+						camHUD.shake(0.002, 0.5);
+						FlxG.sound.play(Paths.sound('tetris/hpblockage_thud','shared'));
+						healthcap = (percentageBlockage / 50);
+						tetrisBlockagePiece.y += 15;
+						//tetrisBlockagePiece.y = -100;
+					},1);
+
+
+			if(!instant)
+				new FlxTimer().start(duration + 2.65, function(tmr:FlxTimer)
+					{
+						FlxG.sound.play(Paths.sound('tetris/hpblockage_clear','shared'));
+						remove(tetrisBlockagePiece);
+						healthcap = 0;
+					},1);
+		}
+
 	public function healthbarshake()
 		{
 		new FlxTimer().start(0.01, function(tmr:FlxTimer)
@@ -2713,7 +2771,7 @@ class PlayState extends MusicBeatState
 					goods++;
 					if (FlxG.save.data.kadeEngineOldHealthSystem)
 						{
-						if (health < 2)
+						if (health < maxhealth)
 							health += 0.04;
 						}
 
@@ -2723,12 +2781,12 @@ class PlayState extends MusicBeatState
 				case 'sick':
 					if (FlxG.save.data.kadeEngineOldHealthSystem)
 						{
-						if (health < 2)
+						if (health < maxhealth)
 							health += 0.04;
 						}
 					else
 						{
-						if (health < 2)
+						if (health < maxhealth)
 							health += 0.1;
 						}
 
@@ -3779,8 +3837,17 @@ class PlayState extends MusicBeatState
 					}
 			}
 
-
-			
+		if (curSong == 'Tetris') 
+			{
+				switch (curBeat)
+				{
+					case 8:
+						tetrisblockage(50, 5, false);
+					case 93:
+						tetrisblockage(25, 6, false);
+				}
+			}
+		
 		switch (curStage)
 		{
 			case 'subway':

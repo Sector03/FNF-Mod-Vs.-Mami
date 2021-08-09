@@ -1,5 +1,6 @@
 package;
 
+import webm.WebmPlayer;
 import openfl.display.BlendMode;
 import openfl.text.TextFormat;
 import openfl.display.Application;
@@ -58,6 +59,8 @@ class Main extends Sprite
 
 		setupGame();
 	}
+
+	public static var webmHandler:WebmHandler;
 
 	private function setupGame():Void
 	{
