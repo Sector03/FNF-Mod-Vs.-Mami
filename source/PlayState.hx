@@ -125,6 +125,7 @@ class PlayState extends MusicBeatState
 
 	private var gfSpeed:Int = 1;
 	private var health:Float = 1;
+	private var notehealthdmg:Float = 0.00;
 	private var maxhealth:Float = 1;
 	private var healthcap:Float = 0;
 	private var combo:Int = 0;
@@ -427,6 +428,7 @@ class PlayState extends MusicBeatState
 		repReleases = 0;
 
 		holyMisses = 1;
+		notehealthdmg = 0;
 
 		#if sys
 		executeModchart = FileSystem.exists(Paths.lua(PlayState.SONG.song.toLowerCase()  + "/modchart"));
@@ -528,7 +530,7 @@ class PlayState extends MusicBeatState
 
 		switch(SONG.song.toLowerCase())
 		{
-			case 'connect' | 'tetris':
+			case 'connect':
 				{
 						defaultCamZoom = 0.7;
 						curStage = 'subway';
@@ -597,6 +599,76 @@ class PlayState extends MusicBeatState
 						connectLight.active = false;
 						connectLight.alpha = 0.0;
 					}
+
+			case 'tetris':
+				{
+						defaultCamZoom = 0.7;
+						curStage = 'subway-tetris';
+						var bg:FlxSprite = new FlxSprite(-500, -500).loadGraphic(Paths.image('mami/BG/BGSky'));
+						bg.antialiasing = true;
+						bg.scrollFactor.set(0.9, 0.9);
+						bg.active = false;
+						add(bg);
+
+						var trainSubway:FlxSprite = new FlxSprite(-500, -100).loadGraphic(Paths.image('mami/BG/BGTrain', 'shared'));
+						trainSubway.updateHitbox();
+						trainSubway.antialiasing = true;
+						trainSubway.scrollFactor.set(0.9, 0.9);
+						trainSubway.active = false;
+						add(trainSubway);
+
+						var stageFront:FlxSprite = new FlxSprite(-500, 600).loadGraphic(Paths.image('mami/BG/BGFloor', 'shared'));
+						stageFront.updateHitbox();
+						stageFront.antialiasing = true;
+						stageFront.scrollFactor.set(0.9, 0.9);
+						stageFront.active = false;
+						add(stageFront);
+
+						var lampsSubway:FlxSprite = new FlxSprite(-500, -400).loadGraphic(Paths.image('mami/BG/BGLamps', 'shared'));
+						lampsSubway.updateHitbox();
+						lampsSubway.antialiasing = true;
+						lampsSubway.scrollFactor.set(0.9, 0.9);
+						lampsSubway.active = false;
+						add(lampsSubway);
+
+						var lampsLeft:FlxSprite = new FlxSprite(-500, -400).loadGraphic(Paths.image('mami/BG/BGLampLights', 'shared'));
+						lampsLeft.updateHitbox();
+						lampsLeft.antialiasing = true;
+						lampsLeft.scrollFactor.set(0.9, 0.9);
+						lampsLeft.active = false;
+						add(lampsLeft);
+
+						var weebGorl:FlxSprite = new FlxSprite(-530, -20).loadGraphic(Paths.image('mami/BG/BGYes', 'shared'));
+						weebGorl.updateHitbox();
+						weebGorl.antialiasing = true;
+						weebGorl.scrollFactor.set(0.9, 0.9);
+						weebGorl.active = false;
+						add(weebGorl);	
+
+						var otherBGStuff:FlxSprite = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/BGRandomshit', 'shared'));
+						otherBGStuff.updateHitbox();
+						otherBGStuff.antialiasing = true;
+						otherBGStuff.scrollFactor.set(0.9, 0.9);
+						otherBGStuff.active = false;
+						add(otherBGStuff);				
+
+						gorls = new FlxSprite(-360, 150);
+						gorls.frames = Paths.getSparrowAtlas('mami/BG/BGGirlsDance', 'shared');
+						gorls.animation.addByPrefix('move', "girls dancing instance 1", 24, false);
+						gorls.antialiasing = true;
+						gorls.scrollFactor.set(0.9, 0.9);
+						gorls.updateHitbox();
+						gorls.active = true;
+						add(gorls);
+
+						connectLight = new FlxSprite(-350, 0).loadGraphic(Paths.image('mami/BG/connect_flash', 'shared'));
+						connectLight.setGraphicSize(Std.int(connectLight.width * 4));
+						connectLight.updateHitbox();
+						connectLight.antialiasing = true;
+						connectLight.scrollFactor.set(0, 0);
+						connectLight.active = false;
+						connectLight.alpha = 0.0;
+					}		
 					
 			case 'salvation': //added some shit cuz yes, Sector gaming B))
 			{
@@ -744,6 +816,9 @@ class PlayState extends MusicBeatState
 		switch (curStage)
 		{
 			case 'subway':
+				boyfriend.x += 80;
+				boyfriend.y += 40;
+			case 'subway-tetris':
 				boyfriend.x += 80;
 				boyfriend.y += 40;
 		}
@@ -1645,11 +1720,50 @@ class PlayState extends MusicBeatState
 							babyArrow.animation.add('confirm', [15, 19], 24, false);
 					}
 
+				case 'subway-tetris':
+					if(FlxG.save.data.arrowColorCustom)
+						babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets_tetris'); //make alt version later
+					else
+						babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets_tetris');
+
+					babyArrow.animation.addByPrefix('green', 'arrowUP');
+					babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
+					babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
+					babyArrow.animation.addByPrefix('red', 'arrowRIGHT');
+
+					babyArrow.antialiasing = true;
+					babyArrow.setGraphicSize(Std.int(babyArrow.width * 0.7));
+
+					switch (Math.abs(i))
+					{
+						case 0:
+							babyArrow.x += Note.swagWidth * 0;
+							babyArrow.animation.addByPrefix('static', 'arrowLEFT');
+							babyArrow.animation.addByPrefix('pressed', 'left press', 24, false);
+							babyArrow.animation.addByPrefix('confirm', 'left confirm', 24, false);
+						case 1:
+							babyArrow.x += Note.swagWidth * 1;
+							babyArrow.animation.addByPrefix('static', 'arrowDOWN');
+							babyArrow.animation.addByPrefix('pressed', 'down press', 24, false);
+							babyArrow.animation.addByPrefix('confirm', 'down confirm', 24, false);
+						case 2:
+							babyArrow.x += Note.swagWidth * 2;
+							babyArrow.animation.addByPrefix('static', 'arrowUP');
+							babyArrow.animation.addByPrefix('pressed', 'up press', 24, false);
+							babyArrow.animation.addByPrefix('confirm', 'up confirm', 24, false);
+						case 3:
+							babyArrow.x += Note.swagWidth * 3;
+							babyArrow.animation.addByPrefix('static', 'arrowRIGHT');
+							babyArrow.animation.addByPrefix('pressed', 'right press', 24, false);
+							babyArrow.animation.addByPrefix('confirm', 'right confirm', 24, false);
+					}
+
 				default:
 					if(FlxG.save.data.arrowColorCustom)
 						babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets-alt');
 					else
 						babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets');
+
 					babyArrow.animation.addByPrefix('green', 'arrowUP');
 					babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
 					babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
@@ -2382,9 +2496,10 @@ class PlayState extends MusicBeatState
 	
 						if (curSong == 'Tetris')
 							{
-								health -= 0.0125;
+								health -= notehealthdmg;
+								trace (notehealthdmg);
 								//FlxG.camera.shake(0.005, 0.25);
-								camHUD.shake(0.0010, 0.25);
+								camHUD.shake((notehealthdmg / 10), 0.25);
 							}
 
 						switch (Math.abs(daNote.noteData))
@@ -2628,7 +2743,7 @@ class PlayState extends MusicBeatState
 			tetrisBlockagePiece.cameras = [camHUD];
 			tetrisBlockagePiece.antialiasing = false;
 
-			tetrisBlockagePiece.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(percentageBlockage, 0, 100, 100, 0) * 0.01)) - 80;
+			tetrisBlockagePiece.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(100 - percentageBlockage, 0, 100, 100, 0) * 0.01)) - 240;
 			tetrisBlockagePiece.y = -720;
 			tetrisBlockagePiece.setGraphicSize(Std.int(tetrisBlockagePiece.width * 0.075));
 
@@ -3778,6 +3893,24 @@ class PlayState extends MusicBeatState
 			camHUD.zoom += 0.03;
 		}
 
+		if (curSong.toLowerCase() == 'tetris' && curBeat >= 162 && curBeat < 176 && camZooming && FlxG.camera.zoom < 1.35)
+			{
+				FlxG.camera.zoom += 0.02;
+				camHUD.zoom += 0.05;
+			}
+
+		if (curSong.toLowerCase() == 'tetris' && curBeat >= 287 && curBeat < 305 && camZooming && FlxG.camera.zoom < 1.35)
+			{
+				FlxG.camera.zoom += 0.02;
+				camHUD.zoom += 0.05;
+			}
+
+		if (curSong.toLowerCase() == 'tetris' && curBeat >= 305 && curBeat < 320 && camZooming && FlxG.camera.zoom < 1.35)
+			{
+				FlxG.camera.zoom += 0.025;
+				camHUD.zoom += 0.060;
+			}
+
 		if (camZooming && FlxG.camera.zoom < 1.35 && curBeat % 4 == 0)
 		{
 			FlxG.camera.zoom += 0.015;
@@ -3841,10 +3974,25 @@ class PlayState extends MusicBeatState
 			{
 				switch (curBeat)
 				{
-					case 8:
-						tetrisblockage(50, 5, false);
-					case 93:
-						tetrisblockage(25, 6, false);
+					case 1:
+						notehealthdmg = 0.0125;
+
+					case 28:
+						tetrisblockage(50, 6, false);
+					case 96:
+						notehealthdmg = 0.015;
+					case 111:
+						notehealthdmg = 0.0125;
+					case 163:
+						notehealthdmg = 0.02;
+					case 168:
+						notehealthdmg = 0.0125;	
+					case 169:
+						tetrisblockage(30, 8, false);	
+					case 281:
+						tetrisblockage(45, 14, false);	
+					case 362:
+						tetrisblockage(50, 26, false);	
 				}
 			}
 		
