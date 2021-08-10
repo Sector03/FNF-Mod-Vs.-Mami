@@ -3991,6 +3991,10 @@ class PlayState extends MusicBeatState
 						tetrisblockage(30, 8, false);	
 					case 281:
 						tetrisblockage(45, 14, false);	
+					case 354:
+						notehealthdmg = 0.02;	
+					case 360:
+						notehealthdmg = 0.0150;	
 					case 362:
 						tetrisblockage(50, 26, false);	
 				}
