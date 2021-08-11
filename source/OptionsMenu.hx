@@ -43,6 +43,12 @@ class OptionsMenu extends MusicBeatState
 			new NPSDisplayOption("Shows your current Notes Per Second."),
 			new ArrowColors("Toggle between Vanilla or modifyed arrow colors.")
 		]),
+
+		new OptionCatagory("Language", [
+			new LangoEnglish("Use ENGLISH as the in-game dialogue language."),
+			new LangoSpanish("Use SPANISH as the in-game dialogue language."),
+			new LangoRussian("Use RUSSIAN as the in-game dialogue language.")
+		]),
 		
 		new OptionCatagory("Misc", [
 			#if desktop

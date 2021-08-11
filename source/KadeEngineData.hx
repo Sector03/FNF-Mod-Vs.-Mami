@@ -69,6 +69,15 @@ class KadeEngineData
 		if (FlxG.save.data.resetButton == null)
 			FlxG.save.data.resetButton = true;
 
+		if (FlxG.save.data.langoEnglish == null)
+			FlxG.save.data.langoEnglish = true;
+
+		if (FlxG.save.data.langoSpanish == null)
+			FlxG.save.data.langoSpanish = false;
+
+		if (FlxG.save.data.langoRussian == null)
+			FlxG.save.data.langoRussian = false;
+
 		Conductor.recalculateTimings();
 
 		Main.watermarks = FlxG.save.data.watermark;

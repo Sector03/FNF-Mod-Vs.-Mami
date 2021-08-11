@@ -551,3 +551,75 @@ class ResetButton extends Option
 		return "R To Reset " + (!FlxG.save.data.resetButton ? "Off" : "On");
 	}
 }
+
+class LangoEnglish extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.langoEnglish = true;
+		FlxG.save.data.langoSpanish = false;
+		FlxG.save.data.langoRussian = false;
+		display = updateDisplay();
+		return true;
+		FlxG.switchState(new MainMenuState());
+	}
+
+	private override function updateDisplay():String
+	{
+		return "English " + (!FlxG.save.data.langoEnglish ? " " : "Current");
+	}
+}
+
+class LangoSpanish extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.langoEnglish = false;
+		FlxG.save.data.langoSpanish = true;
+		FlxG.save.data.langoRussian = false;
+		display = updateDisplay();
+		return true;
+		FlxG.switchState(new MainMenuState());
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Spanish " + (!FlxG.save.data.langoSpanish ? " " : "Current");
+	}
+}
+
+class LangoRussian extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.langoEnglish = false;
+		FlxG.save.data.langoSpanish = false;
+		FlxG.save.data.langoRussian = true;
+		display = updateDisplay();
+		return true;
+		FlxG.switchState(new MainMenuState());
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Russian " + (!FlxG.save.data.langoRussian ? " " : "Current");
+	}
+}

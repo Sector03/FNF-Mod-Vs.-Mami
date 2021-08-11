@@ -230,6 +230,40 @@ class DialogueBox extends FlxSpriteGroup
 
 		dialogueOpened = true;
 
+		if (FlxG.keys.justPressed.ESCAPE && dialogueStarted == true)
+			{
+				isEnding = true;
+
+				if (PlayState.SONG.song.toLowerCase() == 'connect')
+					FlxG.sound.music.fadeOut(2.2, 0);
+
+				new FlxTimer().start(0.2, function(tmr:FlxTimer)
+				{
+					box.alpha -= 1 / 5;
+					bgFade.alpha -= 1 / 5 * 0.7;
+					portraitMamiNormal.visible = false;
+					portraitMamiAnnoyed.visible = false;
+					portraitMamiConcern.visible = false;
+					portraitMamiHappy.visible = false;
+					portraitHomuraTalk.visible = false;
+					portraitBoyfriendNormal.visible = false;
+					portraitMamiHoly.visible = false;
+					portraitHomuraHurt.visible = false;
+					arrowShadow.visible = false;
+					arrowDio.visible = false;
+					nameDialogue.visible = false;
+					swagDialogue.alpha -= 1 / 5;
+					dropText.alpha = swagDialogue.alpha;
+				}, 5);
+
+				new FlxTimer().start(1.2, function(tmr:FlxTimer)
+				{
+					finishThing();
+					kill();
+			});
+		}
+				
+
 		if (FlxG.keys.justPressed.ENTER && dialogueStarted == true)
 		{
 			remove(dialogue);
@@ -242,7 +276,7 @@ class DialogueBox extends FlxSpriteGroup
 				{
 					isEnding = true;
 
-					if (PlayState.SONG.song.toLowerCase() == 'senpai' || PlayState.SONG.song.toLowerCase() == 'thorns')
+					if (PlayState.SONG.song.toLowerCase() == 'connect')
 						FlxG.sound.music.fadeOut(2.2, 0);
 
 					new FlxTimer().start(0.2, function(tmr:FlxTimer)

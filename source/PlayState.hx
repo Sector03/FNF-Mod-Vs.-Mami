@@ -525,7 +525,12 @@ class PlayState extends MusicBeatState
 					"Only then I will even CONSIDER letting you\ndate my daughter!"
 				];
 			case 'connect':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('connect/ENG_connectdio'));
+				if (FlxG.save.data.langoEnglish)
+					dialogue = CoolUtil.coolTextFile(Paths.txt('connect/ENG_connectdio'));
+				else if (FlxG.save.data.langoSpanish)
+					dialogue = CoolUtil.coolTextFile(Paths.txt('connect/SPA_connectdio'));
+				else if (FlxG.save.data.langoRussian)
+					dialogue = CoolUtil.coolTextFile(Paths.txt('connect/RUS_connectdio'));
 		}
 
 		switch(SONG.song.toLowerCase())
@@ -2496,10 +2501,28 @@ class PlayState extends MusicBeatState
 	
 						if (curSong == 'Tetris')
 							{
-								health -= notehealthdmg;
-								trace (notehealthdmg);
+								if (health > 0.2) //do normal notehealthdmg if you are above 20% health (defeat icon starts at 20% for reference btw)
+									if (daNote.isSustainNote)
+										{
+											health -= notehealthdmg / 1.1;
+										}
+									else
+										{
+											health -= notehealthdmg;
+										}
+								else if (health < 0.20 || storyDifficulty == 0) //EASY near death resistance / damage divided by 1.30
+									if (health > 0.02) //makes it where the player cannot die from the health drain
+										health -= notehealthdmg / 1.30;
+								else if (health < 0.20 || storyDifficulty == 1) //NORMAL near death resistance / damage divided by 1.15
+									health -= notehealthdmg / 1.15;
+								else if (health < 0.20 || storyDifficulty == 2) //HARD near death resistance / damage divided by 1.02
+									health -= notehealthdmg / 1.02;
+								else if (health < 0.20 || storyDifficulty == 3) //HOLY no near death resistance
+									health -= notehealthdmg;
+
+								//trace (notehealthdmg);
 								//FlxG.camera.shake(0.005, 0.25);
-								camHUD.shake((notehealthdmg / 10), 0.25);
+								camHUD.shake((notehealthdmg / 7.5), 0.25);
 							}
 
 						switch (Math.abs(daNote.noteData))
@@ -3970,15 +3993,43 @@ class PlayState extends MusicBeatState
 					}
 			}
 
-		if (curSong == 'Tetris') 
+		if (curSong == 'Tetris' && storyDifficulty == 1) //Tetris NORMAL events
+			{
+				switch (curBeat)
+				{
+					case 1:
+						notehealthdmg = 0.01;
+					case 28:
+						tetrisblockage(50, 6, false);
+					case 96:
+						notehealthdmg = 0.0125;
+					case 111:
+						notehealthdmg = 0.01;
+					case 163:
+						notehealthdmg = 0.0125;
+					case 168:
+						notehealthdmg = 0.01;	
+					case 169:
+						tetrisblockage(30, 8, false);	
+					case 281:
+						tetrisblockage(45, 14, false);	
+					case 354:
+						notehealthdmg = 0.015;	
+					case 360:
+						notehealthdmg = 0.01;	
+					case 362:
+						tetrisblockage(50, 26, false);	
+				}
+			}
+
+		if (curSong == 'Tetris' && storyDifficulty == 2) //Tetris HARD events
 			{
 				switch (curBeat)
 				{
 					case 1:
 						notehealthdmg = 0.0125;
-
 					case 28:
-						tetrisblockage(50, 6, false);
+						tetrisblockage(70, 6, false);
 					case 96:
 						notehealthdmg = 0.015;
 					case 111:
@@ -3988,15 +4039,15 @@ class PlayState extends MusicBeatState
 					case 168:
 						notehealthdmg = 0.0125;	
 					case 169:
-						tetrisblockage(30, 8, false);	
+						tetrisblockage(40, 12, false);	
 					case 281:
-						tetrisblockage(45, 14, false);	
+						tetrisblockage(55, 17, false);	
 					case 354:
 						notehealthdmg = 0.02;	
 					case 360:
 						notehealthdmg = 0.0150;	
 					case 362:
-						tetrisblockage(50, 26, false);	
+						tetrisblockage(70, 30, false);	
 				}
 			}
 		
