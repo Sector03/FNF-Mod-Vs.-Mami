@@ -78,6 +78,9 @@ class KadeEngineData
 		if (FlxG.save.data.langoRussian == null)
 			FlxG.save.data.langoRussian = false;
 
+		if (FlxG.save.data.tickets == null)
+			FlxG.save.data.tickets = 0;
+
 		Conductor.recalculateTimings();
 
 		Main.watermarks = FlxG.save.data.watermark;

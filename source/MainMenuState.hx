@@ -27,7 +27,7 @@ class MainMenuState extends MusicBeatState
 	var menuItems:FlxTypedGroup<FlxSprite>;
 
 	#if !switch
-	var optionShit:Array<String> = ['story mode', 'freeplay', 'credits', 'donate', 'options'];
+	var optionShit:Array<String> = ['story mode', 'freeplay', 'gacha', 'credits', 'donate', 'options'];
 	#else
 	var optionShit:Array<String> = ['story mode', 'freeplay'];
 	#end
@@ -35,6 +35,8 @@ class MainMenuState extends MusicBeatState
 	var newGaming:FlxText;
 	var newGaming2:FlxText;
 	var newInput:Bool = true;
+
+	var ticketsCount:FlxText;
 
 	public static var nightly:String = "";
 
@@ -118,6 +120,14 @@ class MainMenuState extends MusicBeatState
 
 		changeItem();
 
+
+		ticketsCount = new FlxText(FlxG.width * 0.9, 35, 0, "", 32);
+		ticketsCount.setFormat("VCR OSD Mono", 64, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		ticketsCount.alpha = 1;
+		ticketsCount.text = FlxG.save.data.tickets;
+		ticketsCount.scrollFactor.set(0, 0);
+		add(ticketsCount);
+
 		super.create();
 	}
 
@@ -193,6 +203,9 @@ class MainMenuState extends MusicBeatState
 										FlxG.switchState(new FreeplayState());
 
 										trace("Freeplay Menu Selected");
+
+									case 'gacha':
+										FlxG.switchState(new SummonState());
 
 									case 'credits':
 										FlxG.switchState(new CreditState());

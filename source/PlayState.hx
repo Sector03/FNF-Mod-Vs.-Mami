@@ -151,6 +151,7 @@ class PlayState extends MusicBeatState
 
 	private var iconP1:HealthIcon;
 	private var iconP2:HealthIcon;
+	private var camOVERLAY:FlxCamera;
 	private var camHUD:FlxCamera;
 	private var camGame:FlxCamera;
 
@@ -179,6 +180,11 @@ class PlayState extends MusicBeatState
 	//subwayarea
 	var gorls:FlxSprite;
 	var connectLight:FlxSprite;
+
+	//tetris
+	
+	var tetrisLight:FlxSprite;
+	var colorCycle:Int = 0;
 
 	var fc:Bool = true;
 
@@ -485,10 +491,13 @@ class PlayState extends MusicBeatState
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
+		camOVERLAY = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
+		camOVERLAY.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD);
+		FlxG.cameras.add(camOVERLAY);
 
 		FlxCamera.defaultCameras = [camGame];
 
@@ -596,13 +605,14 @@ class PlayState extends MusicBeatState
 						gorls.active = true;
 						add(gorls);
 
-						connectLight = new FlxSprite(-350, 0).loadGraphic(Paths.image('mami/BG/connect_flash', 'shared'));
-						connectLight.setGraphicSize(Std.int(connectLight.width * 4));
+						connectLight = new FlxSprite(0, 0).loadGraphic(Paths.image('mami/BG/connect_flash', 'shared'));
+						connectLight.setGraphicSize(Std.int(connectLight.width * 1));
 						connectLight.updateHitbox();
 						connectLight.antialiasing = true;
 						connectLight.scrollFactor.set(0, 0);
 						connectLight.active = false;
 						connectLight.alpha = 0.0;
+						connectLight.cameras = [camOVERLAY];
 					}
 
 			case 'tetris':
@@ -666,13 +676,30 @@ class PlayState extends MusicBeatState
 						gorls.active = true;
 						add(gorls);
 
-						connectLight = new FlxSprite(-350, 0).loadGraphic(Paths.image('mami/BG/connect_flash', 'shared'));
-						connectLight.setGraphicSize(Std.int(connectLight.width * 4));
+						connectLight = new FlxSprite(0, 0).loadGraphic(Paths.image('mami/BG/connect_flash', 'shared'));
+						connectLight.setGraphicSize(Std.int(connectLight.width * 1));
 						connectLight.updateHitbox();
 						connectLight.antialiasing = true;
 						connectLight.scrollFactor.set(0, 0);
 						connectLight.active = false;
 						connectLight.alpha = 0.0;
+						connectLight.cameras = [camOVERLAY];
+
+						tetrisLight = new FlxSprite(0, 0);
+						tetrisLight.frames = Paths.getSparrowAtlas('tetris/connect_flash', 'shared');
+						tetrisLight.animation.addByPrefix('red', "RED instance 1", 24, true);
+						tetrisLight.animation.addByPrefix('yellow', "YEL instance 1", 24, true);
+						tetrisLight.animation.addByPrefix('blue', "BLU instance 1", 24, true);
+						tetrisLight.animation.addByPrefix('green', "GRN instance 1", 24, true);
+						tetrisLight.animation.addByPrefix('pink', "PNK instance 1", 24, true);
+						tetrisLight.setGraphicSize(Std.int(tetrisLight.width * 1));
+						tetrisLight.antialiasing = true;
+						tetrisLight.scrollFactor.set(1, 1);
+						tetrisLight.updateHitbox();
+						tetrisLight.active = false;
+						tetrisLight.alpha = 0.0;
+						tetrisLight.cameras = [camOVERLAY];
+						add(tetrisLight);
 					}		
 					
 			case 'salvation': //added some shit cuz yes, Sector gaming B))
@@ -729,13 +756,30 @@ class PlayState extends MusicBeatState
 					gorls.active = true;
 					add(gorls);
 
-					connectLight = new FlxSprite(-350, 0).loadGraphic(Paths.image('mami/BG/connect_flash', 'shared'));
-					connectLight.setGraphicSize(Std.int(connectLight.width * 4));
-					connectLight.updateHitbox();
-					connectLight.antialiasing = true;
-					connectLight.scrollFactor.set(0, 0);
-					connectLight.active = false;
-					connectLight.alpha = 0.0;
+						connectLight = new FlxSprite(0, 0).loadGraphic(Paths.image('mami/BG/connect_flash', 'shared'));
+						connectLight.setGraphicSize(Std.int(connectLight.width * 1));
+						connectLight.updateHitbox();
+						connectLight.antialiasing = true;
+						connectLight.scrollFactor.set(0, 0);
+						connectLight.active = false;
+						connectLight.alpha = 0.0;
+						connectLight.cameras = [camOVERLAY];
+
+					tetrisLight = new FlxSprite(0, 0);
+					tetrisLight.frames = Paths.getSparrowAtlas('tetris/connect_flash', 'shared');
+					tetrisLight.animation.addByPrefix('red', "RED instance 1", 24, true);
+					tetrisLight.animation.addByPrefix('yellow', "YEL instance 1", 24, true);
+					tetrisLight.animation.addByPrefix('blue', "BLU instance 1", 24, true);
+					tetrisLight.animation.addByPrefix('green', "GRN instance 1", 24, true);
+					tetrisLight.animation.addByPrefix('pink', "PNK instance 1", 24, true);
+					tetrisLight.setGraphicSize(Std.int(tetrisLight.width * 1));
+					tetrisLight.antialiasing = true;
+					tetrisLight.scrollFactor.set(1, 1);
+					tetrisLight.updateHitbox();
+					tetrisLight.active = false;
+					tetrisLight.alpha = 0.0;
+					tetrisLight.cameras = [camOVERLAY];
+					add(tetrisLight);
 				}
 
 			default:
@@ -826,6 +870,12 @@ class PlayState extends MusicBeatState
 			case 'subway-tetris':
 				boyfriend.x += 80;
 				boyfriend.y += 40;
+
+				var evilTrail = new FlxTrail(dad, null, 4, 24, 0.3, 0.069);
+				// evilTrail.changeValuesEnabled(false, false, false, false);
+				// evilTrail.changeGraphic()
+				add(evilTrail);
+				// evilTrail.scrollFactor.set(1.1, 1.1);
 		}
 
 		add(gf);
@@ -839,6 +889,9 @@ class PlayState extends MusicBeatState
 
 		if (curStage == 'subway')
 			add(connectLight);
+
+		if (curStage == 'subway-tetris')
+			add(tetrisLight);
 
 		var doof:DialogueBox = new DialogueBox(false, dialogue);
 		// doof.x += 70;
@@ -2384,6 +2437,7 @@ class PlayState extends MusicBeatState
 					case 'schoolEvil':
 						camFollow.x = boyfriend.getMidpoint().x - 200;
 						camFollow.y = boyfriend.getMidpoint().y - 200;
+
 				}
 
 				if (SONG.song.toLowerCase() == 'tutorial')
@@ -2741,6 +2795,23 @@ class PlayState extends MusicBeatState
 			}
 			else
 			{
+				if (SONG.song.toLowerCase() == 'connect')
+					{
+						if (storyDifficulty == 2)
+							FlxG.save.data.tickets += 2;
+						if (storyDifficulty == 3)
+							FlxG.save.data.tickets += 2;
+					}
+				if (SONG.song.toLowerCase() == 'tetris')
+					{
+						if (storyDifficulty == 1)
+							FlxG.save.data.tickets += 2;
+						if (storyDifficulty == 2)
+							FlxG.save.data.tickets += 3;
+						if (storyDifficulty == 3)
+							FlxG.save.data.tickets += 4;
+					}
+
 				trace('WENT BACK TO FREEPLAY??');
 				FlxG.switchState(new FreeplayState());
 			}
@@ -3992,6 +4063,28 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 0.7;
 					}
 			}
+
+		if (curSong == 'Tetris') 
+			{
+				if (colorCycle <= 3)
+					colorCycle += 1;
+				else
+					colorCycle = 0;
+
+				if (colorCycle == 0)
+					tetrisLight.animation.play("red", true);
+				else if (colorCycle == 1)
+					tetrisLight.animation.play("yellow", true);
+				else if (colorCycle == 2)
+					tetrisLight.animation.play("blue", true);
+				else if (colorCycle == 3)
+					tetrisLight.animation.play("green", true);
+				else if (colorCycle == 4)
+					tetrisLight.animation.play("pink", true);
+
+				tetrisLight.alpha = 1;
+			}
+
 
 		if (curSong == 'Tetris' && storyDifficulty == 1) //Tetris NORMAL events
 			{
