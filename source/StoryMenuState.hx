@@ -10,6 +10,7 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import flixel.tweens.FlxEase;
 import flixel.util.FlxTimer;
 import lime.net.curl.CURLCode;
 
@@ -24,7 +25,7 @@ class StoryMenuState extends MusicBeatState
 	var scoreText:FlxText;
 
 	var weekData:Array<Dynamic> = [
-		['Connect']
+		['Connect','Song Two','Salvation']
 	];
 	var curDifficulty:Int = 1;
 
@@ -54,6 +55,8 @@ class StoryMenuState extends MusicBeatState
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
 	var flower:FlxSprite;
+
+	var holyConfirm:FlxText;
 
 	override function create()
 	{
@@ -149,6 +152,7 @@ class StoryMenuState extends MusicBeatState
 		sprDifficulty.animation.addByPrefix('easy', 'EASY');
 		sprDifficulty.animation.addByPrefix('normal', 'NORMAL');
 		sprDifficulty.animation.addByPrefix('hard', 'HARD');
+		sprDifficulty.animation.addByPrefix('holy', 'HOLY');
 		sprDifficulty.animation.play('easy');
 		changeDifficulty();
 
@@ -166,12 +170,13 @@ class StoryMenuState extends MusicBeatState
 		add(yellowBG);
 		add(grpWeekCharacters);
 
-		flower = new FlxSprite(50, 50);
-		flower.frames = Paths.getSparrowAtlas('weekm', 'preload');
-		flower.animation.addByPrefix('woah', "Symbol 2 instance 1", 24, true);
-		flower.animation.play('woah');
+		flower = new FlxSprite(-15, 0).loadGraphic(Paths.image('weekm'));
+		flower.setGraphicSize(Std.int(flower.width * 0.55));
+		flower.antialiasing = true;
 		add(flower);
 
+		FlxTween.tween(flower, {angle: 25}, 2.5, {type: FlxTweenType.PINGPONG, ease: FlxEase.quadInOut});
+		
 		txtTracklist = new FlxText(FlxG.width * 0.05, yellowBG.x + yellowBG.height + 100, 0, "Tracks", 32);
 		txtTracklist.alignment = CENTER;
 		txtTracklist.font = rankText.font;
@@ -180,6 +185,13 @@ class StoryMenuState extends MusicBeatState
 		// add(rankText);
 		add(scoreText);
 		add(txtWeekTitle);
+
+		holyConfirm = new FlxText(FlxG.width * -0.05, FlxG.height * 0.5, 0, "", 32);
+		holyConfirm.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		holyConfirm.alpha = 0;
+		holyConfirm.text = "HOLY diffiuclty is unforgiving. Press CONFIRM again to play on this diffiuclty.";
+		holyConfirm.scrollFactor.set(0, 0);
+		add(holyConfirm);
 
 		updateText();
 
@@ -192,6 +204,12 @@ class StoryMenuState extends MusicBeatState
 	{
 		// scoreText.setFormat('VCR OSD Mono', 32);
 		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, 0.5));
+
+		if (controls.RIGHT)
+			holyConfirm.alpha = 0;
+
+		if (controls.LEFT)
+			holyConfirm.alpha = 0;
 
 		scoreText.text = "WEEK SCORE:" + lerpScore;
 
@@ -239,9 +257,24 @@ class StoryMenuState extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				selectWeek();
+				if (curDifficulty == 3)
+					{
+						if (holyConfirm.alpha == 1)
+							selectWeek();
+						FlxG.sound.play(Paths.sound('confirmMenu'));
+						holyConfirm.alpha = 1;
+					}
+				else
+					{
+						selectWeek();
+					}
 			}
 		}
+
+		if (curDifficulty == 3)
+			txtTracklist.color = 0xFFFEE897;
+		else
+			txtTracklist.color = 0xFFe55777;
 
 		if (controls.BACK && !movedBack && !selectedWeek)
 		{
@@ -260,40 +293,42 @@ class StoryMenuState extends MusicBeatState
 	function selectWeek()
 	{
 		if (weekUnlocked[curWeek])
-		{
-			if (stopspamming == false)
 			{
-				FlxG.sound.play(Paths.sound('confirmMenu'));
+				if (stopspamming == false)
+				{
+					FlxG.sound.play(Paths.sound('confirmMenu'));
 
-				grpWeekText.members[curWeek].startFlashing();
-				grpWeekCharacters.members[1].animation.play('bfConfirm');
-				stopspamming = true;
+					grpWeekText.members[curWeek].startFlashing();
+					grpWeekCharacters.members[1].animation.play('bfConfirm');
+					stopspamming = true;
+				}
+
+				PlayState.storyPlaylist = weekData[curWeek];
+				PlayState.isStoryMode = true;
+				selectedWeek = true;
+
+				var diffic = "";
+
+				switch (curDifficulty)
+				{
+					case 0:
+						diffic = '-easy';
+					case 2:
+						diffic = '-hard';
+					case 3:
+						diffic = '-holy';
+				}
+
+				PlayState.storyDifficulty = curDifficulty;
+
+				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase());
+				PlayState.storyWeek = curWeek;
+				PlayState.campaignScore = 0;
+				new FlxTimer().start(1, function(tmr:FlxTimer)
+				{
+					LoadingState.loadAndSwitchState(new PlayState(), true);
+				});
 			}
-
-			PlayState.storyPlaylist = weekData[curWeek];
-			PlayState.isStoryMode = true;
-			selectedWeek = true;
-
-			var diffic = "";
-
-			switch (curDifficulty)
-			{
-				case 0:
-					diffic = '-easy';
-				case 2:
-					diffic = '-hard';
-			}
-
-			PlayState.storyDifficulty = curDifficulty;
-
-			PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase());
-			PlayState.storyWeek = curWeek;
-			PlayState.campaignScore = 0;
-			new FlxTimer().start(1, function(tmr:FlxTimer)
-			{
-				LoadingState.loadAndSwitchState(new PlayState(), true);
-			});
-		}
 	}
 
 	function changeDifficulty(change:Int = 0):Void
@@ -301,8 +336,8 @@ class StoryMenuState extends MusicBeatState
 		curDifficulty += change;
 
 		if (curDifficulty < 0)
-			curDifficulty = 2;
-		if (curDifficulty > 2)
+			curDifficulty = 3;
+		if (curDifficulty > 3)
 			curDifficulty = 0;
 
 		sprDifficulty.offset.x = 0;
@@ -317,6 +352,9 @@ class StoryMenuState extends MusicBeatState
 				sprDifficulty.offset.x = 70;
 			case 2:
 				sprDifficulty.animation.play('hard');
+				sprDifficulty.offset.x = 20;
+			case 3:
+				sprDifficulty.animation.play('holy');
 				sprDifficulty.offset.x = 20;
 		}
 

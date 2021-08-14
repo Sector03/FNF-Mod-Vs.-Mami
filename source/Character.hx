@@ -62,6 +62,28 @@ class Character extends FlxSprite
 
 				playAnim('danceRight');
 
+			case 'gf-holy':
+				// GIRLFRIEND CODE
+				tex = Paths.getSparrowAtlas('characters/HOLY_GF', 'shared');
+				frames = tex;
+				animation.addByPrefix('bop', 'girlfriend_idle', 24);
+
+				//addOffset('cheer');
+				//addOffset('sad', -2, -2);
+				//addOffset('danceLeft', 0, -9);
+				//addOffset('danceRight', 0, -9);
+
+				//addOffset("singUP", 0, 4);
+				//addOffset("singRIGHT", 0, -20);
+				//addOffset("singLEFT", 0, -19);
+				//addOffset("singDOWN", 0, -20);
+				//addOffset('hairBlow', 45, -8);
+				//addOffset('hairFall', 0, -9);
+
+				//addOffset('scared', -2, -17);
+
+				playAnim('bop');	
+
 			case 'dad':
 				// DAD ANIMATION LOADING CODE
 				tex = Paths.getSparrowAtlas('characters/DADDY_DEAREST','shared');

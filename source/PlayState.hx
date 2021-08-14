@@ -179,8 +179,9 @@ class PlayState extends MusicBeatState
 
 	//subwayarea
 	var gorls:FlxSprite;
-	var homura:FlxSprite;
+	var holyHomura:FlxSprite;
 	var connectLight:FlxSprite;
+	var gunSwarm:FlxSprite;
 
 	//tetris
 	
@@ -456,6 +457,8 @@ class PlayState extends MusicBeatState
 				storyDifficultyText = "Normal";
 			case 2:
 				storyDifficultyText = "Hard";
+			case 3:
+				storyDifficultyText = "Holy";
 		}
 
 		iconRPC = SONG.player2;
@@ -748,23 +751,30 @@ class PlayState extends MusicBeatState
 					otherBGStuff.active = false;
 					add(otherBGStuff);				
 
-					homura = new FlxSprite(-360, 150);
-					homura.frames = Paths.getSparrowAtlas('mami/BG/HOLY_women', 'shared');
-					homura.animation.addByPrefix('move', "animegirl", 24, false);
-					homura.antialiasing = true;
-					homura.scrollFactor.set(0.9, 0.9);
-					homura.updateHitbox();
-					homura.active = true;
-					add(homura);
+					holyHomura = new FlxSprite(-360, 350);
+					holyHomura.frames = Paths.getSparrowAtlas('mami/BG/HOLY/HOLY_women', 'shared');
+					holyHomura.animation.addByPrefix('move', "animegirl", 24, false);
+					holyHomura.antialiasing = true;
+					holyHomura.scrollFactor.set(0.9, 0.9);
+					holyHomura.updateHitbox();
+					holyHomura.active = true;
+					add(holyHomura);
 
-						connectLight = new FlxSprite(0, 0).loadGraphic(Paths.image('mami/BG/connect_flash', 'shared'));
-						connectLight.setGraphicSize(Std.int(connectLight.width * 1));
-						connectLight.updateHitbox();
-						connectLight.antialiasing = true;
-						connectLight.scrollFactor.set(0, 0);
-						connectLight.active = false;
-						connectLight.alpha = 0.0;
-						connectLight.cameras = [camOVERLAY];
+					gunSwarm = new FlxSprite(-1000, 0).loadGraphic(Paths.image('mami/BG/HOLY/HOLY_guns', 'shared'));
+					gunSwarm.setGraphicSize(Std.int(gunSwarm.width * 1));
+					gunSwarm.antialiasing = true;
+					gunSwarm.scrollFactor.set(0.9, 0.9);
+					gunSwarm.updateHitbox();
+					gunSwarm.active = true;
+
+					connectLight = new FlxSprite(0, 0).loadGraphic(Paths.image('mami/BG/connect_flash', 'shared'));
+					connectLight.setGraphicSize(Std.int(connectLight.width * 1));
+					connectLight.updateHitbox();
+					connectLight.antialiasing = true;
+					connectLight.scrollFactor.set(0, 0);
+					connectLight.active = false;
+					connectLight.alpha = 0.0;
+					connectLight.cameras = [camOVERLAY];
 
 					tetrisLight = new FlxSprite(0, 0);
 					tetrisLight.frames = Paths.getSparrowAtlas('tetris/connect_flash', 'shared');
@@ -827,6 +837,12 @@ class PlayState extends MusicBeatState
 
 		if (curStage == 'limo')
 			gfVersion = 'gf-car';
+
+		if (curStage == 'subway-holy')
+			gfVersion = 'gf-holy';
+
+		if (curStage == 'subway-tetris')
+			gfVersion = 'gf-holy'; //gf-tetris? 🤔🤔
 
 		gf = new Character(400, 130, gfVersion);
 		gf.scrollFactor.set(0.95, 0.95);
@@ -893,6 +909,9 @@ class PlayState extends MusicBeatState
 
 		if (curStage == 'subway-tetris')
 			add(tetrisLight);
+
+		if (curStage == 'subway-holy')
+			add(gunSwarm);
 
 		var doof:DialogueBox = new DialogueBox(false, dialogue);
 		// doof.x += 70;
@@ -985,7 +1004,7 @@ class PlayState extends MusicBeatState
 		add(healthBar);
 
 		// Add Kade Engine watermark
-		kadeEngineWatermark = new FlxText(4,healthBarBG.y + 50,0,SONG.song + " " + (storyDifficulty == 2 ? "Hard" : storyDifficulty == 1 ? "Normal" : "Easy") + (Main.watermarks ? " - KE " + MainMenuState.kadeEngineVer : ""), 16);
+		kadeEngineWatermark = new FlxText(4,healthBarBG.y + 50,0,SONG.song + " " + (storyDifficulty == 3 ? "Holy" :storyDifficulty == 2 ? "Hard" : storyDifficulty == 1 ? "Normal" : "Easy") + (Main.watermarks ? " - KE " + MainMenuState.kadeEngineVer : ""), 16);
 		kadeEngineWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		kadeEngineWatermark.scrollFactor.set();
 		add(kadeEngineWatermark);
@@ -2117,15 +2136,13 @@ class PlayState extends MusicBeatState
 		else
 			currentFrames++;
 
-		/*
 		if (FlxG.keys.justPressed.NINE)
-		{
-			if (iconP1.animation.curAnim.name == 'bf-old')
-				iconP1.animation.play(SONG.player1);
-			else
-				iconP1.animation.play('bf-old');
-		}
-		*/
+			{
+				if (iconP1.animation.curAnim.name == 'bf-old')
+					iconP1.animation.play(SONG.player1);
+				else
+					iconP1.animation.play('bf-old');
+			}
 
 		switch (curStage)
 		{
@@ -2554,7 +2571,7 @@ class PlayState extends MusicBeatState
 								altAnim = '-alt';
 						}
 	
-						if (curSong == 'Tetris')
+						if (curSong == 'Tetris' || storyDifficulty == 3)
 							{
 								if (health > 0.2) //do normal notehealthdmg if you are above 20% health (defeat icon starts at 20% for reference btw)
 									if (daNote.isSustainNote)
@@ -2578,6 +2595,16 @@ class PlayState extends MusicBeatState
 								//trace (notehealthdmg);
 								//FlxG.camera.shake(0.005, 0.25);
 								camHUD.shake((notehealthdmg / 7.5), 0.25);
+
+								if (storyDifficulty == 3)
+									switch(curSong)
+										{
+											case 'Connect':
+												notehealthdmg = 0.01;
+
+											case 'Salvation':
+												notehealthdmg = 0.012;
+										}
 							}
 
 						switch (Math.abs(daNote.noteData))
@@ -2770,6 +2797,9 @@ class PlayState extends MusicBeatState
 					if (storyDifficulty == 2)
 						difficulty = '-hard';
 
+					if (storyDifficulty == 3)
+						difficulty = '-holy';
+
 					trace('LOADING NEXT SONG');
 					trace(PlayState.storyPlaylist[0].toLowerCase() + difficulty);
 
@@ -2947,63 +2977,62 @@ class PlayState extends MusicBeatState
 
 			var daRating = daNote.rating;
 
-			if (danote.holy)
-				switch(daRating)
-				{
-					case 'shit':
-						score = -300;
-						combo = 0;
-						misses++;
-						if (FlxG.save.data.kadeEngineOldHealthSystem)
-							health -= 0.2;
-						else
-							health -= 0.06;
+			switch(daRating)
+			{
+				case 'shit':
+					score = -300;
+					combo = 0;
+					misses++;
+					if (FlxG.save.data.kadeEngineOldHealthSystem)
+						health -= 0.2;
+					else
+						health -= 0.06;
 
-						ss = false;
-						shits++;
-						if (FlxG.save.data.accuracyMod == 0)
-							totalNotesHit += 0.25;
-					case 'bad':
-						daRating = 'bad';
-						score = 0;
-						if (FlxG.save.data.kadeEngineOldHealthSystem)
-							health -= 0.06;
-						else
-							health -= 0.03;
+					ss = false;
+					shits++;
+					if (FlxG.save.data.accuracyMod == 0)
+						totalNotesHit += 0.25;
+				case 'bad':
+					daRating = 'bad';
+					score = 0;
+					if (FlxG.save.data.kadeEngineOldHealthSystem)
+						health -= 0.06;
+					else
+						health -= 0.03;
 
-						ss = false;
-						bads++;
-						if (FlxG.save.data.accuracyMod == 0)
-							totalNotesHit += 0.50;
-					case 'good':
-						daRating = 'good';
-						score = 200;
-						ss = false;
-						goods++;
-						if (FlxG.save.data.kadeEngineOldHealthSystem)
-							{
-							if (health < maxhealth)
-								health += 0.04;
-							}
+					ss = false;
+					bads++;
+					if (FlxG.save.data.accuracyMod == 0)
+						totalNotesHit += 0.50;
+				case 'good':
+					daRating = 'good';
+					score = 200;
+					ss = false;
+					goods++;
+					if (FlxG.save.data.kadeEngineOldHealthSystem)
+						{
+						if (health < maxhealth)
+							health += 0.04;
+						}
 
 
-						if (FlxG.save.data.accuracyMod == 0)
-							totalNotesHit += 0.75;
-					case 'sick':
-						if (FlxG.save.data.kadeEngineOldHealthSystem)
-							{
-							if (health < maxhealth)
-								health += 0.04;
-							}
-						else
-							{
-							if (health < maxhealth)
-								health += 0.1;
-							}
+					if (FlxG.save.data.accuracyMod == 0)
+						totalNotesHit += 0.75;
+				case 'sick':
+					if (FlxG.save.data.kadeEngineOldHealthSystem)
+						{
+						if (health < maxhealth)
+							health += 0.04;
+						}
+					else
+						{
+						if (health < maxhealth)
+							health += 0.1;
+						}
 
-						if (FlxG.save.data.accuracyMod == 0)
-							totalNotesHit += 1;
-						sicks++;
+					if (FlxG.save.data.accuracyMod == 0)
+						totalNotesHit += 1;
+					sicks++;
 			}
 
 			// trace('Wife accuracy loss: ' + wife + ' | Rating: ' + daRating + ' | Score: ' + score + ' | Weight: ' + (1 - wife));
@@ -3451,8 +3480,8 @@ class PlayState extends MusicBeatState
 							{
 								FlxG.sound.play(Paths.sound('MAMI_shoot','shared'));
 								boyfriend.playAnim('dodge', true); //its just here i will make it work propperly tomorrow or smth
-								FlxG.camera.shake(0.01, 0.4);
-								camHUD.shake(0.025, 0.4);
+								FlxG.camera.shake(0.015, 0.3);
+								camHUD.shake(0.010, 0.3);
 							}
 						daNote.kill();
 						notes.remove(daNote, true);
@@ -4066,6 +4095,36 @@ class PlayState extends MusicBeatState
 					}
 			}
 
+		if (curSong == 'Song Two')
+			{
+				switch (curBeat)
+				{
+					case 17:
+						iconP2.animation.play("dad");
+
+						remove(dad);
+						dad = new Character(25, 100, "dad");
+						add(dad);
+				}
+			}
+
+		if (curSong == 'Salvation')
+			{
+				switch (curBeat)
+				{
+					case 2: //straight
+						FlxTween.linearMotion(gunSwarm, -500, 120, 1500, 120, .5, true);
+
+					case 10: //downward right
+						gunSwarm.angle = -15;
+						FlxTween.linearMotion(gunSwarm, 1500, -200, 2500, -1500, .5, true);
+
+					case 18: //upward right
+					gunSwarm.angle = 15;
+					FlxTween.linearMotion(gunSwarm, -1500, -200, 2500, 1500, .5, true);
+				}
+			}
+			
 		if (curSong == 'Tetris') 
 			{
 				if (colorCycle <= 3)
@@ -4086,7 +4145,6 @@ class PlayState extends MusicBeatState
 
 				tetrisLight.alpha = 1;
 			}
-
 
 		if (curSong == 'Tetris' && storyDifficulty == 1) //Tetris NORMAL events
 			{
@@ -4145,6 +4203,35 @@ class PlayState extends MusicBeatState
 						tetrisblockage(70, 30, false);	
 				}
 			}
+
+		if (curSong == 'Tetris' && storyDifficulty == 3) //Tetris HOLY events
+			{
+				switch (curBeat)
+				{
+					case 1:
+						notehealthdmg = 0.0125;
+					case 28:
+						tetrisblockage(70, 6, false);
+					case 96:
+						notehealthdmg = 0.015;
+					case 111:
+						notehealthdmg = 0.0125;
+					case 163:
+						notehealthdmg = 0.02;
+					case 168:
+						notehealthdmg = 0.0125;	
+					case 169:
+						tetrisblockage(40, 12, false);	
+					case 281:
+						tetrisblockage(55, 17, false);	
+					case 354:
+						notehealthdmg = 0.02;	
+					case 360:
+						notehealthdmg = 0.0150;	
+					case 362:
+						tetrisblockage(70, 30, false);	
+				}
+			}
 		
 		switch (curStage)
 		{
@@ -4152,7 +4239,7 @@ class PlayState extends MusicBeatState
 				gorls.animation.play('move', true);
 
 			case 'subway-holy':
-				homura.animation.play('move', true);
+				holyHomura.animation.play('move', true);
 
 			case 'school':
 				bgGirls.dance();

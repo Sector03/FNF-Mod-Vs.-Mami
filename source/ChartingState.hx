@@ -70,6 +70,8 @@ class ChartingState extends MusicBeatState
 
 	var gridBG:FlxSprite;
 
+	var holynoteplacing:FlxSprite;
+
 	var _song:SwagSong;
 
 	var typingShit:FlxInputText;
