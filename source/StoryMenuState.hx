@@ -55,6 +55,7 @@ class StoryMenuState extends MusicBeatState
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
 	var flower:FlxSprite;
+	var holyConfirmBG:FlxSprite;
 
 	var holyConfirm:FlxText;
 
@@ -186,11 +187,16 @@ class StoryMenuState extends MusicBeatState
 		add(scoreText);
 		add(txtWeekTitle);
 
-		holyConfirm = new FlxText(FlxG.width * -0.05, FlxG.height * 0.5, 0, "", 32);
-		holyConfirm.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		holyConfirmBG = new FlxSprite(0, 347).makeGraphic(FlxG.width, 90, FlxColor.BLACK);
+		holyConfirmBG.alpha = 0;
+		add(holyConfirmBG);
+		
+		holyConfirm = new FlxText(FlxG.width * -0.05, FlxG.height * 0.5, 1000, "", 32);
+		holyConfirm.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		holyConfirm.alpha = 0;
 		holyConfirm.text = "HOLY diffiuclty is unforgiving. Press CONFIRM again to play on this diffiuclty.";
 		holyConfirm.scrollFactor.set(0, 0);
+		holyConfirm.screenCenter(X);
 		add(holyConfirm);
 
 		updateText();
@@ -206,10 +212,20 @@ class StoryMenuState extends MusicBeatState
 		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, 0.5));
 
 		if (controls.RIGHT)
+			{
+			FlxTween.cancelTweensOf(holyConfirm);
+			FlxTween.cancelTweensOf(holyConfirmBG);
 			holyConfirm.alpha = 0;
+			holyConfirmBG.alpha = 0;
+			}
 
 		if (controls.LEFT)
+			{
+			FlxTween.cancelTweensOf(holyConfirm);
+			FlxTween.cancelTweensOf(holyConfirmBG);
 			holyConfirm.alpha = 0;
+			holyConfirmBG.alpha = 0;
+			}
 
 		scoreText.text = "WEEK SCORE:" + lerpScore;
 
@@ -262,7 +278,10 @@ class StoryMenuState extends MusicBeatState
 						if (holyConfirm.alpha == 1)
 							selectWeek();
 						FlxG.sound.play(Paths.sound('confirmMenu'));
-						holyConfirm.alpha = 1;
+						holyConfirm.y = 370;
+						holyConfirmBG.y = 357;
+						FlxTween.tween(holyConfirm, {y: 360, alpha: 1}, .3, {type: FlxTweenType.ONESHOT, ease: FlxEase.quadOut});
+						FlxTween.tween(holyConfirmBG, {y: 347, alpha: 1}, .3, {type: FlxTweenType.ONESHOT, ease: FlxEase.quadOut});
 					}
 				else
 					{
