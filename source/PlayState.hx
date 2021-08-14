@@ -179,6 +179,7 @@ class PlayState extends MusicBeatState
 
 	//subwayarea
 	var gorls:FlxSprite;
+	var homura:FlxSprite;
 	var connectLight:FlxSprite;
 
 	//tetris
@@ -747,14 +748,14 @@ class PlayState extends MusicBeatState
 					otherBGStuff.active = false;
 					add(otherBGStuff);				
 
-					gorls = new FlxSprite(-360, 150);
-					gorls.frames = Paths.getSparrowAtlas('mami/BG/BGGirlsDance', 'shared');
-					gorls.animation.addByPrefix('move', "girls dancing instance 1", 24, false);
-					gorls.antialiasing = true;
-					gorls.scrollFactor.set(0.9, 0.9);
-					gorls.updateHitbox();
-					gorls.active = true;
-					add(gorls);
+					homura = new FlxSprite(-360, 150);
+					homura.frames = Paths.getSparrowAtlas('mami/BG/HOLY_women', 'shared');
+					homura.animation.addByPrefix('move', "animegirl", 24, false);
+					homura.antialiasing = true;
+					homura.scrollFactor.set(0.9, 0.9);
+					homura.updateHitbox();
+					homura.active = true;
+					add(homura);
 
 						connectLight = new FlxSprite(0, 0).loadGraphic(Paths.image('mami/BG/connect_flash', 'shared'));
 						connectLight.setGraphicSize(Std.int(connectLight.width * 1));
@@ -4149,6 +4150,9 @@ class PlayState extends MusicBeatState
 		{
 			case 'subway':
 				gorls.animation.play('move', true);
+
+			case 'subway-holy':
+				homura.animation.play('move', true);
 
 			case 'school':
 				bgGirls.dance();
