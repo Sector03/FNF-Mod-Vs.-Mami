@@ -137,6 +137,7 @@ class PlayState extends MusicBeatState
 	private var totalPlayed:Int = 0;
 	private var ss:Bool = false;
 
+	public var debugCommandsText:FlxText;
 	private var holyMisses:Int = 1;
 	public var godmodecheat:Bool = false;
 	public var allowBFanimupdate = true;
@@ -490,7 +491,6 @@ class PlayState extends MusicBeatState
 		// Updating Discord Rich Presence.
 		DiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ") " + generateRanking(), "\nAcc: " + truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC);
 		#end
-
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
@@ -1004,7 +1004,7 @@ class PlayState extends MusicBeatState
 		add(healthBar);
 
 		// Add Kade Engine watermark
-		kadeEngineWatermark = new FlxText(4,healthBarBG.y + 50,0,SONG.song + " " + (storyDifficulty == 3 ? "Holy" :storyDifficulty == 2 ? "Hard" : storyDifficulty == 1 ? "Normal" : "Easy") + (Main.watermarks ? " - KE " + MainMenuState.kadeEngineVer : ""), 16);
+		kadeEngineWatermark = new FlxText(4,healthBarBG.y + 50,0,SONG.song + " " + (storyDifficulty == 3 ? "Holy" :storyDifficulty == 2 ? "Hard" : storyDifficulty == 1 ? "Normal" : "Easy"), 16);
 		kadeEngineWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		kadeEngineWatermark.scrollFactor.set();
 		add(kadeEngineWatermark);
@@ -1036,6 +1036,16 @@ class PlayState extends MusicBeatState
 		iconP2 = new HealthIcon(SONG.player2, false);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
+
+		#if debug
+		debugCommandsText = new FlxText(4, 4, 320, "DEBUG COMMANDS\n" + "N - Gain Health\n" + "M - Drain Health\n" + "B - Hit Holy Note\n" + "G - Toggle God Mode\n" + "V - Hide Debug Menu\n");
+		debugCommandsText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		debugCommandsText.scrollFactor.set();
+		debugCommandsText.cameras = [camHUD];
+		debugCommandsText.visible = true;
+		
+		add(debugCommandsText);
+		#end
 
 		strumLineNotes.cameras = [camHUD];
 		notes.cameras = [camHUD];
@@ -2144,6 +2154,14 @@ class PlayState extends MusicBeatState
 					iconP1.animation.play('bf-old');
 			}
 
+		if (FlxG.keys.justPressed.V) //why the fuck doesn't it come backbruh
+			{
+				if (debugCommandsText.visible = true)
+					debugCommandsText.visible = false;
+				else
+					debugCommandsText.visible = true;
+			}
+
 		switch (curStage)
 		{
 			case 'philly':
@@ -2210,8 +2228,8 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 
-		iconP1.setGraphicSize(Std.int(FlxMath.lerp(iconP1.width, 150, 0.15)));
-		iconP2.setGraphicSize(Std.int(FlxMath.lerp(iconP1.width, 150, 0.15)));
+		iconP1.setGraphicSize(Std.int(FlxMath.lerp(iconP1.width, 150, 0.25)));
+		iconP2.setGraphicSize(Std.int(FlxMath.lerp(iconP1.width, 150, 0.25)));
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
@@ -2253,6 +2271,8 @@ class PlayState extends MusicBeatState
 				health -= 2;
 
 		#if debug
+		//AWESOME OVERHAULED DEBUG COMMANDS :D
+
 		// health changer cheat debug
 		if (FlxG.keys.pressed.N)
 			health += 0.02;
@@ -2260,9 +2280,13 @@ class PlayState extends MusicBeatState
 		if (FlxG.keys.pressed.M)
 			health -= 0.02;
 
+		if (FlxG.keys.justPressed.B)
+			holyNoteHit();
+
 		//god mode
 		if (FlxG.keys.justPressed.G)
 			godmodecheat = !godmodecheat;
+
 		#end
 
 		#if debug
@@ -2596,6 +2620,12 @@ class PlayState extends MusicBeatState
 								//FlxG.camera.shake(0.005, 0.25);
 								camHUD.shake((notehealthdmg / 7.5), 0.25);
 
+								if (!daNote.isSustainNote)
+									{
+									FlxTween.color(healthBar, .20, FlxColor.RED, FlxColor.WHITE, {ease: FlxEase.quadOut});
+									FlxTween.color(iconP1, .20, FlxColor.RED, FlxColor.WHITE, {ease: FlxEase.quadOut});
+									}
+
 								if (storyDifficulty == 3)
 									switch(curSong)
 										{
@@ -2681,23 +2711,9 @@ class PlayState extends MusicBeatState
 
 							if (daNote.holy)
 							{
-								allowBFanimupdate = false;
-								healthbarshake();
-								healthbarshake();
-								healthbarshake();
-								health -= 0.5 * holyMisses; //0.5 for first time, 1.0 for second time, 1.5 for third time, kinda like a strike system but with 4 strikes?
-								//iconP1.animation.play('bf-shot');
-								//dad.playAnim('shoot', true); //no animation bruh
-								FlxG.sound.play(Paths.sound('MAMI_shoot','shared'));
-								FlxG.camera.shake(0.02, 0.2);
-								boyfriend.playAnim('hit', true);
-								holyMisses += 1; //start at 1
-								new FlxTimer().start(.6, function(tmr:FlxTimer)
-									{
-										allowBFanimupdate = true;
-										//iconP1.animation.play('bf');
-									});
+								holyNoteHit();
 							}
+
 							vocals.volume = 0;
 							if (theFunne)
 								noteMiss(daNote.noteData, daNote);
@@ -2723,6 +2739,28 @@ class PlayState extends MusicBeatState
 			endSong();
 		#end
 	}
+
+	function holyNoteHit()
+		{
+			allowBFanimupdate = false;
+			healthbarshake();
+			healthbarshake();
+			healthbarshake();
+			health -= 0.5 * holyMisses; //0.5 for first time, 1.0 for second time, 1.5 for third time, kinda like a strike system but with 4 strikes?
+			iconP1.animation.play('bf-shot');
+			//dad.playAnim('shoot', true); //no animation bruh
+			FlxG.sound.play(Paths.sound('MAMI_shoot','shared'));
+			FlxG.camera.shake(0.02, 0.2);
+			boyfriend.playAnim('hit', true);
+			holyMisses += 1; //start at 1
+			FlxTween.color(healthBar, .20, FlxColor.RED, FlxColor.WHITE, {ease: FlxEase.quadOut});
+			FlxTween.color(iconP1, .20, FlxColor.RED, FlxColor.WHITE, {ease: FlxEase.quadOut});
+			new FlxTimer().start(1, function(tmr:FlxTimer)
+				{
+					allowBFanimupdate = true;
+					iconP1.animation.play('bf');
+				});
+		}
 
 	function endSong():Void
 	{

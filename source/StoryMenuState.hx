@@ -56,8 +56,8 @@ class StoryMenuState extends MusicBeatState
 	var rightArrow:FlxSprite;
 	var flower:FlxSprite;
 	var holyConfirmBG:FlxSprite;
-
 	var holyConfirm:FlxText;
+	var holySelected:Bool = false;
 
 	override function create()
 	{
@@ -275,13 +275,21 @@ class StoryMenuState extends MusicBeatState
 			{
 				if (curDifficulty == 3)
 					{
-						if (holyConfirm.alpha == 1)
-							selectWeek();
-						FlxG.sound.play(Paths.sound('confirmMenu'));
-						holyConfirm.y = 370;
-						holyConfirmBG.y = 357;
-						FlxTween.tween(holyConfirm, {y: 360, alpha: 1}, .3, {type: FlxTweenType.ONESHOT, ease: FlxEase.quadOut});
-						FlxTween.tween(holyConfirmBG, {y: 347, alpha: 1}, .3, {type: FlxTweenType.ONESHOT, ease: FlxEase.quadOut});
+						if (!holySelected)
+							{
+							FlxTween.completeTweensOf(holyConfirm);
+							FlxTween.completeTweensOf(holyConfirmBG);
+							if (holyConfirm.alpha == 1)
+								{
+								selectWeek();
+								holySelected = true;
+								}
+							FlxG.sound.play(Paths.sound('confirmMenu'));
+							holyConfirm.y = 370;
+							holyConfirmBG.y = 357;
+							FlxTween.tween(holyConfirm, {y: 360, alpha: 1}, .3, {type: FlxTweenType.ONESHOT, ease: FlxEase.quadOut});
+							FlxTween.tween(holyConfirmBG, {y: 347, alpha: 1}, .3, {type: FlxTweenType.ONESHOT, ease: FlxEase.quadOut});
+							}
 					}
 				else
 					{

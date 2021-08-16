@@ -18,6 +18,7 @@ class HealthIcon extends FlxSprite
 
 		animation.add('bf', [0, 1, 2], 0, false, isPlayer);
 		animation.add('bf-old', [3, 4, 5], 0, false, isPlayer);
+		animation.add('bf-shot', [24, 24, 24], 0, false, isPlayer);
 		animation.add('bf-tetris', [6, 7, 8], 0, false, isPlayer);
 		animation.add('mami', [9, 10, 11], 0, false, isPlayer);
 		animation.add('mami-holy', [12, 13, 14], 0, false, isPlayer);
