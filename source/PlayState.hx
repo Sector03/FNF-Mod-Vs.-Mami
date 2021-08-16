@@ -2620,11 +2620,7 @@ class PlayState extends MusicBeatState
 								//FlxG.camera.shake(0.005, 0.25);
 								camHUD.shake((notehealthdmg / 7.5), 0.25);
 
-								if (!daNote.isSustainNote)
-									{
-									FlxTween.color(healthBar, .20, FlxColor.RED, FlxColor.WHITE, {ease: FlxEase.quadOut});
-									FlxTween.color(iconP1, .20, FlxColor.RED, FlxColor.WHITE, {ease: FlxEase.quadOut});
-									}
+						
 
 								if (storyDifficulty == 3)
 									switch(curSong)
