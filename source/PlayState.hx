@@ -2619,14 +2619,16 @@ class PlayState extends MusicBeatState
 								//trace (notehealthdmg);
 								//FlxG.camera.shake(0.005, 0.25);
 								camHUD.shake((notehealthdmg / 7.5), 0.25);
-
-						
+								healthbarshake(0.15);
 
 								if (storyDifficulty == 3)
 									switch(curSong)
 										{
 											case 'Connect':
 												notehealthdmg = 0.01;
+												
+											case 'Reminisce':
+												notehealthdmg = 0.012;
 
 											case 'Salvation':
 												notehealthdmg = 0.012;
@@ -2699,7 +2701,7 @@ class PlayState extends MusicBeatState
 						}
 						else
 						{
-							healthbarshake();
+							healthbarshake(1.0);
 							if (FlxG.save.data.kadeEngineOldHealthSystem)
 								health -= 0.075;
 							else
@@ -2739,9 +2741,7 @@ class PlayState extends MusicBeatState
 	function holyNoteHit()
 		{
 			allowBFanimupdate = false;
-			healthbarshake();
-			healthbarshake();
-			healthbarshake();
+			healthbarshake(3.0);
 			health -= 0.5 * holyMisses; //0.5 for first time, 1.0 for second time, 1.5 for third time, kinda like a strike system but with 4 strikes?
 			iconP1.animation.play('bf-shot');
 			//dad.playAnim('shoot', true); //no animation bruh
@@ -2854,8 +2854,13 @@ class PlayState extends MusicBeatState
 
 					PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty, PlayState.storyPlaylist[0]);
 					FlxG.sound.music.stop();
-
-					LoadingState.loadAndSwitchState(new PlayState());
+					switch(SONG.song.toLowerCase())
+					{
+						case 'connect':
+							//LoadingState.loadAndSwitchState(new VideoState("assets/videos/Connect_Intro.webm", new PlayState()));
+						default:
+							LoadingState.loadAndSwitchState(new PlayState());
+					}
 				}
 			}
 			else
@@ -2941,49 +2946,49 @@ class PlayState extends MusicBeatState
 					},1);
 		}
 
-	public function healthbarshake()
+	public function healthbarshake(intensity:Float)
 		{
 		new FlxTimer().start(0.01, function(tmr:FlxTimer)
 			{
-				iconP1.y += 10;
-				iconP2.y += 10;
-				healthBar.y += 10;
-				healthBarBG.y += 10;
+				iconP1.y += (10 * intensity);
+				iconP2.y += (10 * intensity);
+				healthBar.y += (10 * intensity);
+				healthBarBG.y += (10 * intensity);
 			});
 			new FlxTimer().start(0.05, function(tmr:FlxTimer)
 			{
-				iconP1.y -= 15;
-				iconP2.y -= 15;
-				healthBar.y -= 15;
-				healthBarBG.y -= 15;
+				iconP1.y -= (15 * intensity);
+				iconP2.y -= (15 * intensity);
+				healthBar.y -= (15 * intensity);
+				healthBarBG.y -= (15 * intensity);
 			});
 			new FlxTimer().start(0.10, function(tmr:FlxTimer)
 			{
-				iconP1.y += 8;
-				iconP2.y += 8;
-				healthBar.y += 8;
-				healthBarBG.y += 8;
+				iconP1.y += (8 * intensity);
+				iconP2.y += (8 * intensity);
+				healthBar.y += (8 * intensity);
+				healthBarBG.y += (8 * intensity);
 			});
 			new FlxTimer().start(0.15, function(tmr:FlxTimer)
 			{
-				iconP1.y -= 5;
-				iconP2.y -= 5;
-				healthBar.y -= 5;
-				healthBarBG.y -= 5;
+				iconP1.y -= (5 * intensity);
+				iconP2.y -= (5 * intensity);
+				healthBar.y -= (5 * intensity);
+				healthBarBG.y -= (5 * intensity);
 			});
 			new FlxTimer().start(0.20, function(tmr:FlxTimer)
 			{
-				iconP1.y += 3;
-				iconP2.y += 3;
-				healthBar.y += 3;
-				healthBarBG.y += 3;
+				iconP1.y += (3 * intensity);
+				iconP2.y += (3 * intensity);
+				healthBar.y += (3 * intensity);
+				healthBarBG.y += (3 * intensity);
 			});
 			new FlxTimer().start(0.25, function(tmr:FlxTimer)
 			{
-				iconP1.y -= 1;
-				iconP2.y -= 1;
-				healthBar.y -= 1;
-				healthBarBG.y -= 1;
+				iconP1.y -= (1 * intensity);
+				iconP2.y -= (1 * intensity);
+				healthBar.y -= (1 * intensity);
+				healthBarBG.y -= (1 * intensity);
 			});
 		}
 
@@ -3675,7 +3680,7 @@ class PlayState extends MusicBeatState
 	{
 		if (!boyfriend.stunned)
 		{
-			healthbarshake();
+			healthbarshake(1.0);
 			if (FlxG.save.data.kadeEngineOldHealthSystem)
 				health -= 0.04;
 			else
@@ -3816,7 +3821,7 @@ class PlayState extends MusicBeatState
 						playerStrums.members[1].animation.play('static');
 						playerStrums.members[2].animation.play('static');
 						playerStrums.members[3].animation.play('static');
-						healthbarshake();
+						healthbarshake(1.0);
 						health -= 0.2;
 						trace('mash ' + mashing);
 					}
@@ -4129,7 +4134,7 @@ class PlayState extends MusicBeatState
 					}
 			}
 
-		if (curSong == 'Song Two')
+		if (curSong == 'Reminisce')
 			{
 				switch (curBeat)
 				{

@@ -25,7 +25,7 @@ class StoryMenuState extends MusicBeatState
 	var scoreText:FlxText;
 
 	var weekData:Array<Dynamic> = [
-		['Connect','Song Two','Salvation']
+		['Connect','Reminisce','Salvation']
 	];
 	var curDifficulty:Int = 1;
 
@@ -353,6 +353,7 @@ class StoryMenuState extends MusicBeatState
 				PlayState.campaignScore = 0;
 				new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/Connect_Intro.webm", new PlayState()));
 					LoadingState.loadAndSwitchState(new PlayState(), true);
 				});
 			}

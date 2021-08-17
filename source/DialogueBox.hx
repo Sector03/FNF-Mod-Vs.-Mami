@@ -217,6 +217,7 @@ class DialogueBox extends FlxSpriteGroup
 
 	var dialogueOpened:Bool = false;
 	var dialogueStarted:Bool = false;
+	var dialogueSkipped:Bool = false;
 	
 	override function update(elapsed:Float)
 	{
@@ -230,9 +231,10 @@ class DialogueBox extends FlxSpriteGroup
 
 		dialogueOpened = true;
 
-		if (FlxG.keys.justPressed.ESCAPE && dialogueStarted == true)
+		if (FlxG.keys.justPressed.ESCAPE && dialogueStarted == true && dialogueSkipped == false)
 			{
 				isEnding = true;
+				dialogueSkipped = true;
 
 				if (PlayState.SONG.song.toLowerCase() == 'connect')
 					FlxG.sound.music.fadeOut(2.2, 0);
