@@ -2743,7 +2743,10 @@ class PlayState extends MusicBeatState
 			allowBFanimupdate = false;
 			healthbarshake(3.0);
 			health -= 0.5 * holyMisses; //0.5 for first time, 1.0 for second time, 1.5 for third time, kinda like a strike system but with 4 strikes?
-			iconP1.animation.play('bf-shot');
+			if (curSong == 'Tetris')
+				iconP1.animation.play('bf-tetris-shot');
+			else
+				iconP1.animation.play('bf-shot');
 			//dad.playAnim('shoot', true); //no animation bruh
 			FlxG.sound.play(Paths.sound('MAMI_shoot','shared'));
 			FlxG.camera.shake(0.02, 0.2);
@@ -2754,7 +2757,10 @@ class PlayState extends MusicBeatState
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
 					allowBFanimupdate = true;
-					iconP1.animation.play('bf');
+					if (curSong == 'Tetris')
+						iconP1.animation.play('bf-tetris');
+					else
+						iconP1.animation.play('bf');
 				});
 		}
 
