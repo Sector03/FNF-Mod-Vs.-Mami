@@ -20,6 +20,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import flixel.math.FlxMath;
 import io.newgrounds.NG;
 import lime.app.Application;
 import openfl.Assets;
@@ -158,12 +159,12 @@ class TitleState extends MusicBeatState
 			// music.loadStream(Paths.music('freakyMenu'));
 			// FlxG.sound.list.add(music);
 			// music.play();
-			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0); //this song prob copyrighted AF lol
 
 			FlxG.sound.music.fadeIn(4, 0, 0.7);
 		}
 
-		Conductor.changeBPM(102);
+		Conductor.changeBPM(171);
 		persistentUpdate = true;
 
 		logoBl = new FlxSprite(-150, -45);
@@ -266,6 +267,8 @@ class TitleState extends MusicBeatState
 			bgFlash.alpha -= 0.0035;
 		//might actually make the alpha a tween so it would be better on pc AND look better
 
+		FlxG.camera.zoom = FlxMath.lerp(1, FlxG.camera.zoom, 0.95);
+
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
@@ -323,7 +326,12 @@ class TitleState extends MusicBeatState
 			transitioning = true;
 			// FlxG.sound.music.stop();
 
-			new FlxTimer().start(0.01, function(tmr:FlxTimer) //orginally 2 lol
+			FlxTween.tween(bgFlash, {y: 1280}, 2, {ease: FlxEase.quadIn});
+			FlxTween.tween(logoBl, {y: 1280}, 2, {ease: FlxEase.quadIn});
+			FlxTween.tween(mamiTitle, {y: 1280}, 2, {ease: FlxEase.quadIn});
+			FlxTween.tween(titleText, {y: 1280}, 2, {ease: FlxEase.quadIn});
+
+			new FlxTimer().start(2.5, function(tmr:FlxTimer) //orginally 2 lol
 			{
 
 				// Get current version of Kade Engine
@@ -404,9 +412,14 @@ class TitleState extends MusicBeatState
 		if (curBeat % 2 == 1)
 			{
 			bgFlash.alpha += 0.25;
-			logoBl.animation.play('bump');
+			logoBl.animation.play('bump', true);
+			mamiTitle.animation.play('idle', true);
 			}
 
+		if (curBeat % 4 == 0)
+			{
+				FlxG.camera.zoom += 0.02;
+			}
 
 		//danceLeft = !danceLeft;
 
@@ -420,42 +433,26 @@ class TitleState extends MusicBeatState
 		switch (curBeat)
 		{
 			case 1:
-				createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
+				createCoolText(['a fnf mod']);
 			// credTextShit.visible = true;
 			case 3:
-				addMoreText('present');
+				addMoreText('by these people');
+				ngSpr.visible = true;
 			// credTextShit.text += '\npresent...';
 			// credTextShit.addText();
-			case 4:
+			case 6:
+				ngSpr.visible = false;
 				deleteCoolText();
 			// credTextShit.visible = false;
 			// credTextShit.text = 'In association \nwith';
 			// credTextShit.screenCenter();
-			case 5:
-				if (Main.watermarks)
-					createCoolText(['Kade Engine', 'by']);
-				else
-					createCoolText(['In Partnership', 'with']);
-			case 7:
-				if (Main.watermarks)
-					addMoreText('KadeDeveloper');
-				else
-				{
-					addMoreText('Newgrounds');
-					ngSpr.visible = true;
-				}
-			// credTextShit.text += '\nNewgrounds';
-			case 8:
-				deleteCoolText();
-				ngSpr.visible = false;
 			// credTextShit.visible = false;
-
 			// credTextShit.text = 'Shoutouts Tom Fulp';
 			// credTextShit.screenCenter();
-			case 9:
+			case 7:
 				createCoolText([curWacky[0]]);
 			// credTextShit.visible = true;
-			case 11:
+			case 9:
 				addMoreText(curWacky[1]);
 			// credTextShit.text += '\nlmao';
 			case 12:
@@ -464,13 +461,13 @@ class TitleState extends MusicBeatState
 			// credTextShit.text = "Friday";
 			// credTextShit.screenCenter();
 			case 13:
-				addMoreText('Friday');
+				addMoreText('The full');
 			// credTextShit.visible = true;
 			case 14:
-				addMoreText('Night');
+				addMoreText('ass vs');
 			// credTextShit.text += '\nNight';
 			case 15:
-				addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+				addMoreText('Mami mod'); // credTextShit.text += '\nFunkin';
 
 			case 16:
 				skipIntro();

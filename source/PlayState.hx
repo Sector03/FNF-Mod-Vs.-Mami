@@ -1071,6 +1071,16 @@ class PlayState extends MusicBeatState
 		// cameras = [FlxG.cameras.list[1]];
 		startingSong = true;
 		
+		new FlxTimer().start(1.5, function(tmr:FlxTimer)
+			{
+				if (health < 0.5)
+					{
+					FlxTween.color(healthBar, 1, 0xffffbdbd, FlxColor.WHITE, {ease: FlxEase.quartOut});
+					FlxTween.color(iconP1, 1, 0xffffbdbd, FlxColor.WHITE, {ease: FlxEase.quartOut});
+					FlxTween.color(iconP2, 1, 0xffffbdbd, FlxColor.WHITE, {ease: FlxEase.quartOut});
+					}
+			}, 0);
+
 		if (isStoryMode)
 		{
 			switch (curSong.toLowerCase())
@@ -2710,6 +2720,7 @@ class PlayState extends MusicBeatState
 							if (daNote.holy)
 							{
 								holyNoteHit();
+								daNote.rating == 'evade';
 							}
 
 							vocals.volume = 0;
@@ -2754,6 +2765,7 @@ class PlayState extends MusicBeatState
 			holyMisses += 1; //start at 1
 			FlxTween.color(healthBar, .20, FlxColor.RED, FlxColor.WHITE, {ease: FlxEase.quadOut});
 			FlxTween.color(iconP1, .20, FlxColor.RED, FlxColor.WHITE, {ease: FlxEase.quadOut});
+			FlxTween.color(iconP2, .20, FlxColor.RED, FlxColor.WHITE, {ease: FlxEase.quadOut});
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
 					allowBFanimupdate = true;
@@ -2909,6 +2921,7 @@ class PlayState extends MusicBeatState
 
 	public function tetrisblockage(percentageBlockage:Int, duration:Int, instant:Bool = false)
 		{
+			canPause = false; //temp(hopefully) solution to people avoiding tetris blocking mechanic 
 			var tetrisBlockagePiece:FlxSprite = new FlxSprite(0, -1080).loadGraphic(Paths.image('tetris/health_blockage'));
 			tetrisBlockagePiece.cameras = [camHUD];
 			tetrisBlockagePiece.antialiasing = false;
@@ -2949,6 +2962,7 @@ class PlayState extends MusicBeatState
 						FlxG.sound.play(Paths.sound('tetris/hpblockage_clear','shared'));
 						remove(tetrisBlockagePiece);
 						healthcap = 0;
+						canPause = true; //temp(hopefully) solution to people avoiding tetris blocking mechanic 
 					},1);
 		}
 
@@ -3021,6 +3035,10 @@ class PlayState extends MusicBeatState
 				totalNotesHit += wife;
 
 			var daRating = daNote.rating;
+			if (daNote.holy)
+				{
+					daRating = 'evade';
+				}
 
 			switch(daRating)
 			{
@@ -3075,6 +3093,11 @@ class PlayState extends MusicBeatState
 							health += 0.1;
 						}
 
+					if (FlxG.save.data.accuracyMod == 0)
+						totalNotesHit += 1;
+					sicks++;
+				case 'evade':
+					daRating = 'evade';
 					if (FlxG.save.data.accuracyMod == 0)
 						totalNotesHit += 1;
 					sicks++;

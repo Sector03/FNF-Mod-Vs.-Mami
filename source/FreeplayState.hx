@@ -8,6 +8,9 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+import flixel.util.FlxTimer;
 import lime.utils.Assets;
 
 
@@ -24,6 +27,7 @@ class FreeplayState extends MusicBeatState
 	var selector:FlxText;
 	var curSelected:Int = 0;
 	var curDifficulty:Int = 1;
+	var selectedSong = false;
 
 	var scoreText:FlxText;
 	var diffText:FlxText;
@@ -181,37 +185,46 @@ class FreeplayState extends MusicBeatState
 		var downP = controls.DOWN_P;
 		var accepted = controls.ACCEPT;
 
-		if (upP)
-		{
-			changeSelection(-1);
-		}
-		if (downP)
-		{
-			changeSelection(1);
-		}
+		if (!selectedSong)
+			{
+			if (upP)
+			{
+				changeSelection(-1);
+			}
+			if (downP)
+			{
+				changeSelection(1);
+			}
 
-		if (controls.LEFT_P)
-			changeDiff(-1);
-		if (controls.RIGHT_P)
-			changeDiff(1);
+			if (controls.LEFT_P)
+				changeDiff(-1);
+			if (controls.RIGHT_P)
+				changeDiff(1);
 
-		if (controls.BACK)
-		{
-			FlxG.switchState(new MainMenuState());
-		}
+			if (controls.BACK)
+			{
+				FlxG.switchState(new MainMenuState());
+			}
 
-		if (accepted)
-		{
-			var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
+			if (accepted)
+			{
+				selectedSong = true;
+				changeSelection(0); //I KNOW I'M SO FUCKING STUPID
+				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 
-			trace(poop);
+				trace(poop);
 
-			PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-			PlayState.isStoryMode = false;
-			PlayState.storyDifficulty = curDifficulty;
-			PlayState.storyWeek = songs[curSelected].week;
-			trace('CUR WEEK' + PlayState.storyWeek);
-			LoadingState.loadAndSwitchState(new PlayState());
+				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+				PlayState.isStoryMode = false;
+				PlayState.storyDifficulty = curDifficulty;
+				PlayState.storyWeek = songs[curSelected].week;
+
+				new FlxTimer().start(1, function(tmr:FlxTimer)
+					{
+						trace('CUR WEEK' + PlayState.storyWeek);
+						LoadingState.loadAndSwitchState(new PlayState());
+					});
+			}
 		}
 	}
 
@@ -243,12 +256,18 @@ class FreeplayState extends MusicBeatState
 
 	function changeSelection(change:Int = 0)
 	{
+		if (selectedSong)
+		{
+			FlxG.sound.play(Paths.sound('confirmMenu'));
+		}
+
 		#if !switch
 		// NGio.logEvent('Fresh');
 		#end
 
 		// NGio.logEvent('Fresh');
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		if (!selectedSong)
+			FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 
 		curSelected += change;
 
@@ -264,9 +283,12 @@ class FreeplayState extends MusicBeatState
 		// lerpScore = 0;
 		#end
 
-		#if PRELOAD_ALL
-		FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
-		#end
+		if (!selectedSong)
+			{
+				#if PRELOAD_ALL
+				FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+				#end
+			}
 
 		var bullShit:Int = 0;
 
@@ -279,6 +301,7 @@ class FreeplayState extends MusicBeatState
 
 		for (item in grpSongs.members)
 		{
+			FlxTween.completeTweensOf(item);
 			item.targetY = bullShit - curSelected;
 			bullShit++;
 
@@ -287,9 +310,30 @@ class FreeplayState extends MusicBeatState
 
 			if (item.targetY == 0)
 			{
-				item.alpha = 1;
-				// item.setGraphicSize(Std.int(item.width));
+				if (selectedSong)
+					{
+						FlxG.sound.play(Paths.sound('confirmMenu'));
+						FlxTween.color(item, 3, FlxColor.RED, FlxColor.WHITE, {ease: FlxEase.quadOut});
+					}
+				else
+					{
+						item.alpha = 1;
+						FlxTween.color(item, 1, FlxColor.YELLOW, FlxColor.WHITE, {ease: FlxEase.quadOut});
+						// item.setGraphicSize(Std.int(item.width));
+					}
 			}
+			else
+				{
+					if (selectedSong)
+						{
+							FlxTween.tween(item, {x: 1000, "alpha": 0}, 1, {ease: FlxEase.quadIn});
+							for (i in 0...iconArray.length)
+								{
+									FlxTween.tween(iconArray[i], {x: 1200, "alpha": 0}, 1, {ease: FlxEase.quadIn});
+									FlxTween.cancelTweensOf(iconArray[curSelected]);
+								}
+						}
+				}
 		}
 	}
 }
