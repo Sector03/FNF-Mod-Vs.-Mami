@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="titlecharacter_1.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="IDLE0000" x="2" y="2" width="737" height="811"/>
+	<SubTexture name="IDLE0001" x="741" y="2" width="737" height="811"/>
+	<SubTexture name="IDLE0002" x="1480" y="2" width="737" height="811"/>
+	<SubTexture name="IDLE0003" x="2219" y="2" width="737" height="811"/>
+	<SubTexture name="IDLE0004" x="2958" y="2" width="737" height="811"/>
+	<SubTexture name="IDLE0005" x="2958" y="2" width="737" height="811"/>
+	<SubTexture name="IDLE0006" x="2" y="815" width="737" height="811"/>
+	<SubTexture name="IDLE0007" x="2" y="815" width="737" height="811"/>
+	<SubTexture name="IDLE0008" x="741" y="815" width="737" height="811"/>
+	<SubTexture name="IDLE0009" x="741" y="815" width="737" height="811"/>
+	<SubTexture name="IDLE0010" x="1480" y="815" width="737" height="811"/>
+	<SubTexture name="IDLE0011" x="1480" y="815" width="737" height="811"/>
+	<SubTexture name="IDLE0012" x="1480" y="815" width="737" height="811"/>
+	<SubTexture name="IDLE0013" x="1480" y="815" width="737" height="811"/>
+</TextureAtlas>

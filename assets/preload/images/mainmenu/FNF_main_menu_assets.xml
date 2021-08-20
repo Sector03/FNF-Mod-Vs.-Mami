@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="FNF_main_menu_assets.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="credits basic0000" x="2" y="2" width="639" height="199"/>
+	<SubTexture name="credits white0000" x="643" y="2" width="639" height="199"/>
+	<SubTexture name="donate basic0000" x="1284" y="2" width="639" height="199"/>
+	<SubTexture name="donate white0000" x="2" y="203" width="639" height="199"/>
+	<SubTexture name="freeplay basic0000" x="643" y="203" width="657" height="234" frameX="18" frameY="35" frameWidth="657" frameHeight="234"/>
+	<SubTexture name="freeplay white0000" x="1302" y="203" width="657" height="234" frameX="18" frameY="35" frameWidth="657" frameHeight="234"/>
+	<SubTexture name="gacha basic0000" x="2" y="439" width="639" height="199"/>
+	<SubTexture name="gacha white0000" x="643" y="439" width="639" height="199"/>
+	<SubTexture name="options basic0000" x="1284" y="439" width="639" height="199"/>
+	<SubTexture name="options white0000" x="2" y="640" width="639" height="199"/>
+	<SubTexture name="story mode basic0000" x="643" y="640" width="619" height="159" frameX="-20" frameY="0" frameWidth="619" frameHeight="159"/>
+	<SubTexture name="story mode white0000" x="1264" y="640" width="619" height="159" frameX="-20" frameY="0" frameWidth="619" frameHeight="159"/>
+</TextureAtlas>

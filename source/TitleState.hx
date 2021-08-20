@@ -345,13 +345,13 @@ class TitleState extends MusicBeatState
 						//trace('outdated lmao! ' + data.trim() + ' != ' + MainMenuState.kadeEngineVer);
 						OutdatedSubState.needVer = data;
 						#if windows //theres only a windows build
-						FlxG.switchState(new StoryMenuState());
+						FlxG.switchState(new MainMenuState());
 						#end
 					}
 					else
 					{
 						#if windows
-						FlxG.switchState(new StoryMenuState());
+						FlxG.switchState(new MainMenuState());
 						#end
 					}
 				}

@@ -6,6 +6,7 @@ import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
+import flixel.effects.FlxFlicker;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxEase;
@@ -38,6 +39,9 @@ class FreeplayState extends MusicBeatState
 	private var curPlaying:Bool = false;
 
 	private var iconArray:Array<HealthIcon> = [];
+
+	var songPlaying:Bool = false;
+	var playingSongText:FlxText;
 
 	override function create()
 	{
@@ -115,6 +119,10 @@ class FreeplayState extends MusicBeatState
 		changeSelection();
 		changeDiff();
 
+		playingSongText = new FlxText(FlxG.width * 0.1, 32, 0, "Press P to toggle song previews. (OFF)", 32);
+		playingSongText.setFormat("VCR OSD Mono", 32, FlxColor.GRAY, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(playingSongText);
+
 		// FlxG.sound.playMusic(Paths.music('title'), 0);
 		// FlxG.sound.music.fadeIn(2, 0, 0.8);
 		selector = new FlxText();
@@ -169,6 +177,30 @@ class FreeplayState extends MusicBeatState
 	{
 		super.update(elapsed);
 
+		if (FlxG.keys.justPressed.P)
+			{
+				songPlaying = !songPlaying;
+			}
+
+		if (FlxG.keys.justPressed.P && songPlaying)
+			{
+				FlxTween.completeTweensOf(playingSongText);
+				FlxTween.color(playingSongText, .5, FlxColor.GRAY, FlxColor.WHITE, {ease: FlxEase.quadOut});
+				FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+				playingSongText.text = "Press P to toggle song previews. (ON)";
+				playingSongText.size = 32;
+			}
+
+		if (FlxG.keys.justPressed.P && !songPlaying)
+			{
+				FlxTween.completeTweensOf(playingSongText);
+				FlxTween.color(playingSongText, .5, FlxColor.WHITE, FlxColor.GRAY, {ease: FlxEase.quadOut});
+				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				playingSongText.color = FlxColor.WHITE;
+				playingSongText.text = "Press P to toggle song previews. (OFF)";
+				playingSongText.size = 32;
+			}
+
 		if (FlxG.sound.music.volume < 0.7)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -208,6 +240,8 @@ class FreeplayState extends MusicBeatState
 
 			if (accepted)
 			{
+				FlxG.sound.music.stop();
+				FlxG.sound.play(Paths.sound('confirmMenu'));
 				selectedSong = true;
 				changeSelection(0); //I KNOW I'M SO FUCKING STUPID
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
@@ -276,19 +310,17 @@ class FreeplayState extends MusicBeatState
 		if (curSelected >= songs.length)
 			curSelected = 0;
 
+		if (songPlaying && !selectedSong)
+			{
+				FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+			}
+
 		// selector.y = (70 * curSelected) + 30;
 
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
 		// lerpScore = 0;
 		#end
-
-		if (!selectedSong)
-			{
-				#if PRELOAD_ALL
-				FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
-				#end
-			}
 
 		var bullShit:Int = 0;
 
@@ -313,7 +345,8 @@ class FreeplayState extends MusicBeatState
 				if (selectedSong)
 					{
 						FlxG.sound.play(Paths.sound('confirmMenu'));
-						FlxTween.color(item, 3, FlxColor.RED, FlxColor.WHITE, {ease: FlxEase.quadOut});
+						FlxTween.color(item, 3, FlxColor.YELLOW, FlxColor.WHITE, {ease: FlxEase.quadOut});
+						FlxFlicker.flicker(item, 1, 0.2, true);
 					}
 				else
 					{

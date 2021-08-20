@@ -671,14 +671,14 @@ class PlayState extends MusicBeatState
 						otherBGStuff.active = false;
 						add(otherBGStuff);				
 
-						gorls = new FlxSprite(-360, 150);
-						gorls.frames = Paths.getSparrowAtlas('mami/BG/BGGirlsDance', 'shared');
-						gorls.animation.addByPrefix('move', "girls dancing instance 1", 24, false);
-						gorls.antialiasing = true;
-						gorls.scrollFactor.set(0.9, 0.9);
-						gorls.updateHitbox();
-						gorls.active = true;
-						add(gorls);
+						holyHomura = new FlxSprite(-360, 350);
+						holyHomura.frames = Paths.getSparrowAtlas('mami/BG/HOLY/HOLY_women', 'shared');
+						holyHomura.animation.addByPrefix('move', "animegirl", 24, false);
+						holyHomura.antialiasing = true;
+						holyHomura.scrollFactor.set(0.9, 0.9);
+						holyHomura.updateHitbox();
+						holyHomura.active = true;
+						add(holyHomura);
 
 						connectLight = new FlxSprite(0, 0).loadGraphic(Paths.image('mami/BG/connect_flash', 'shared'));
 						connectLight.setGraphicSize(Std.int(connectLight.width * 1));
@@ -1071,13 +1071,13 @@ class PlayState extends MusicBeatState
 		// cameras = [FlxG.cameras.list[1]];
 		startingSong = true;
 		
-		new FlxTimer().start(1.5, function(tmr:FlxTimer)
+		new FlxTimer().start(1.15, function(tmr:FlxTimer)
 			{
-				if (health < 0.5)
+				if (healthBar.percent < 20)
 					{
-					FlxTween.color(healthBar, 1, 0xffffbdbd, FlxColor.WHITE, {ease: FlxEase.quartOut});
-					FlxTween.color(iconP1, 1, 0xffffbdbd, FlxColor.WHITE, {ease: FlxEase.quartOut});
-					FlxTween.color(iconP2, 1, 0xffffbdbd, FlxColor.WHITE, {ease: FlxEase.quartOut});
+					FlxTween.color(healthBar, 1, 0xffff8f8f, FlxColor.WHITE, {ease: FlxEase.quartOut});
+					FlxTween.color(iconP1, 1, 0xffff8f8f, FlxColor.WHITE, {ease: FlxEase.quartOut});
+					FlxTween.color(iconP2, 1, 0xffff8f8f, FlxColor.WHITE, {ease: FlxEase.quartOut});
 					}
 			}, 0);
 
@@ -2188,6 +2188,12 @@ class PlayState extends MusicBeatState
 				// phillyCityLights.members[curLight].alpha -= (Conductor.crochet / 1000) * FlxG.elapsed;
 		}
 
+		if (curSong == 'Tetris') 
+			{
+				if (tetrisLight.alpha >= 0.05)
+				tetrisLight.alpha -= .015;
+			}
+
 		super.update(elapsed);
 
 		if (!offsetTesting)
@@ -2629,7 +2635,6 @@ class PlayState extends MusicBeatState
 								//trace (notehealthdmg);
 								//FlxG.camera.shake(0.005, 0.25);
 								camHUD.shake((notehealthdmg / 7.5), 0.25);
-								healthbarshake(0.15);
 
 								if (storyDifficulty == 3)
 									switch(curSong)
@@ -4030,7 +4035,6 @@ class PlayState extends MusicBeatState
 			// dad.dance();
 		}
 
-
 		// yes this updates every step.
 		// yes this is bad
 		// but i'm doing it to update misses and accuracy
@@ -4193,7 +4197,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 			
-		if (curSong == 'Tetris') 
+		if (curSong == 'Tetris' && curBeat >= 64 && curBeat <= 128) 
 			{
 				if (colorCycle <= 3)
 					colorCycle += 1;
@@ -4218,6 +4222,8 @@ class PlayState extends MusicBeatState
 			{
 				switch (curBeat)
 				{
+					case 0:
+						notehealthdmg = 0.0125;
 					case 1:
 						notehealthdmg = 0.01;
 					case 28:
@@ -4247,6 +4253,8 @@ class PlayState extends MusicBeatState
 			{
 				switch (curBeat)
 				{
+					case 0:
+						notehealthdmg = 0.0125;
 					case 1:
 						notehealthdmg = 0.0125;
 					case 28:
@@ -4276,10 +4284,12 @@ class PlayState extends MusicBeatState
 			{
 				switch (curBeat)
 				{
+					case 0:
+						notehealthdmg = 0.0125;
 					case 1:
 						notehealthdmg = 0.0125;
 					case 28:
-						tetrisblockage(70, 6, false);
+						tetrisblockage(75, 6, false);
 					case 96:
 						notehealthdmg = 0.015;
 					case 111:
@@ -4289,24 +4299,48 @@ class PlayState extends MusicBeatState
 					case 168:
 						notehealthdmg = 0.0125;	
 					case 169:
-						tetrisblockage(40, 12, false);	
+						tetrisblockage(45, 12, false);	
 					case 281:
-						tetrisblockage(55, 17, false);	
+						tetrisblockage(60, 17, false);	
 					case 354:
 						notehealthdmg = 0.02;	
 					case 360:
 						notehealthdmg = 0.0150;	
 					case 362:
-						tetrisblockage(70, 30, false);	
+						tetrisblockage(80, 30, false);	
 				}
 			}
-		
+
+		if (curSong == 'Tetris')
+			{
+				switch (curBeat)
+					{
+						case 0:
+							defaultCamZoom = 0.90;
+
+						case 1:
+							defaultCamZoom = 0.90;
+
+						case 16:
+							defaultCamZoom = 0.7;
+
+						case 32:
+							defaultCamZoom = 0.90;
+
+						case 48:
+							defaultCamZoom = 0.7;
+					}
+			}
+
 		switch (curStage)
 		{
 			case 'subway':
 				gorls.animation.play('move', true);
 
 			case 'subway-holy':
+				holyHomura.animation.play('move', true);
+
+			case 'subway-tetris':
 				holyHomura.animation.play('move', true);
 
 			case 'school':
