@@ -90,6 +90,8 @@ class PlayState extends MusicBeatState
 
 	var halloweenLevel:Bool = false;
 
+	public static var isDisco:Bool = false;
+
 	var songLength:Float = 0;
 	var kadeEngineWatermark:FlxText;
 	
@@ -203,6 +205,8 @@ class PlayState extends MusicBeatState
 	public static var campaignScore:Int = 0;
 
 	var defaultCamZoom:Float = 1.05;
+
+	var tetrisZoom:Float = 0.00;
 
 	public static var daPixelZoom:Float = 6;
 
@@ -438,6 +442,7 @@ class PlayState extends MusicBeatState
 
 		holyMisses = 1;
 		notehealthdmg = 0;
+		tetrisZoom = 0.00;
 
 		#if sys
 		executeModchart = FileSystem.exists(Paths.lua(PlayState.SONG.song.toLowerCase()  + "/modchart"));
@@ -2926,7 +2931,7 @@ class PlayState extends MusicBeatState
 
 	public function tetrisblockage(percentageBlockage:Int, duration:Int, instant:Bool = false)
 		{
-			canPause = false; //temp(hopefully) solution to people avoiding tetris blocking mechanic 
+			//canPause = false; //temp(hopefully) solution to people avoiding tetris blocking mechanic 
 			var tetrisBlockagePiece:FlxSprite = new FlxSprite(0, -1080).loadGraphic(Paths.image('tetris/health_blockage'));
 			tetrisBlockagePiece.cameras = [camHUD];
 			tetrisBlockagePiece.antialiasing = false;
@@ -4090,22 +4095,10 @@ class PlayState extends MusicBeatState
 			camHUD.zoom += 0.03;
 		}
 
-		if (curSong.toLowerCase() == 'tetris' && curBeat >= 162 && curBeat < 176 && camZooming && FlxG.camera.zoom < 1.35)
+		if (curSong.toLowerCase() == 'tetris' && camZooming && FlxG.camera.zoom < 1.35)
 			{
-				FlxG.camera.zoom += 0.02;
-				camHUD.zoom += 0.05;
-			}
-
-		if (curSong.toLowerCase() == 'tetris' && curBeat >= 287 && curBeat < 305 && camZooming && FlxG.camera.zoom < 1.35)
-			{
-				FlxG.camera.zoom += 0.02;
-				camHUD.zoom += 0.05;
-			}
-
-		if (curSong.toLowerCase() == 'tetris' && curBeat >= 305 && curBeat < 320 && camZooming && FlxG.camera.zoom < 1.35)
-			{
-				FlxG.camera.zoom += 0.025;
-				camHUD.zoom += 0.060;
+				FlxG.camera.zoom += (tetrisZoom / 2); //0.02
+				camHUD.zoom += tetrisZoom; //0.05
 			}
 
 		if (camZooming && FlxG.camera.zoom < 1.35 && curBeat % 4 == 0)
@@ -4197,7 +4190,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 			
-		if (curSong == 'Tetris' && curBeat >= 64 && curBeat <= 128) 
+		if (curSong == 'Tetris' && isDisco) 
 			{
 				if (colorCycle <= 3)
 					colorCycle += 1;
@@ -4315,9 +4308,6 @@ class PlayState extends MusicBeatState
 			{
 				switch (curBeat)
 					{
-						case 0:
-							defaultCamZoom = 0.90;
-
 						case 1:
 							defaultCamZoom = 0.90;
 
@@ -4329,8 +4319,44 @@ class PlayState extends MusicBeatState
 
 						case 48:
 							defaultCamZoom = 0.7;
+
+						case 64:
+							isDisco = true;
+							tetrisZoom = 0.03;
+
+						case 82:
+							tetrisZoom = 0.015;
+
+						case 92:
+							tetrisZoom = 0.04;
+
+						case 128:
+							tetrisZoom = 0.02;
+
+						case 160:
+							isDisco = false;
+							tetrisZoom = 0.00;
+
+						case 256:
+							tetrisZoom = 0.01;
+
+						case 272:
+							tetrisZoom = 0.015;
+
+						case 286:
+							isDisco = true;
+							tetrisZoom = 0.03;
+
+						case 304:
+							tetrisZoom = 0.05;
+
+						case 352:
+							isDisco = false;
+							tetrisZoom = 0.02;
 					}
 			}
+
+		//isDisco = true;
 
 		switch (curStage)
 		{
