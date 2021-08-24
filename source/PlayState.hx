@@ -4361,7 +4361,8 @@ class PlayState extends MusicBeatState
 		switch (curStage)
 		{
 			case 'subway':
-				gorls.animation.play('move', true);
+				if(curBeat % 2 == 1)
+					gorls.animation.play('move', true);
 
 			case 'subway-holy':
 				holyHomura.animation.play('move', true);
