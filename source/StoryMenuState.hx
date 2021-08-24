@@ -96,8 +96,10 @@ class StoryMenuState extends MusicBeatState
 		grpWeekText = new FlxTypedGroup<MenuItem>();
 		add(grpWeekText);
 
-		var blackBarThingie:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 56, FlxColor.BLACK);
+		var blackBarThingie:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('menu/top','shared'));
 		add(blackBarThingie);
+		var blackbottom:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('menu/bottom','shared'));
+		add(blackbottom);
 
 		grpWeekCharacters = new FlxTypedGroup<MenuCharacter>();
 
@@ -170,6 +172,7 @@ class StoryMenuState extends MusicBeatState
 
 		add(yellowBG);
 		add(grpWeekCharacters);
+		add(blackBarThingie);
 
 		flower = new FlxSprite(-15, 0).loadGraphic(Paths.image('weekm'));
 		flower.setGraphicSize(Std.int(flower.width * 0.55));
