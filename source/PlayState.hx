@@ -3460,6 +3460,8 @@ class PlayState extends MusicBeatState
 										if (controlArray[ignoreList[shit]])
 											inIgnoreList = true;
 									}
+									if (!inIgnoreList)
+										badNoteCheck();
 								}
 							}
 						}
@@ -3566,6 +3568,10 @@ class PlayState extends MusicBeatState
 						daNote.destroy();
 					}
 				}
+				else
+					{
+						badNoteCheck();
+					}
 			}
 	
 			if ((up || right || down || left) && generatedMusic || (upHold || downHold || leftHold || rightHold) && loadRep && generatedMusic)
@@ -3763,7 +3769,44 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	/*function badNoteCheck()
+	function noteMisswithoutDaNote(direction:Int = 1)
+		{
+			if (!boyfriend.stunned)
+				{
+					healthbarshake(1.0);
+					if (FlxG.save.data.kadeEngineOldHealthSystem)
+						health -= 0.04;
+					else
+						health -= 0.1;
+		
+					if (combo > 5 && gf.animOffsets.exists('sad'))
+					{
+						gf.playAnim('sad');
+					}
+					combo = 0;
+					misses++;
+
+				songScore -= 10;
+				FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
+
+				if (allowBFanimupdate)
+					switch (direction)
+					{
+						case 0:
+							boyfriend.playAnim('singLEFTmiss', true);
+						case 1:
+							boyfriend.playAnim('singDOWNmiss', true);
+						case 2:
+							boyfriend.playAnim('singUPmiss', true);
+						case 3:
+							boyfriend.playAnim('singRIGHTmiss', true);
+					}
+
+				updateAccuracy();	
+				}
+		}
+
+	function badNoteCheck()
 		{
 			// just double pasting this shit cuz fuk u
 			// REDO THIS SYSTEM!
@@ -3773,16 +3816,16 @@ class PlayState extends MusicBeatState
 			var leftP = controls.LEFT_P;
 	
 			if (leftP)
-				noteMiss(0);
+				noteMisswithoutDaNote(0);
 			if (upP)
-				noteMiss(2);
+				noteMisswithoutDaNote(2);
 			if (rightP)
-				noteMiss(3);
+				noteMisswithoutDaNote(3);
 			if (downP)
-				noteMiss(1);
+				noteMisswithoutDaNote(1);
 			updateAccuracy();
 		}
-	*/
+	
 	function updateAccuracy() 
 		{
 			totalPlayed += 1;
@@ -3844,7 +3887,6 @@ class PlayState extends MusicBeatState
 						if (b)
 							mashing++;
 					}
-
 					// ANTI MASH CODE FOR THE BOYS
 
 					if (mashing <= getKeyPresses(note) && mashViolations < 2)
