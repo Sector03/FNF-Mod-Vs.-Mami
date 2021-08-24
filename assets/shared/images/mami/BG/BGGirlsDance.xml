@@ -2,18 +2,18 @@
 <TextureAtlas imagePath="BGGirlsDance.png">
 	<!-- Created with Adobe Animate version 21.0.7.42652 -->
 	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="girls dancing instance 10000" x="0" y="0" width="2216" height="668" frameX="0" frameY="-11" frameWidth="2216" frameHeight="679"/>
-	<SubTexture name="girls dancing instance 10001" x="0" y="0" width="2216" height="668" frameX="0" frameY="-11" frameWidth="2216" frameHeight="679"/>
-	<SubTexture name="girls dancing instance 10002" x="0" y="668" width="2210" height="674" frameX="-3" frameY="-5" frameWidth="2216" frameHeight="679"/>
-	<SubTexture name="girls dancing instance 10003" x="0" y="668" width="2210" height="674" frameX="-3" frameY="-5" frameWidth="2216" frameHeight="679"/>
-	<SubTexture name="girls dancing instance 10004" x="0" y="1342" width="2207" height="677" frameX="-4" frameY="-2" frameWidth="2216" frameHeight="679"/>
-	<SubTexture name="girls dancing instance 10005" x="0" y="1342" width="2207" height="677" frameX="-4" frameY="-2" frameWidth="2216" frameHeight="679"/>
-	<SubTexture name="girls dancing instance 10006" x="0" y="2019" width="2204" height="678" frameX="-5" frameY="0" frameWidth="2216" frameHeight="679"/>
-	<SubTexture name="girls dancing instance 10007" x="0" y="2019" width="2204" height="678" frameX="-5" frameY="0" frameWidth="2216" frameHeight="679"/>
-	<SubTexture name="girls dancing instance 10008" x="0" y="2019" width="2204" height="678" frameX="-5" frameY="0" frameWidth="2216" frameHeight="679"/>
-	<SubTexture name="girls dancing instance 10009" x="0" y="2019" width="2204" height="678" frameX="-5" frameY="0" frameWidth="2216" frameHeight="679"/>
-	<SubTexture name="girls dancing instance 10010" x="0" y="2019" width="2204" height="678" frameX="-5" frameY="0" frameWidth="2216" frameHeight="679"/>
-	<SubTexture name="girls dancing instance 10011" x="0" y="2019" width="2204" height="678" frameX="-5" frameY="0" frameWidth="2216" frameHeight="679"/>
-	<SubTexture name="girls dancing instance 10012" x="0" y="2019" width="2204" height="678" frameX="-5" frameY="0" frameWidth="2216" frameHeight="679"/>
-	<SubTexture name="girls dancing instance 10013" x="0" y="2019" width="2204" height="678" frameX="-5" frameY="0" frameWidth="2216" frameHeight="679"/>
+	<SubTexture name="girls dancing instance 10000" x="0" y="0" width="2231" height="696" frameX="-3" frameY="-4" frameWidth="2239" frameHeight="700"/>
+	<SubTexture name="girls dancing instance 10001" x="0" y="0" width="2231" height="696" frameX="-3" frameY="-4" frameWidth="2239" frameHeight="700"/>
+	<SubTexture name="girls dancing instance 10002" x="0" y="696" width="2239" height="700"/>
+	<SubTexture name="girls dancing instance 10003" x="0" y="696" width="2239" height="700"/>
+	<SubTexture name="girls dancing instance 10004" x="0" y="1396" width="2227" height="699" frameX="-6" frameY="-1" frameWidth="2239" frameHeight="700"/>
+	<SubTexture name="girls dancing instance 10005" x="0" y="1396" width="2227" height="699" frameX="-6" frameY="-1" frameWidth="2239" frameHeight="700"/>
+	<SubTexture name="girls dancing instance 10006" x="0" y="2095" width="2221" height="698" frameX="-9" frameY="-2" frameWidth="2239" frameHeight="700"/>
+	<SubTexture name="girls dancing instance 10007" x="0" y="2095" width="2221" height="698" frameX="-9" frameY="-2" frameWidth="2239" frameHeight="700"/>
+	<SubTexture name="girls dancing instance 10008" x="0" y="2793" width="2217" height="698" frameX="-11" frameY="-2" frameWidth="2239" frameHeight="700"/>
+	<SubTexture name="girls dancing instance 10009" x="0" y="2793" width="2217" height="698" frameX="-11" frameY="-2" frameWidth="2239" frameHeight="700"/>
+	<SubTexture name="girls dancing instance 10010" x="0" y="2793" width="2217" height="698" frameX="-11" frameY="-2" frameWidth="2239" frameHeight="700"/>
+	<SubTexture name="girls dancing instance 10011" x="0" y="2793" width="2217" height="698" frameX="-11" frameY="-2" frameWidth="2239" frameHeight="700"/>
+	<SubTexture name="girls dancing instance 10012" x="0" y="2793" width="2217" height="698" frameX="-11" frameY="-2" frameWidth="2239" frameHeight="700"/>
+	<SubTexture name="girls dancing instance 10013" x="0" y="2793" width="2217" height="698" frameX="-11" frameY="-2" frameWidth="2239" frameHeight="700"/>
 </TextureAtlas>
