@@ -27,11 +27,11 @@ class StoryMenuState extends MusicBeatState
 
 	var weekData:Array<Dynamic> = [
 		['Connect','Reminisce','Salvation'],
-		['Piss']
+		['???', '???', '???']
 	];
 	var curDifficulty:Int = 1;
 
-	public static var weekUnlocked:Array<Bool> = [true, true];
+	public static var weekUnlocked:Array<Bool> = [true];
 
 	var weekCharacters:Array<Dynamic> = [
 		['', 'bf', 'gf']
@@ -39,7 +39,7 @@ class StoryMenuState extends MusicBeatState
 
 	var weekNames:Array<String> = [
 		"Mami The Witch Hunter",
-		"pissy wissy"
+		"???"
 	];
 
 	var txtWeekTitle:FlxText;
@@ -61,6 +61,9 @@ class StoryMenuState extends MusicBeatState
 	var holyConfirmBG:FlxSprite;
 	var holyConfirm:FlxText;
 	var holySelected:Bool = false;
+
+	var storyWeekBG:FlxSprite;
+	var storyWeek2BG:FlxSprite;
 
 	override function create()
 	{
@@ -102,8 +105,16 @@ class StoryMenuState extends MusicBeatState
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
 		var yellowBG:FlxSprite = new FlxSprite(0, 56).makeGraphic(FlxG.width, 400, 0xFFF9CF51);
 
-		var storyWeekBG:FlxSprite = new FlxSprite(0, -100).loadGraphic(Paths.image('storymenu/week'+ curWeek + 'bg', 'preload'));
+		storyWeek2BG = new FlxSprite(0, -100).loadGraphic(Paths.image('storymenu/week1bg', 'preload'));
+		storyWeek2BG.antialiasing = true;
+		storyWeek2BG.visible = false;
+		//haxeflixe please make the week bg change thanks -Juan
+		add(storyWeek2BG);
+		FlxTween.linearMotion(storyWeek2BG, 0, -1280, 0, -100, 2, {ease: FlxEase.quadOut});
+
+		storyWeekBG = new FlxSprite(0, -100).loadGraphic(Paths.image('storymenu/week0bg', 'preload'));
 		storyWeekBG.antialiasing = true;
+		storyWeekBG.visible = true;
 		//haxeflixe please make the week bg change thanks -Juan
 		add(storyWeekBG);
 		FlxTween.linearMotion(storyWeekBG, 0, -1280, 0, -100, 2, {ease: FlxEase.quadOut});
@@ -111,6 +122,7 @@ class StoryMenuState extends MusicBeatState
 		new FlxTimer().start(2, function(tmr:FlxTimer)
 			{
 				FlxTween.tween(storyWeekBG, {y: -25}, 7, {type: FlxTweenType.PINGPONG, ease: FlxEase.quadInOut});
+				FlxTween.tween(storyWeek2BG, {y: -25}, 7, {type: FlxTweenType.PINGPONG, ease: FlxEase.quadInOut});
 			});
 
 		var scoreBlackBG:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('storymenu/top_section', 'preload'));
@@ -182,7 +194,7 @@ class StoryMenuState extends MusicBeatState
 		leftArrow.animation.play('idle');
 		difficultySelectors.add(leftArrow);
 
-		sprDifficulty = new FlxSprite(leftArrow.x + 95, leftArrow.y);
+		sprDifficulty = new FlxSprite(leftArrow.x + 95, 540);
 		sprDifficulty.frames = ui_tex;
 		sprDifficulty.animation.addByPrefix('easy', 'EASY');
 		sprDifficulty.animation.addByPrefix('normal', 'NORMAL');
@@ -201,7 +213,7 @@ class StoryMenuState extends MusicBeatState
 		difficultySelectors.add(rightArrow);
 
 		FlxTween.linearMotion(leftArrow, 900, 1280, 900, 525, 2, {ease: FlxEase.quadOut});
-		FlxTween.linearMotion(sprDifficulty, 995, 1280, 995, 525, 2, {ease: FlxEase.quadOut});
+		FlxTween.linearMotion(sprDifficulty, 995, 1280, 1015, 540, 2, {ease: FlxEase.quadOut});
 		FlxTween.linearMotion(rightArrow, 1200, 1280, 1200, 525, 2, {ease: FlxEase.quadOut});
 
 		trace("Line 150");
@@ -274,6 +286,22 @@ class StoryMenuState extends MusicBeatState
 			holyConfirmBG.alpha = 0;
 			}
 
+		if (controls.UP)
+			{
+			FlxTween.cancelTweensOf(holyConfirm);
+			FlxTween.cancelTweensOf(holyConfirmBG);
+			holyConfirm.alpha = 0;
+			holyConfirmBG.alpha = 0;
+			}
+
+		if (controls.DOWN)
+			{
+			FlxTween.cancelTweensOf(holyConfirm);
+			FlxTween.cancelTweensOf(holyConfirmBG);
+			holyConfirm.alpha = 0;
+			holyConfirmBG.alpha = 0;
+			}
+
 		scoreText.text = "" + lerpScore;
 
 		//scoreText.text = "WEEK SCORE:" + lerpScore;
@@ -284,6 +312,21 @@ class StoryMenuState extends MusicBeatState
 		// FlxG.watch.addQuick('font', scoreText.font);
 
 		difficultySelectors.visible = weekUnlocked[curWeek];
+
+
+		if (curWeek == 1)
+			{
+				storyWeekBG.visible = false;
+				storyWeek2BG.visible = true;
+				difficultySelectors.visible = true;
+			}
+		else
+			{
+				storyWeekBG.visible = true;
+				storyWeek2BG.visible = false;
+				difficultySelectors.visible = true;
+			}
+
 
 		grpLocks.forEach(function(lock:FlxSprite)
 		{
@@ -304,23 +347,24 @@ class StoryMenuState extends MusicBeatState
 					changeWeek(1);
 				}
 
-				if (controls.RIGHT)
+				if (controls.RIGHT && curWeek == 0)
 					rightArrow.animation.play('press')
 				else
 					rightArrow.animation.play('idle');
 
-				if (controls.LEFT)
+				if (controls.LEFT && curWeek == 0)
 					leftArrow.animation.play('press');
 				else
 					leftArrow.animation.play('idle');
 
-				if (controls.RIGHT_P)
+				if (controls.RIGHT_P && curWeek == 0)
 					changeDifficulty(1);
-				if (controls.LEFT_P)
+
+				if (controls.LEFT_P && curWeek == 0)
 					changeDifficulty(-1);
 			}
 
-			if (controls.ACCEPT)
+			if (controls.ACCEPT && curWeek == 0)
 			{
 				if (curDifficulty == 3)
 					{
@@ -334,10 +378,13 @@ class StoryMenuState extends MusicBeatState
 								holySelected = true;
 								}
 							FlxG.sound.play(Paths.sound('confirmMenu'));
-							holyConfirm.y = 370;
-							holyConfirmBG.y = 357;
-							FlxTween.tween(holyConfirm, {y: 360, alpha: 1}, .3, {type: FlxTweenType.ONESHOT, ease: FlxEase.quadOut});
-							FlxTween.tween(holyConfirmBG, {y: 347, alpha: 1}, .3, {type: FlxTweenType.ONESHOT, ease: FlxEase.quadOut});
+							if (!holySelected) //just to make sure it doesn't move after you select it??
+								{
+								holyConfirm.y = 370;
+								holyConfirmBG.y = 357;
+								FlxTween.tween(holyConfirm, {y: 360, alpha: 1}, .3, {type: FlxTweenType.ONESHOT, ease: FlxEase.quadOut});
+								FlxTween.tween(holyConfirmBG, {y: 347, alpha: 1}, .3, {type: FlxTweenType.ONESHOT, ease: FlxEase.quadOut});
+								}
 							}
 					}
 				else
@@ -345,9 +392,14 @@ class StoryMenuState extends MusicBeatState
 						selectWeek();
 					}
 			}
+			else if (controls.ACCEPT && curWeek == 1)
+				{
+					FlxG.sound.play(Paths.sound('errorMenu'));
+					FlxTween.color(storyWeek2BG, 1, 0xffff8f8f, FlxColor.WHITE, {ease: FlxEase.quartOut});
+				}
 		}
 
-		if (curDifficulty == 3)
+		if (curDifficulty == 3 && curWeek == 0)
 			txtTracklist.color = 0xFFFEE897;
 		else
 			txtTracklist.color = 0xFFe55777;
@@ -386,7 +438,13 @@ class StoryMenuState extends MusicBeatState
 			{
 				if (stopspamming == false)
 				{
-					FlxG.sound.play(Paths.sound('confirmMenu'));
+					if (curDifficulty == 3)
+						{
+						FlxTween.completeTweensOf(holyConfirm);
+						FlxTween.completeTweensOf(holyConfirmBG);
+						}
+					else
+						FlxG.sound.play(Paths.sound('confirmMenu'));
 
 					grpWeekText.members[curWeek].startFlashing();
 					//grpWeekCharacters.members[1].animation.play('bfConfirm');
@@ -437,16 +495,16 @@ class StoryMenuState extends MusicBeatState
 		{
 			case 0:
 				sprDifficulty.animation.play('easy');
-				sprDifficulty.offset.x = 20;
+				sprDifficulty.offset.x = 40;
 			case 1:
 				sprDifficulty.animation.play('normal');
-				sprDifficulty.offset.x = 70;
+				sprDifficulty.offset.x = 50;
 			case 2:
 				sprDifficulty.animation.play('hard');
-				sprDifficulty.offset.x = 20;
+				sprDifficulty.offset.x = 45;
 			case 3:
 				sprDifficulty.animation.play('holy');
-				sprDifficulty.offset.x = 20;
+				sprDifficulty.offset.x = 40;
 		}
 
 		sprDifficulty.alpha = 0;

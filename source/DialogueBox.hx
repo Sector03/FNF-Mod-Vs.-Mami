@@ -266,7 +266,7 @@ class DialogueBox extends FlxSpriteGroup
 		}
 				
 
-		if (FlxG.keys.justPressed.ENTER && dialogueStarted == true)
+		if (FlxG.keys.justPressed.ENTER && dialogueStarted == true && isEnding == false)
 		{
 			remove(dialogue);
 				

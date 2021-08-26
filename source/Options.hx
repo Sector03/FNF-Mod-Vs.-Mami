@@ -506,28 +506,7 @@ class ArrowColors extends Option
 
 	private override function updateDisplay():String
 	{
-		return "Arrow Colors " + (!FlxG.save.data.arrowColorCustom ? "Vanilla" : "Modifyed");
-	}
-}
-
-class HealthSystem extends Option
-{
-	public function new(desc:String)
-	{
-		super();
-		description = desc;
-	}
-
-	public override function press():Bool
-	{
-		FlxG.save.data.kadeEngineOldHealthSystem = !FlxG.save.data.kadeEngineOldHealthSystem;
-		display = updateDisplay();
-		return true;
-	}
-
-	private override function updateDisplay():String
-	{
-		return "Health System " + (!FlxG.save.data.kadeEngineOldHealthSystem ? "Old" : "New");
+		return "Arrow Colors " + (!FlxG.save.data.arrowColorCustom ? "Vanilla" : "Custom");
 	}
 }
 
@@ -621,5 +600,68 @@ class LangoRussian extends Option
 	private override function updateDisplay():String
 	{
 		return "Russian " + (!FlxG.save.data.langoRussian ? " " : "Current");
+	}
+}
+
+class FlashingLights extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.flashingLights = !FlxG.save.data.flashingLights;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Flashing Lights " + (!FlxG.save.data.flashingLights ? "Off" : "On");
+	}
+}
+
+class GhostTapping extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.ghostTapping = !FlxG.save.data.ghostTapping;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Ghost Tapping " + (!FlxG.save.data.ghostTapping ? "Off" : "On");
+	}
+}
+
+class CopyrightMusic extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.copyrightedMusic = !FlxG.save.data.copyrightedMusic;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Use Copyrighted Music " + (!FlxG.save.data.copyrightedMusic ? "Off" : "On");
 	}
 }

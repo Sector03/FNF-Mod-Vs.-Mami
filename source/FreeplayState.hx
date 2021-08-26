@@ -186,7 +186,7 @@ class FreeplayState extends MusicBeatState
 			{
 				FlxTween.completeTweensOf(playingSongText);
 				FlxTween.color(playingSongText, .5, FlxColor.GRAY, FlxColor.WHITE, {ease: FlxEase.quadOut});
-				FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+				FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0); //COPYRIGHT MUSIC THING DOESN'T WORK HERE JUST YET
 				playingSongText.text = "Press P to toggle song previews. (ON)";
 				playingSongText.size = 32;
 			}

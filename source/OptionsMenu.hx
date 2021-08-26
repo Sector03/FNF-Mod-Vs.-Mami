@@ -20,6 +20,13 @@ class OptionsMenu extends MusicBeatState
 	var curSelected:Int = 0;
 
 	var options:Array<OptionCatagory> = [
+		
+		new OptionCatagory("Vs Mami Settings", [
+			new CopyrightMusic("Use copyrighted music in Connect."),
+			new FlashingLights("Remove effects for players that are epileptic."),
+			new GhostTapping("Allows you to tap when there is no notes and don't receive a miss.")
+		]),
+
 		new OptionCatagory("Gameplay", [
 			new DFJKOption(controls),
 			new Judgement("Customize your Hit Timings (LEFT or RIGHT)"),
@@ -30,9 +37,9 @@ class OptionsMenu extends MusicBeatState
 			new AccuracyDOption("Change how accuracy is calculated. (Accurate = Simple, Complex = Milisecond Based)"),
 			// new OffsetMenu("Get a note offset based off of your inputs!"),
 			new CustomizeGameplay("Drag'n'Drop Gameplay Modules around to your preference"),
-			new HealthSystem("Toggle between the New Health system from KE 1.6, or the old one."),
 			new ResetButton("Toggle if you want the option to restart the song by pressing R.")
 		]),
+
 		new OptionCatagory("Appearence", [
 			new SongPositionOption("Show the songs current position (as a bar)"),
 			new DownscrollOption("Change the layout of the strumline."),
@@ -41,7 +48,7 @@ class OptionsMenu extends MusicBeatState
 			#end
 			new AccuracyOption("Display accuracy information."),
 			new NPSDisplayOption("Shows your current Notes Per Second."),
-			new ArrowColors("Toggle between Vanilla or modifyed arrow colors.")
+			new ArrowColors("Toggle between Vanilla or custom arrow colors.")
 		]),
 
 		new OptionCatagory("Language", [

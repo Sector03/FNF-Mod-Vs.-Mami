@@ -35,7 +35,8 @@ class CreditState extends MusicBeatState
 		'boinkbonktext', //BoinkBonk
 		'sectortext', //Sector
 		'vidztext', //Vidz
-		'magbrostext']; //Magbros
+		'magbrostext', //Magbros
+		'ascentitext']; //Ascenti
 	#else
 	var optionShit:Array<String> = [
 		'Fade Revamped', //Fade Revamped
@@ -44,7 +45,8 @@ class CreditState extends MusicBeatState
 		'BoinkBonk', //BoinkBonk
 		'Sector', //Sector
 		'Vidz', //Vidz
-		'Magbros']; //Magbros
+		'Magbros', //Magbros
+		'Ascenti']; //Ascenti
 	#end
 	//ROLES
 	#if !switch
@@ -53,18 +55,20 @@ class CreditState extends MusicBeatState
 		'Co-Director, Publisher, Art', //Egg Overlord
 		'Co-Director, Vocalist, Advisor', //TheAwfulUsername
 		'Animator', //BoinkBonk
-		'Coder, Art Quality Assurance, Charter', //Sector
+		'Coder, General Quality Assurance, Charter', //Sector
 		'Coder', //Vidz
-		'Musician']; //Magbros
+		'Musician', //Magbros
+		'Connect Cutscene Animator']; //Ascenti
 	#else
 	var credinfolist:Array<String> = [
 		'Lead Director, Charter, Vocalist', //Fade Revamped
 		'Co-Director, Publisher, Art', //Egg Overlord
 		'Co-Director, Vocalist, Advisor', //TheAwfulUsername
 		'Animator', //BoinkBonk
-		'Lead Coder, Art QA', //Sector
+		'Coder, General Quality Assurance, Charter', //Sector
 		'Coder', //Vidz
-		'Musician']; //Magbros
+		'Musician', //Magbros
+		'Connect Cutscene Animator']; //Ascenti
 	#end
 	//ICONS
 	#if !switch
@@ -75,16 +79,18 @@ class CreditState extends MusicBeatState
 		'boinkbonkicon', //BoinkBonk
 		'sectoricon', //Sector
 		'vidzicon', //Vidz
-		'magbrosicon']; //Magbros
+		'magbrosicon', //Magbros
+		'acentiicon']; //Ascenti
 	#else
 	var crediconlist:Array<String> = [
-		'faderevamped', //Fade Revamped
-		'eggoverlord', //Egg Overlord
-		'theawfulusername', //TheAwfulUsername
-		'boinkbonk', //BoinkBonk
-		'sector', //Sector
-		'vidz', //Vidz
-		'magbros']; //Magbros
+		'faderevampedicon', //Fade Revamped
+		'eggoverlordicon', //Egg Overlord
+		'theawfulusernameicon', //TheAwfulUsername
+		'boinkbonkicon', //BoinkBonk
+		'sectoricon', //Sector
+		'vidzicon', //Vidz
+		'magbrosicon', //Magbros
+		'acentiicon']; //Ascenti
 	#end
 
 
@@ -262,9 +268,9 @@ class CreditState extends MusicBeatState
 						{
 							case 'faderevampedtext':
 								#if linux
-								Sys.command('/usr/bin/xdg-open', ["https://gamebanana.com/members/1945012", "&"]);
+								Sys.command('/usr/bin/xdg-open', ["https://twitter.com/FadeRevamped", "&"]);
 								#else
-								FlxG.openURL('https://gamebanana.com/members/1945012');
+								FlxG.openURL('https://twitter.com/FadeRevamped');
 								#end
 							case 'eggoverlordtext':
 								#if linux
@@ -303,6 +309,12 @@ class CreditState extends MusicBeatState
 								Sys.command('/usr/bin/xdg-open', ["https://gamebanana.com/members/1805209", "&"]);
 								#else
 								FlxG.openURL('https://gamebanana.com/members/1805209');
+								#end
+							case 'ascentitext':
+								#if linux
+								Sys.command('/usr/bin/xdg-open', ["https://gamebanana.com/members/", "&"]);
+								#else
+								FlxG.openURL('https://gamebanana.com/members/'); //idk it lol
 								#end
 					};
 				}
@@ -368,7 +380,7 @@ class CreditState extends MusicBeatState
 				creditRoleText.text = "Animator";	
 				creditNameText.text = "BoinkBonk";
 			case 4:
-				creditRoleText.text = "Lead Coder, Art QA, Charter";	
+				creditRoleText.text = "Lead Coder, General Quality Assurance, Charter";	
 				creditNameText.text = "Sector";
 			case 5:
 				creditRoleText.text = "Coder";
@@ -376,6 +388,9 @@ class CreditState extends MusicBeatState
 			case 6:
 				creditRoleText.text = "Musician";
 				creditNameText.text = "Magbros";
+			case 7:
+				creditRoleText.text = "Connect Cutscene Animator";
+				creditNameText.text = "Ascenti";
 		}
 	}
 }

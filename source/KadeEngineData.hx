@@ -63,9 +63,6 @@ class KadeEngineData
 		if (FlxG.save.data.arrowColorCustom == null)
 			FlxG.save.data.arrowColorCustom = true;
 
-		if (FlxG.save.data.kadeEngineOldHealthSystem == null)
-			FlxG.save.data.kadeEngineOldHealthSystem = true;
-
 		if (FlxG.save.data.resetButton == null)
 			FlxG.save.data.resetButton = true;
 
@@ -77,6 +74,15 @@ class KadeEngineData
 
 		if (FlxG.save.data.langoRussian == null)
 			FlxG.save.data.langoRussian = false;
+
+		if (FlxG.save.data.flashingLights == null)
+			FlxG.save.data.flashingLights = true;
+
+		if (FlxG.save.data.ghostTapping == null)
+			FlxG.save.data.ghostTapping = true;
+
+		if (FlxG.save.data.copyrightedMusic == null)
+			FlxG.save.data.copyrightedMusic = false;
 
 		if (FlxG.save.data.tickets == null)
 			FlxG.save.data.tickets = 0;

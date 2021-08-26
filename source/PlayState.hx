@@ -191,6 +191,8 @@ class PlayState extends MusicBeatState
 	var tetrisLight:FlxSprite;
 	var colorCycle:Int = 0;
 
+	var tetrisCrowd:FlxSprite;
+
 	var fc:Bool = true;
 
 	var bgGirls:BackgroundGirls;
@@ -694,6 +696,19 @@ class PlayState extends MusicBeatState
 						connectLight.alpha = 0.0;
 						connectLight.cameras = [camOVERLAY];
 
+						tetrisCrowd = new FlxSprite(-7, 920);
+						tetrisCrowd.frames = Paths.getSparrowAtlas('tetris/crowd', 'shared');
+						tetrisCrowd.animation.addByPrefix('cheer', "crowd", 24, true);
+						tetrisCrowd.setGraphicSize(Std.int(tetrisCrowd.width * 1));
+						tetrisCrowd.antialiasing = true;
+						tetrisCrowd.scrollFactor.set(1, 1);
+						tetrisCrowd.updateHitbox();
+						tetrisCrowd.active = true;
+						tetrisCrowd.alpha = 1;
+						tetrisCrowd.cameras = [camOVERLAY];
+						add(tetrisCrowd);
+						tetrisCrowd.animation.play('cheer', true);
+
 						tetrisLight = new FlxSprite(0, 0);
 						tetrisLight.frames = Paths.getSparrowAtlas('tetris/connect_flash', 'shared');
 						tetrisLight.animation.addByPrefix('red', "RED instance 1", 24, true);
@@ -913,7 +928,9 @@ class PlayState extends MusicBeatState
 			add(connectLight);
 
 		if (curStage == 'subway-tetris')
+			add(tetrisCrowd);
 			add(tetrisLight);
+			tetrisCrowd.animation.play('cheer', true);
 
 		if (curStage == 'subway-holy')
 			add(gunSwarm);
@@ -1602,7 +1619,10 @@ class PlayState extends MusicBeatState
 
 		if (!paused)
 		{
-			FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
+			if (FlxG.save.data.copyrightedMusic && curSong == 'Connect')
+				FlxG.sound.playMusic(Paths.instcr(PlayState.SONG.song), 1, false);
+			else
+				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
 		}
 
 		FlxG.sound.music.onComplete = endSong;
@@ -2722,10 +2742,7 @@ class PlayState extends MusicBeatState
 						else
 						{
 							healthbarshake(1.0);
-							if (FlxG.save.data.kadeEngineOldHealthSystem)
-								health -= 0.075;
-							else
-								health -= 0.1;
+							health -= 0.1;
 
 							if (daNote.holy)
 							{
@@ -3056,56 +3073,42 @@ class PlayState extends MusicBeatState
 					score = -300;
 					combo = 0;
 					misses++;
-					if (FlxG.save.data.kadeEngineOldHealthSystem)
-						health -= 0.2;
-					else
-						health -= 0.06;
-
 					ss = false;
 					shits++;
 					if (FlxG.save.data.accuracyMod == 0)
 						totalNotesHit += 0.25;
+
+					health -= 0.2;
+
 				case 'bad':
 					daRating = 'bad';
 					score = 0;
-					if (FlxG.save.data.kadeEngineOldHealthSystem)
-						health -= 0.06;
-					else
-						health -= 0.03;
-
 					ss = false;
 					bads++;
 					if (FlxG.save.data.accuracyMod == 0)
 						totalNotesHit += 0.50;
+
+					health -= 0.06;
+
 				case 'good':
 					daRating = 'good';
 					score = 200;
 					ss = false;
 					goods++;
-					if (FlxG.save.data.kadeEngineOldHealthSystem)
-						{
-						if (health < maxhealth)
-							health += 0.04;
-						}
-
-
 					if (FlxG.save.data.accuracyMod == 0)
 						totalNotesHit += 0.75;
-				case 'sick':
-					if (FlxG.save.data.kadeEngineOldHealthSystem)
-						{
-						if (health < maxhealth)
-							health += 0.04;
-						}
-					else
-						{
-						if (health < maxhealth)
-							health += 0.1;
-						}
 
+					//if (health < maxhealth)
+					//	health += 0.04;
+
+				case 'sick':
 					if (FlxG.save.data.accuracyMod == 0)
 						totalNotesHit += 1;
 					sicks++;
+
+					if (health < maxhealth)
+						health += 0.04;
+
 				case 'evade':
 					daRating = 'evade';
 					if (FlxG.save.data.accuracyMod == 0)
@@ -3460,7 +3463,7 @@ class PlayState extends MusicBeatState
 										if (controlArray[ignoreList[shit]])
 											inIgnoreList = true;
 									}
-									if (!inIgnoreList)
+									if (!inIgnoreList && !FlxG.save.data.ghostTapping)
 										badNoteCheck();
 								}
 							}
@@ -3568,7 +3571,7 @@ class PlayState extends MusicBeatState
 						daNote.destroy();
 					}
 				}
-				else
+				else if (!FlxG.save.data.ghostTapping)
 					{
 						badNoteCheck();
 					}
@@ -3726,13 +3729,11 @@ class PlayState extends MusicBeatState
 		if (!boyfriend.stunned)
 		{
 			healthbarshake(1.0);
-			if (FlxG.save.data.kadeEngineOldHealthSystem)
-				health -= 0.04;
+
+			if (daNote.isSustainNote)
+				health -= 0.05; //you lose less health per sustain note you miss
 			else
-				if (daNote.isSustainNote)
-					health -= 0.05; //you lose less health per sustain note you miss
-				else
-					health -= 0.1;
+				health -= 0.125;
 
 			if (combo > 5 && gf.animOffsets.exists('sad'))
 			{
@@ -3774,10 +3775,7 @@ class PlayState extends MusicBeatState
 			if (!boyfriend.stunned)
 				{
 					healthbarshake(1.0);
-					if (FlxG.save.data.kadeEngineOldHealthSystem)
-						health -= 0.04;
-					else
-						health -= 0.1;
+					health -= 0.15;
 		
 					if (combo > 5 && gf.animOffsets.exists('sad'))
 					{
@@ -3903,7 +3901,7 @@ class PlayState extends MusicBeatState
 						playerStrums.members[2].animation.play('static');
 						playerStrums.members[3].animation.play('static');
 						healthbarshake(1.0);
-						health -= 0.2;
+						health -= 0.15;
 						trace('mash ' + mashing);
 					}
 
@@ -4183,20 +4181,34 @@ class PlayState extends MusicBeatState
 				{
 					case 2:
 						defaultCamZoom = 0.85;
-						connectLight.alpha = .8;
-						FlxTween.tween(connectLight, {alpha: 0}, 3, {ease: FlxEase.quartOut});
+
+						if (FlxG.save.data.flashingLights)
+							{
+							connectLight.alpha = .8;
+							FlxTween.tween(connectLight, {alpha: 0}, 3, {ease: FlxEase.quartOut});
+							}
 					case 32:
 						defaultCamZoom = 0.7;
 					case 209:
 						defaultCamZoom = 0.90;
 						connectLight.alpha = .8;
-						FlxTween.tween(connectLight, {alpha: 0}, 3, {ease: FlxEase.quartOut});
+
+						if (FlxG.save.data.flashingLights)
+							{
+							connectLight.alpha = .8;
+							FlxTween.tween(connectLight, {alpha: 0}, 3, {ease: FlxEase.quartOut});
+							}
 					case 216:
 						defaultCamZoom = 0.7;
 					case 225:
 						defaultCamZoom = 0.90;
 						connectLight.alpha = .8;
-						FlxTween.tween(connectLight, {alpha: 0}, 3, {ease: FlxEase.quartOut});
+						
+						if (FlxG.save.data.flashingLights)
+							{
+							connectLight.alpha = .8;
+							FlxTween.tween(connectLight, {alpha: 0}, 3, {ease: FlxEase.quartOut});
+							}
 					case 240:
 						defaultCamZoom = 0.7;
 					}
@@ -4232,7 +4244,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 			
-		if (curSong == 'Tetris' && isDisco) 
+		if (curSong == 'Tetris' && isDisco && FlxG.save.data.flashingLights) 
 			{
 				if (colorCycle <= 3)
 					colorCycle += 1;
@@ -4388,9 +4400,13 @@ class PlayState extends MusicBeatState
 						case 286:
 							isDisco = true;
 							tetrisZoom = 0.03;
+							FlxTween.tween(tetrisCrowd, {y: 300}, .5, {type: FlxTweenType.ONESHOT, ease: FlxEase.quadOut});
 
 						case 304:
 							tetrisZoom = 0.05;
+
+						case 320:
+							FlxTween.tween(tetrisCrowd, {y: 900}, .5, {type: FlxTweenType.ONESHOT, ease: FlxEase.quadOut});
 
 						case 352:
 							isDisco = false;
@@ -4411,6 +4427,7 @@ class PlayState extends MusicBeatState
 
 			case 'subway-tetris':
 				holyHomura.animation.play('move', true);
+				tetrisCrowd.animation.play('cheer', true);
 
 			case 'school':
 				bgGirls.dance();
