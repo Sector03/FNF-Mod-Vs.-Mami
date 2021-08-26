@@ -26,18 +26,20 @@ class StoryMenuState extends MusicBeatState
 	var scoreText:FlxText;
 
 	var weekData:Array<Dynamic> = [
-		['Connect','Reminisce','Salvation']
+		['Connect','Reminisce','Salvation'],
+		['Piss']
 	];
 	var curDifficulty:Int = 1;
 
-	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true];
+	public static var weekUnlocked:Array<Bool> = [true, true];
 
 	var weekCharacters:Array<Dynamic> = [
 		['', 'bf', 'gf']
 	];
 
 	var weekNames:Array<String> = [
-		"Mami The Witch Hunter"
+		"Mami The Witch Hunter",
+		"pissy wissy"
 	];
 
 	var txtWeekTitle:FlxText;
@@ -100,8 +102,9 @@ class StoryMenuState extends MusicBeatState
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
 		var yellowBG:FlxSprite = new FlxSprite(0, 56).makeGraphic(FlxG.width, 400, 0xFFF9CF51);
 
-		var storyWeekBG:FlxSprite = new FlxSprite(0, -100).loadGraphic(Paths.image('storymenu/week0bg', 'preload'));
+		var storyWeekBG:FlxSprite = new FlxSprite(0, -100).loadGraphic(Paths.image('storymenu/week'+ curWeek + 'bg', 'preload'));
 		storyWeekBG.antialiasing = true;
+		//haxeflixe please make the week bg change thanks -Juan
 		add(storyWeekBG);
 		FlxTween.linearMotion(storyWeekBG, 0, -1280, 0, -100, 2, {ease: FlxEase.quadOut});
 
