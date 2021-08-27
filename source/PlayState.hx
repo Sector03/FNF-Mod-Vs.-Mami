@@ -925,15 +925,21 @@ class PlayState extends MusicBeatState
 		add(boyfriend);
 
 		if (curStage == 'subway')
+			{
 			add(connectLight);
+			}
 
 		if (curStage == 'subway-tetris')
+			{
 			add(tetrisCrowd);
 			add(tetrisLight);
 			tetrisCrowd.animation.play('cheer', true);
+			}
 
 		if (curStage == 'subway-holy')
+			{
 			add(gunSwarm);
+			}
 
 		var doof:DialogueBox = new DialogueBox(false, dialogue);
 		// doof.x += 70;
