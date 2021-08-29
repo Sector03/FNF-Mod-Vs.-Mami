@@ -4220,6 +4220,7 @@ class PlayState extends MusicBeatState
 					}
 			}
 
+		/*
 		if (curSong == 'Reminisce')
 			{
 				switch (curBeat)
@@ -4232,6 +4233,7 @@ class PlayState extends MusicBeatState
 						add(dad);
 				}
 			}
+		*/
 
 		if (curSong == 'Salvation')
 			{
