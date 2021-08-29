@@ -2749,6 +2749,8 @@ class PlayState extends MusicBeatState
 						{
 							healthbarshake(1.0);
 							health -= 0.1;
+							if(daNote.isSustainNote)
+								misses++;
 
 							if (daNote.holy)
 							{
