@@ -214,20 +214,20 @@ class Character extends FlxSprite
 	
 				playAnim('idle');
 
-			case 'mami-holy': //these are PLACAEHOLDER
+			case 'mami-holy':
 				tex = Paths.getSparrowAtlas('characters/Holy Mami','shared');
 				frames = tex;
-				animation.addByPrefix('idle', 'IDLE instance 1', 24);
-				animation.addByPrefix('singUP', 'IDLE instance 1', 24);
-				animation.addByPrefix('singRIGHT', 'IDLE instance 1', 24);
-				animation.addByPrefix('singDOWN', 'IDLE instance 1', 24);
-				animation.addByPrefix('singLEFT', 'IDLE instance 1', 24);
+				animation.addByPrefix('idle', 'IDLE', 24);
+				animation.addByPrefix('singUP', 'UP', 24);
+				animation.addByPrefix('singRIGHT', 'RIGHT', 24);
+				animation.addByPrefix('singDOWN', 'DOWN', 24);
+				animation.addByPrefix('singLEFT', 'LEFT', 24);
 
-				addOffset('idle', -80, -25);
-				addOffset("singUP", -80, -25);
-				addOffset("singRIGHT", -80, -25);
-				addOffset("singLEFT", -80, -25);
-				addOffset("singDOWN", -80, -25);
+				addOffset('idle', -69, 126); //24
+				addOffset("singUP", 150, 145); //-5
+				addOffset("singRIGHT", 40, 115); //-35
+				addOffset("singLEFT", -10, 115); //-35
+				addOffset("singDOWN", 50, 85); //-65
 	
 				playAnim('idle');	
 

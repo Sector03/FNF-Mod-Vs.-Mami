@@ -888,10 +888,8 @@ class PlayState extends MusicBeatState
 			case 'mami-tetris':
 				dad.x -= 75;
 			case 'mami-holy':
-				camPos.x += -10;
-				dad.x -= 150;
-				dad.y -= 150;
-
+				dad.x -= 350;
+				dad.y += 15;
 		}
 
 
@@ -904,6 +902,7 @@ class PlayState extends MusicBeatState
 			case 'subway':
 				boyfriend.x += 80;
 				boyfriend.y += 40;
+
 			case 'subway-tetris':
 				boyfriend.x += 80;
 				boyfriend.y += 40;
@@ -913,6 +912,11 @@ class PlayState extends MusicBeatState
 				// evilTrail.changeGraphic()
 				add(evilTrail);
 				// evilTrail.scrollFactor.set(1.1, 1.1);
+
+			case 'subway-holy':
+				boyfriend.x += 80;
+				boyfriend.y += 40;
+				gf.y -= 50;
 		}
 
 		add(gf);
@@ -3972,6 +3976,9 @@ class PlayState extends MusicBeatState
 					note.wasGoodHit = true;
 					vocals.volume = 1;
 		
+					if (FlxG.save.data.hitSound || !note.isSustainNote)
+						FlxG.sound.play(Paths.sound('MAMI_hitsound','shared'));
+
 					note.kill();
 					notes.remove(note, true);
 					note.destroy();

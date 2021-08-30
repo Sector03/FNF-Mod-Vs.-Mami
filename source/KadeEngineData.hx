@@ -84,6 +84,9 @@ class KadeEngineData
 		if (FlxG.save.data.copyrightedMusic == null)
 			FlxG.save.data.copyrightedMusic = false;
 
+		if (FlxG.save.data.hitSound == null)
+			FlxG.save.data.hitSound = false;
+
 		if (FlxG.save.data.tickets == null)
 			FlxG.save.data.tickets = 0;
 
