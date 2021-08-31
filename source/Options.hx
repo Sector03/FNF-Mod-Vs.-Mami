@@ -686,3 +686,26 @@ class HitSound extends Option
 		return "Hit Sound " + (!FlxG.save.data.hitSound ? "Off" : "On");
 	}
 }
+
+class CpuStrums extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.cpuStrums = !FlxG.save.data.cpuStrums;
+
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return  FlxG.save.data.cpuStrums ? "Light CPU Strums" : "CPU Strums stay static";
+	}
+
+}
