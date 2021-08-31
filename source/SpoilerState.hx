@@ -7,17 +7,33 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import lime.app.Application;
 
+
+
 class SpoilerState extends MusicBeatState
 {
 	public static var leftState:Bool = false;
 
 	public static var needVer:String = "IDFK LOL";
 
+
+	var bg:FlxSprite;
+
 	override function create()
 	{
-		super.create();
-		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		var tex = Paths.getSparrowAtlas('spoiler','shared');
+		bg = new FlxSprite(-200, -100);
+		bg.frames = tex;
+		bg.animation.addByPrefix('idle', 'spoiler loop');
+		bg.scale.x *= 2.57;
+		bg.scale.y *= 2.57;
+		bg.screenCenter();
+		bg.animation.play('idle', true);
+		bg.alpha = 0.5;
 		add(bg);
+
+
+		super.create();
+		
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
 			"Hi Person\n"
 			+ " So this mod has like spoilers and shit to the Madoka Magica series "
@@ -27,6 +43,9 @@ class SpoilerState extends MusicBeatState
 			32);
 		txt.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
 		txt.screenCenter();
+		txt.borderColor = FlxColor.BLACK;
+		txt.borderSize = 3;
+		txt.borderStyle = FlxTextBorderStyle.OUTLINE;
 		add(txt);
 	}
 
