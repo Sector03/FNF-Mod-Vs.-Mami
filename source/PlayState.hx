@@ -2790,6 +2790,25 @@ class PlayState extends MusicBeatState
 							case 0:
 								dad.playAnim('singLEFT' + altAnim, true);
 						}
+						
+						if (FlxG.save.data.cpuStrums)
+							{
+								cpuStrums.forEach(function(spr:FlxSprite)
+								{
+									if (Math.abs(daNote.noteData) == spr.ID)
+									{
+										spr.animation.play('confirm', true);
+									}
+									if (spr.animation.curAnim.name == 'confirm' && !curStage.startsWith('school'))
+									{
+										spr.centerOffsets();
+										spr.offset.x -= 13;
+										spr.offset.y -= 13;
+									}
+									else
+										spr.centerOffsets();
+								});
+							}
 	
 						if (FlxG.save.data.cpuStrums)
 							{
