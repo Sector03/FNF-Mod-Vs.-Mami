@@ -361,11 +361,7 @@ class TitleState extends MusicBeatState
 				  FlxG.switchState(new SpoilerState()); // fail but we go anyway
 				}
 				
-
-				  FlxG.switchState(new SpoilerState()); // fail but we go anyway
-			
-				
-		
+				http.request();
 
 			});
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
