@@ -87,7 +87,6 @@ class KadeEngineData
 		if (FlxG.save.data.cpuStrums == null)
 			FlxG.save.data.cpuStrums = false;
 
-
 		if (FlxG.save.data.hitSound == null)
 			FlxG.save.data.hitSound = false;
 

@@ -35,11 +35,10 @@ class SpoilerState extends MusicBeatState
 		super.create();
 		
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
-			"Hi Person\n"
-			+ " So this mod has like spoilers and shit to the Madoka Magica series "
-			+ "\nand"
-			+ "\nMagia Record(I think)"
-			+ "\nPress Enter if you actually watched the series or just don't care lol",
+			"THIS MOD CONTAINS SPOILERS\n"
+			+ "This mod has spoilers for the 'Madoka Magica' series\n"
+			+ "Press ENTER to proceed.\n"
+			+ "(You can toggle this warning in the settings)\n", //lol NO U CANT YET
 			32);
 		txt.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
 		txt.screenCenter();
