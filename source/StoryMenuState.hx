@@ -38,7 +38,7 @@ class StoryMenuState extends MusicBeatState
 	];
 
 	var weekNames:Array<String> = [
-		"Mami The Witch Hunter",
+		"Mackingham Palace",
 		"???"
 	];
 

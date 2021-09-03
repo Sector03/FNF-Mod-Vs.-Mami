@@ -4243,6 +4243,16 @@ class PlayState extends MusicBeatState
 			// dad.dance();
 		}
 
+		switch (curSong){
+			case 'Salvation':
+				switch (curStep){
+					case 2127:
+						dad.playAnim('singUP', true);
+						defaultCamZoom = 1.2;
+					case 2143:
+						defaultCamZoom = 0.7;
+				}
+			}
 		// yes this updates every step.
 		// yes this is bad
 		// but i'm doing it to update misses and accuracy
@@ -4436,6 +4446,8 @@ class PlayState extends MusicBeatState
 				tetrisLight.alpha = 1;
 			}
 
+
+			
 		if (curSong == 'Tetris' && storyDifficulty == 1) //Tetris NORMAL events
 			{
 				switch (curBeat)
@@ -4645,7 +4657,17 @@ class PlayState extends MusicBeatState
 		{
 			lightningStrikeShit();
 		}
+		if (curBeat == 2127 && curSong.toLowerCase() == "salvation")
+			{
+				dad.playAnim('singUP', true);
+			}
+	
+			if (curBeat == 2149 && curSong.toLowerCase() == "salvation")
+			{
+				dad.playAnim('idle', true);
+			}
 	}
+	
 
 	var curLight:Int = 0;
 }
