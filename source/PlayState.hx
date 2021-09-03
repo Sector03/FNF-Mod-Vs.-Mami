@@ -2427,6 +2427,25 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.keys.pressed.N || FlxG.keys.pressed.M || FlxG.keys.justPressed.B || FlxG.keys.justPressed.G || FlxG.keys.pressed.T || FlxG.keys.pressed.Y)
 			kadeEngineWatermark.color = FlxColor.YELLOW;
+
+		if (FlxG.keys.justPressed.C)
+			{
+			iconP2.animation.play("mami-holy-postsnap");
+
+			remove(dad);
+			dad = new Character(25, 100, "mami-holy-postsnap");
+			add(dad);
+			}
+
+		if (FlxG.keys.justPressed.X)
+			{
+			iconP2.animation.play("mami-holy");
+	
+			remove(dad);
+			dad = new Character(25, 100, "mami-holy");
+			add(dad);
+			}
+
 		#end
 
 		#if debug
@@ -4515,6 +4534,7 @@ class PlayState extends MusicBeatState
 				switch (curBeat)
 					{
 						case 1:
+							isDisco = false;
 							defaultCamZoom = 0.90;
 
 						case 16:

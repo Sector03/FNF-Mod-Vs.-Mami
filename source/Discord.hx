@@ -58,7 +58,7 @@ class DiscordClient
 	{
 		var DiscordDaemon = sys.thread.Thread.create(() ->
 		{
-			new DiscordClient();
+			//new DiscordClient(); to prevent leaks i think
 		});
 		trace("Discord Client initialized");
 	}

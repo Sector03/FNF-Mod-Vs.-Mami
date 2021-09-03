@@ -248,6 +248,22 @@ class Character extends FlxSprite
 	
 				playAnim('idle');
 	
+			case 'mami-holy-postsnap':
+				tex = Paths.getSparrowAtlas('characters/Holy Mami','shared');
+				frames = tex;
+				animation.addByPrefix('idle', 'altIDLE', 24);
+				animation.addByPrefix('singUP', 'altIDLE', 24);
+				animation.addByPrefix('singRIGHT', 'altIDLE', 24);
+				animation.addByPrefix('singDOWN', 'altIDLE', 24);
+				animation.addByPrefix('singLEFT', 'altIDLE', 24);
+
+				addOffset('idle', -69, 126);
+				addOffset('singUP', -69, 126);
+				addOffset('singRIGHT', -69, 126);
+				addOffset('singDOWN', -69, 126);
+	
+				playAnim('idle');	
+
 		}
 
 		dance();
