@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="freeplaycharacters.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="playstate_holymami0000" x="2" y="2" width="737" height="811"/>
+	<SubTexture name="playstate_holymami0001" x="741" y="2" width="737" height="811"/>
+	<SubTexture name="playstate_holymami0002" x="1480" y="2" width="737" height="811"/>
+	<SubTexture name="playstate_holymami0003" x="2219" y="2" width="737" height="811"/>
+	<SubTexture name="playstate_holymami0004" x="2958" y="2" width="737" height="811"/>
+	<SubTexture name="playstate_holymami0005" x="2958" y="2" width="737" height="811"/>
+	<SubTexture name="playstate_holymami0006" x="3697" y="2" width="737" height="811"/>
+	<SubTexture name="playstate_holymami0007" x="3697" y="2" width="737" height="811"/>
+	<SubTexture name="playstate_holymami0008" x="4436" y="2" width="737" height="811"/>
+	<SubTexture name="playstate_holymami0009" x="5175" y="2" width="737" height="811"/>
+	<SubTexture name="playstate_holymami0010" x="5914" y="2" width="737" height="811"/>
+	<SubTexture name="playstate_holymami0011" x="6653" y="2" width="737" height="811"/>
+	<SubTexture name="playstate_holymami0012" x="6653" y="2" width="737" height="811"/>
+	<SubTexture name="playstate_holymami0013" x="6653" y="2" width="737" height="811"/>
+	<SubTexture name="playstate_holymami0000" x="6653" y="815" width="865" height="945"/>
+	<SubTexture name="playstate_holymami0001" x="6653" y="815" width="865" height="945"/>
+	<SubTexture name="playstate_holymami0002" x="2" y="1762" width="865" height="945"/>
+	<SubTexture name="playstate_holymami0003" x="2" y="1762" width="865" height="945"/>
+	<SubTexture name="playstate_holymami0004" x="869" y="1762" width="865" height="945"/>
+	<SubTexture name="playstate_holymami0005" x="869" y="1762" width="865" height="945"/>
+	<SubTexture name="playstate_holymami0006" x="1736" y="1762" width="865" height="945"/>
+	<SubTexture name="playstate_holymami0007" x="2603" y="1762" width="865" height="945"/>
+	<SubTexture name="playstate_holymami0008" x="3470" y="1762" width="865" height="945"/>
+	<SubTexture name="playstate_holymami0009" x="4337" y="1762" width="865" height="945"/>
+	<SubTexture name="playstate_holymami0010" x="5204" y="1762" width="865" height="945"/>
+	<SubTexture name="playstate_holymami0011" x="6071" y="1762" width="865" height="945"/>
+	<SubTexture name="playstate_holymami0012" x="6071" y="1762" width="865" height="945"/>
+	<SubTexture name="playstate_holymami0013" x="6071" y="1762" width="865" height="945"/>
+	<SubTexture name="playstate_mami0000" x="7392" y="2" width="737" height="811"/>
+	<SubTexture name="playstate_mami0001" x="2" y="815" width="737" height="811"/>
+	<SubTexture name="playstate_mami0002" x="741" y="815" width="737" height="811"/>
+	<SubTexture name="playstate_mami0003" x="1480" y="815" width="737" height="811"/>
+	<SubTexture name="playstate_mami0004" x="2219" y="815" width="737" height="811"/>
+	<SubTexture name="playstate_mami0005" x="2219" y="815" width="737" height="811"/>
+	<SubTexture name="playstate_mami0006" x="2958" y="815" width="737" height="811"/>
+	<SubTexture name="playstate_mami0007" x="2958" y="815" width="737" height="811"/>
+	<SubTexture name="playstate_mami0008" x="3697" y="815" width="737" height="811"/>
+	<SubTexture name="playstate_mami0009" x="4436" y="815" width="737" height="811"/>
+	<SubTexture name="playstate_mami0010" x="5175" y="815" width="737" height="811"/>
+	<SubTexture name="playstate_mami0011" x="5914" y="815" width="737" height="811"/>
+	<SubTexture name="playstate_mami0012" x="5914" y="815" width="737" height="811"/>
+	<SubTexture name="playstate_mami0013" x="5914" y="815" width="737" height="811"/>
+</TextureAtlas>

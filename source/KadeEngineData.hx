@@ -90,6 +90,18 @@ class KadeEngineData
 		if (FlxG.save.data.hitSound == null)
 			FlxG.save.data.hitSound = false;
 
+		if (FlxG.save.data.progressStoryClear == null)
+			FlxG.save.data.progressStoryClear = false;
+
+		if (FlxG.save.data.progressStoryClearHard == null)
+			FlxG.save.data.progressStoryClearHard = false;
+
+		if (FlxG.save.data.progressStoryClearTetris == null)
+			FlxG.save.data.progressStoryClearTetris = false;
+
+		if (FlxG.save.data.progressStoryClearMamigation == null)
+			FlxG.save.data.progressStoryClearMamigation = false;
+
 		if (FlxG.save.data.tickets == null)
 			FlxG.save.data.tickets = 0;
 

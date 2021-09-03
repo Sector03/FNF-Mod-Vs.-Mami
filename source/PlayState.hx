@@ -2333,7 +2333,7 @@ class PlayState extends MusicBeatState
 			paused = true;
 
 			// 1 / 1000 chance for Gitaroo Man easter egg
-			if (FlxG.random.bool(0.1))
+			if (FlxG.random.bool(0.001))
 			{
 				// gitaroo man easter egg
 				FlxG.switchState(new GitarooPause());
@@ -2419,11 +2419,11 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.keys.pressed.T)
 			scrollSpeedAddictive -= 0.01;
-			trace(scrollSpeedAddictive);
+			//trace(scrollSpeedAddictive);
 
 		if (FlxG.keys.pressed.Y)
 			scrollSpeedAddictive += 0.01;
-			trace(scrollSpeedAddictive);
+			//trace(scrollSpeedAddictive);
 
 		if (FlxG.keys.pressed.N || FlxG.keys.pressed.M || FlxG.keys.justPressed.B || FlxG.keys.justPressed.G || FlxG.keys.pressed.T || FlxG.keys.pressed.Y)
 			kadeEngineWatermark.color = FlxColor.YELLOW;
