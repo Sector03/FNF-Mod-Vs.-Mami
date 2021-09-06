@@ -164,7 +164,7 @@ class TitleState extends MusicBeatState
 			FlxG.sound.music.fadeIn(4, 0, 0.7);
 		}
 
-		Conductor.changeBPM(171);
+		Conductor.changeBPM(102);
 		persistentUpdate = true;
 
 		logoBl = new FlxSprite(-150, -45);
@@ -302,6 +302,12 @@ class TitleState extends MusicBeatState
 				pressedEnter = true;
 			#end
 		}
+
+		if (FlxG.keys.justPressed.NINE && !transitioning)
+			{
+				transitioning = true;
+				FlxG.switchState(new TitleStateOld());
+			}
 
 		if (pressedEnter && !transitioning && skippedIntro)
 		{

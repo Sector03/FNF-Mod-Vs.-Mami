@@ -450,14 +450,6 @@ class FreeplayState extends MusicBeatState
 
 		curSelected += change;
 
-		if (curSelected >= 3 && curDiffiuclty <= 2)
-			{
-			if (curDifficulty < 2)
-				curDifficulty = 3;
-			if (curDifficulty > 3) //curdiff 4 for master
-				curDifficulty = 2;
-			}
-
 		if (curSelected < 0)
 			curSelected = songs.length - 1;
 		if (curSelected >= songs.length)
