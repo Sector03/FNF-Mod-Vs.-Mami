@@ -2377,19 +2377,22 @@ class PlayState extends MusicBeatState
 
 		maxhealth = 2 - healthcap;
 
-		if (healthBar.percent < 20)
-			iconP1.animation.curAnim.curFrame = 1;
-		else if (healthBar.percent > 80)
-			iconP1.animation.curAnim.curFrame = 2;
-		else
-			iconP1.animation.curAnim.curFrame = 0;
+		if (SONG.player2 != 'mami-tetris'){
+			if (healthBar.percent < 20)
+				iconP1.animation.curAnim.curFrame = 1;
+			else if (healthBar.percent > 80)
+				iconP1.animation.curAnim.curFrame = 2;
+			else
+				iconP1.animation.curAnim.curFrame = 0;
 
-		if (healthBar.percent > 80)
-			iconP2.animation.curAnim.curFrame = 1;
-		else if (healthBar.percent < 20)
-			iconP2.animation.curAnim.curFrame = 2;
-		else
-			iconP2.animation.curAnim.curFrame = 0;
+			if (healthBar.percent > 80)
+				iconP2.animation.curAnim.curFrame = 1;
+			else if (healthBar.percent < 20)
+				iconP2.animation.curAnim.curFrame = 2;
+			else
+				iconP2.animation.curAnim.curFrame = 0;
+		}
+
 
 		//anim 0 = normal, anim 1 = defeat, anim 2 = winning
 
