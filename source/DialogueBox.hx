@@ -66,6 +66,10 @@ class DialogueBox extends FlxSpriteGroup
 			case 'connect':
 				FlxG.sound.playMusic(Paths.music('cutscenes/NoFear'), 0);
 				FlxG.sound.music.fadeIn(1, 0, 0.8);
+
+			case 'reminisce':
+				FlxG.sound.playMusic(Paths.music('cutscenes/NoFear'), 0);
+				FlxG.sound.music.fadeIn(1, 0, 0.8);
 		}
 
 		bgFade = new FlxSprite(-200, -200).makeGraphic(Std.int(FlxG.width * 1.3), Std.int(FlxG.height * 1.3), 0xFFB3DFd8);
@@ -86,6 +90,10 @@ class DialogueBox extends FlxSpriteGroup
 		switch (PlayState.SONG.song.toLowerCase())
 		{
 			case 'connect':
+				hasDialog = true;
+				box.loadGraphic(Paths.image('cutscene/images/dialoguebox'));
+				
+			case 'reminisce':
 				hasDialog = true;
 				box.loadGraphic(Paths.image('cutscene/images/dialoguebox'));
 		}
@@ -131,7 +139,6 @@ class DialogueBox extends FlxSpriteGroup
 		portraitMamiHappy.antialiasing = true;
 		add(portraitMamiHappy);
 		portraitMamiHappy.visible = false;
-		
 
 		portraitMamiHoly = new FlxSprite(-50, 60);
 		portraitMamiHoly.loadGraphic(Paths.image('cutscene/images/PORTRAITS/MAMI_HOLY'));
@@ -239,6 +246,9 @@ class DialogueBox extends FlxSpriteGroup
 				if (PlayState.SONG.song.toLowerCase() == 'connect')
 					FlxG.sound.music.fadeOut(2.2, 0);
 
+				if (PlayState.SONG.song.toLowerCase() == 'reminisce')
+					FlxG.sound.music.fadeOut(2.2, 0);
+
 				new FlxTimer().start(0.2, function(tmr:FlxTimer)
 				{
 					box.alpha -= 1 / 5;
@@ -279,6 +289,9 @@ class DialogueBox extends FlxSpriteGroup
 					isEnding = true;
 
 					if (PlayState.SONG.song.toLowerCase() == 'connect')
+						FlxG.sound.music.fadeOut(2.2, 0);
+
+					if (PlayState.SONG.song.toLowerCase() == 'reminisce')
 						FlxG.sound.music.fadeOut(2.2, 0);
 
 					new FlxTimer().start(0.2, function(tmr:FlxTimer)
