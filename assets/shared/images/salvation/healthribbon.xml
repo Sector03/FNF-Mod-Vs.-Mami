@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="healthribbon.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="ribbon_dragging0000" x="2" y="2" width="276" height="154" frameX="0" frameY="-65" frameWidth="276" frameHeight="154"/>
+	<SubTexture name="ribbon_dragging0001" x="280" y="2" width="276" height="154" frameX="0" frameY="-65" frameWidth="276" frameHeight="154"/>
+	<SubTexture name="ribbon_move0000" x="558" y="2" width="289" height="239"/>
+	<SubTexture name="ribbon_move0001" x="558" y="2" width="289" height="239"/>
+	<SubTexture name="ribbon_move0002" x="849" y="2" width="289" height="239"/>
+	<SubTexture name="ribbon_move0003" x="849" y="2" width="289" height="239"/>
+	<SubTexture name="ribbon_move0004" x="1140" y="2" width="289" height="239"/>
+	<SubTexture name="ribbon_move0005" x="1140" y="2" width="289" height="239"/>
+	<SubTexture name="ribbon_move0006" x="1431" y="2" width="289" height="239"/>
+	<SubTexture name="ribbon_move0007" x="1431" y="2" width="289" height="239"/>
+	<SubTexture name="ribbon_move0008" x="1722" y="2" width="289" height="239"/>
+	<SubTexture name="ribbon_move0009" x="1722" y="2" width="289" height="239"/>
+	<SubTexture name="ribbon_move0010" x="2" y="243" width="289" height="239"/>
+	<SubTexture name="ribbon_move0011" x="2" y="243" width="289" height="239"/>
+	<SubTexture name="ribbon_move0012" x="1722" y="2" width="289" height="239"/>
+	<SubTexture name="ribbon_show0000" x="293" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0001" x="293" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0002" x="534" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0003" x="534" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0004" x="775" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0005" x="775" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0006" x="1016" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0007" x="1016" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0008" x="1257" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0009" x="1257" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0010" x="1498" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0011" x="1498" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0012" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0013" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0014" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0015" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0016" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0017" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0018" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0019" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0020" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0021" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0022" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0023" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0024" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0025" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0026" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0027" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0028" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0029" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0030" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0031" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_show0032" x="1739" y="243" width="239" height="278"/>
+	<SubTexture name="ribbon_ungrab0000" x="2" y="523" width="647" height="235"/>
+	<SubTexture name="ribbon_ungrab0001" x="2" y="523" width="647" height="235"/>
+	<SubTexture name="ribbon_ungrab0002" x="651" y="523" width="647" height="235"/>
+	<SubTexture name="ribbon_ungrab0003" x="651" y="523" width="647" height="235"/>
+	<SubTexture name="ribbon_ungrab0004" x="1300" y="523" width="647" height="235"/>
+	<SubTexture name="ribbon_ungrab0005" x="1300" y="523" width="647" height="235"/>
+	<SubTexture name="ribbon_ungrab0006" x="2" y="760" width="647" height="235"/>
+	<SubTexture name="ribbon_ungrab0007" x="2" y="760" width="647" height="235"/>
+	<SubTexture name="ribbon_ungrab0008" x="651" y="760" width="647" height="235"/>
+	<SubTexture name="ribbon_ungrab0009" x="651" y="760" width="647" height="235"/>
+	<SubTexture name="ribbon_ungrab0010" x="1300" y="760" width="647" height="235"/>
+	<SubTexture name="ribbon_ungrab0011" x="1300" y="760" width="647" height="235"/>
+	<SubTexture name="ribbon_ungrab0012" x="2" y="997" width="647" height="235"/>
+	<SubTexture name="ribbon_ungrab0013" x="2" y="997" width="647" height="235"/>
+</TextureAtlas>
