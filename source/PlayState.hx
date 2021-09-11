@@ -55,6 +55,7 @@ import lime.utils.Assets;
 import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
+import openfl.filters.ColorMatrixFilter;
 
 #if windows
 import Discord.DiscordClient;
@@ -104,6 +105,7 @@ class PlayState extends MusicBeatState
 	#end
 
 	private var vocals:FlxSound;
+	private var lowhpmusic:FlxSound;
 
 	private var dad:Character;
 	private var gf:Character;
@@ -146,7 +148,6 @@ class PlayState extends MusicBeatState
 	private var holyMisses:Int = 1;
 	public var godmodecheat:Bool = false;
 	public var allowBFanimupdate = true;
-
 
 	private var healthBarBG:FlxSprite;
 	private var healthBar:FlxBar;
@@ -449,6 +450,7 @@ class PlayState extends MusicBeatState
 		notehealthdmg = 0;
 		tetrisZoom = 0.00;
 		scrollSpeedAddictive = 0;
+		setChrome(0.0);
 
 		#if sys
 		executeModchart = FileSystem.exists(Paths.lua(PlayState.SONG.song.toLowerCase()  + "/modchart"));
@@ -500,7 +502,8 @@ class PlayState extends MusicBeatState
 		detailsPausedText = "Paused - " + detailsText;
 
 		// Updating Discord Rich Presence.
-		DiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ") " + generateRanking(), "\nAcc: " + truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC);
+		//PREVENTINGLEEKSLOLDiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ") " + generateRanking(), "\nAcc: " + truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC);
+		DiscordClient.changePresence(detailsText + " " + "Little Manmi" + " (" + "Lunatic" + ") " + generateRanking(), "\nAcc: " + truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC);
 		#end
 
 		// var gameCam:FlxCamera = FlxG.camera;
@@ -559,78 +562,7 @@ class PlayState extends MusicBeatState
 
 		switch(SONG.song.toLowerCase())
 		{
-			case 'connect':
-				{
-						defaultCamZoom = 0.7;
-						curStage = 'subway';
-						var bg:FlxSprite = new FlxSprite(-500, -500).loadGraphic(Paths.image('mami/BG/BGSky'));
-						bg.antialiasing = true;
-						bg.scrollFactor.set(0.9, 0.9);
-						bg.active = false;
-						add(bg);
-
-						var trainSubway:FlxSprite = new FlxSprite(-500, -100).loadGraphic(Paths.image('mami/BG/BGTrain', 'shared'));
-						trainSubway.updateHitbox();
-						trainSubway.antialiasing = true;
-						trainSubway.scrollFactor.set(0.9, 0.9);
-						trainSubway.active = false;
-						add(trainSubway);
-
-						var stageFront:FlxSprite = new FlxSprite(-500, 600).loadGraphic(Paths.image('mami/BG/BGFloor', 'shared'));
-						stageFront.updateHitbox();
-						stageFront.antialiasing = true;
-						stageFront.scrollFactor.set(0.9, 0.9);
-						stageFront.active = false;
-						add(stageFront);
-
-						var lampsSubway:FlxSprite = new FlxSprite(-500, -400).loadGraphic(Paths.image('mami/BG/BGLamps', 'shared'));
-						lampsSubway.updateHitbox();
-						lampsSubway.antialiasing = true;
-						lampsSubway.scrollFactor.set(0.9, 0.9);
-						lampsSubway.active = false;
-						add(lampsSubway);
-
-						var lampsLeft:FlxSprite = new FlxSprite(-500, -400).loadGraphic(Paths.image('mami/BG/BGLampLights', 'shared'));
-						lampsLeft.updateHitbox();
-						lampsLeft.antialiasing = true;
-						lampsLeft.scrollFactor.set(0.9, 0.9);
-						lampsLeft.active = false;
-						add(lampsLeft);
-
-						var weebGorl:FlxSprite = new FlxSprite(-530, -20).loadGraphic(Paths.image('mami/BG/BGYes', 'shared'));
-						weebGorl.updateHitbox();
-						weebGorl.antialiasing = true;
-						weebGorl.scrollFactor.set(0.9, 0.9);
-						weebGorl.active = false;
-						add(weebGorl);	
-
-						var otherBGStuff:FlxSprite = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/BGRandomshit', 'shared'));
-						otherBGStuff.updateHitbox();
-						otherBGStuff.antialiasing = true;
-						otherBGStuff.scrollFactor.set(0.9, 0.9);
-						otherBGStuff.active = false;
-						add(otherBGStuff);				
-
-						gorls = new FlxSprite(-360, 150);
-						gorls.frames = Paths.getSparrowAtlas('mami/BG/BGGirlsDance', 'shared');
-						gorls.animation.addByPrefix('move', "girls dancing instance 1", 24, false);
-						gorls.antialiasing = true;
-						gorls.scrollFactor.set(0.9, 0.9);
-						gorls.updateHitbox();
-						gorls.active = true;
-						add(gorls);
-
-						connectLight = new FlxSprite(0, 0).loadGraphic(Paths.image('mami/BG/connect_flash', 'shared'));
-						connectLight.setGraphicSize(Std.int(connectLight.width * 1));
-						connectLight.updateHitbox();
-						connectLight.antialiasing = true;
-						connectLight.scrollFactor.set(0, 0);
-						connectLight.active = false;
-						connectLight.alpha = 0.0;
-						connectLight.cameras = [camOVERLAY];
-					}
-
-			case 'reminisce':
+			case 'connect' | 'reminisce':
 				{
 						defaultCamZoom = 0.7;
 						curStage = 'subway';
@@ -801,7 +733,7 @@ class PlayState extends MusicBeatState
 						add(tetrisLight);
 					}		
 					
-			case 'salvation': //added some shit cuz yes, Sector gaming B))
+			case 'salvation' | 'mamigation': //added some shit cuz yes, Sector gaming B))
 			{
 					defaultCamZoom = 0.7;
 					curStage = 'subway-holy';
@@ -1713,6 +1645,7 @@ class PlayState extends MusicBeatState
 
 		FlxG.sound.music.onComplete = endSong;
 		vocals.play();
+		lowhpmusic.play();
 
 		// Song duration in a float, useful for the time left feature
 		songLength = FlxG.sound.music.length;
@@ -1758,7 +1691,8 @@ class PlayState extends MusicBeatState
 		
 		#if windows
 		// Updating Discord Rich Presence (with Time Left)
-		DiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ") " + generateRanking(), "\nAcc: " + truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC);
+		//PREVENTINGLEEKSLOLDiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ") " + generateRanking(), "\nAcc: " + truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC);
+		DiscordClient.changePresence(detailsText + " " + "Little Manmi" + " (" + "Lunatic" + ") " + generateRanking(), "\nAcc: " + truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC);
 		#end
 	}
 
@@ -1779,6 +1713,9 @@ class PlayState extends MusicBeatState
 			vocals = new FlxSound();
 
 		FlxG.sound.list.add(vocals);
+
+		lowhpmusic = new FlxSound().loadEmbedded(Paths.lowhpmusic(PlayState.SONG.song));
+		FlxG.sound.list.add(lowhpmusic);
 
 		notes = new FlxTypedGroup<Note>();
 		add(notes);
@@ -2047,10 +1984,12 @@ class PlayState extends MusicBeatState
 			{
 				FlxG.sound.music.pause();
 				vocals.pause();
+				lowhpmusic.pause();
 			}
 
 			#if windows
-			DiscordClient.changePresence("PAUSED on " + SONG.song + " (" + storyDifficultyText + ") " + generateRanking(), "Acc: " + truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC);
+			//PREVENTINGLEEKSLOLDiscordClient.changePresence("PAUSED on " + SONG.song + " (" + storyDifficultyText + ") " + generateRanking(), "Acc: " + truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC);
+			DiscordClient.changePresence("PAUSED on " + "Little Manmi" + " (" + "Lunatic" + ") " + generateRanking(), "Acc: " + truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC);
 			#end
 			if (!startTimer.finished)
 				startTimer.active = false;
@@ -2066,6 +2005,7 @@ class PlayState extends MusicBeatState
 			if (FlxG.sound.music != null && !startingSong)
 			{
 				resyncVocals();
+				resyncLowhpmusic();
 			}
 
 			if (!startTimer.finished)
@@ -2075,10 +2015,12 @@ class PlayState extends MusicBeatState
 			#if windows
 			if (startTimer.finished)
 			{
+				//PREVENTINGLEEKSLOLDiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ") " + generateRanking(), "\nAcc: " + truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses, iconRPC, true, songLength - Conductor.songPosition);
 				DiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ") " + generateRanking(), "\nAcc: " + truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses, iconRPC, true, songLength - Conductor.songPosition);
 			}
 			else
 			{
+				//PREVENTINGLEEKSLOLDiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ") " + generateRanking(), iconRPC);
 				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ") " + generateRanking(), iconRPC);
 			}
 			#end
@@ -2098,9 +2040,18 @@ class PlayState extends MusicBeatState
 		vocals.play();
 
 		#if windows
+		//PREVENTINGLEEKSLOLDiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ") " + generateRanking(), "\nAcc: " + truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC);
 		DiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ") " + generateRanking(), "\nAcc: " + truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC);
 		#end
 	}
+
+	function resyncLowhpmusic():Void
+		{
+			lowhpmusic.pause();
+	
+			lowhpmusic.time = Conductor.songPosition;
+			lowhpmusic.play();
+		}
 
 	private var paused:Bool = false;
 	var startedCountdown:Bool = false;
@@ -2399,6 +2350,33 @@ class PlayState extends MusicBeatState
 		/* if (FlxG.keys.justPressed.NINE)
 			FlxG.switchState(new Charting()); */
 
+		if (curSong == 'Salvation')
+			{
+				if (health <= 1)
+					{
+					FlxG.sound.music.volume = health;
+					lowhpmusic.volume = 1 - health;
+					}
+				else
+					{
+					FlxG.sound.music.volume = 1;
+					lowhpmusic.volume = 0;
+					}
+
+				var chromeOffset:Float = ((2 - ((health / 0.5))));
+				chromeOffset /= 350;
+				if (chromeOffset <= 0)
+					setChrome(0.0);
+				else
+					{
+					setChrome(chromeOffset);
+					}	
+			}
+
+		trace(FlxG.sound.music.volume);
+		trace(lowhpmusic.volume);
+
+
 		if (FlxG.keys.pressed.R)
 			if (FlxG.save.data.resetButton)
 				health -= 2;
@@ -2427,6 +2405,11 @@ class PlayState extends MusicBeatState
 		if (FlxG.keys.pressed.Y)
 			scrollSpeedAddictive += 0.01;
 			//trace(scrollSpeedAddictive);
+
+		if (FlxG.keys.pressed.Z)
+			{
+			camHUD.angle += 0.02;
+			}
 
 		if (FlxG.keys.pressed.N || FlxG.keys.pressed.M || FlxG.keys.justPressed.B || FlxG.keys.justPressed.G || FlxG.keys.pressed.T || FlxG.keys.pressed.Y)
 			kadeEngineWatermark.color = FlxColor.YELLOW;
@@ -2698,6 +2681,7 @@ class PlayState extends MusicBeatState
 
 		if (health <= 0 && godmodecheat == false)
 		{
+			setChrome(0.0);
 			if (deathByHolyNote && FlxG.save.data.flashingLights)
 				{
 					FlxG.camera.flash(FlxColor.RED, 3);
@@ -2711,12 +2695,14 @@ class PlayState extends MusicBeatState
 
 			vocals.stop();
 			FlxG.sound.music.stop();
+			lowhpmusic.stop();
 
 			openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
 			#if windows
 			// Game Over doesn't get his own variable because it's only used here
-			DiscordClient.changePresence("GAME OVER -- " + SONG.song + " (" + storyDifficultyText + ") " + generateRanking(),"\nAcc: " + truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC);
+			//PREVENTINGLEEKSLOLDiscordClient.changePresence("GAME OVER -- " + SONG.song + " (" + storyDifficultyText + ") " + generateRanking(),"\nAcc: " + truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC);
+			DiscordClient.changePresence("GAME OVER -- " + "Little Manmi" + " (" + "Lunatic" + ") " + generateRanking(),"\nAcc: " + truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC);
 			#end
 
 			// FlxG.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
@@ -4233,6 +4219,7 @@ class PlayState extends MusicBeatState
 		if (FlxG.sound.music.time > Conductor.songPosition + 20 || FlxG.sound.music.time < Conductor.songPosition - 20)
 		{
 			resyncVocals();
+			resyncLowhpmusic();
 		}
 
 		if (executeModchart && lua != null)
@@ -4246,16 +4233,8 @@ class PlayState extends MusicBeatState
 			// dad.dance();
 		}
 
-		switch (curSong){
-			case 'Salvation':
-				switch (curStep){
-					case 2127:
-						dad.playAnim('singUP', true);
-						defaultCamZoom = 1.2;
-					case 2143:
-						defaultCamZoom = 0.7;
-				}
-			}
+		health -= (camHUD.angle * 0.01);
+
 		// yes this updates every step.
 		// yes this is bad
 		// but i'm doing it to update misses and accuracy
@@ -4264,7 +4243,7 @@ class PlayState extends MusicBeatState
 		songLength = FlxG.sound.music.length;
 
 		// Updating Discord Rich Presence (with Time Left)
-		DiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ") " + generateRanking(), "Acc: " + truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC,true,  songLength - Conductor.songPosition);
+		DiscordClient.changePresence(detailsText + " " + "Little Manmi" + " (" + "Lunatic" + ") " + generateRanking(), "\nAcc: " + truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC);
 		#end
 
 		if (curSong == 'Tetris' && isDisco && FlxG.save.data.flashingLights) 
@@ -4281,6 +4260,9 @@ class PlayState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
+
+		FlxG.camera.setFilters([ShadersHandler.chromaticAberration]);
+		camHUD.setFilters([ShadersHandler.chromaticAberration]);
 
 		if (generatedMusic)
 		{
@@ -4449,8 +4431,6 @@ class PlayState extends MusicBeatState
 				tetrisLight.alpha = 1;
 			}
 
-
-			
 		if (curSong == 'Tetris' && storyDifficulty == 1) //Tetris NORMAL events
 			{
 				switch (curBeat)
@@ -4603,6 +4583,19 @@ class PlayState extends MusicBeatState
 
 		//isDisco = true;
 
+		if (curSong == 'Mamigation')
+			{
+				switch (curBeat)
+					{
+						case 532:
+							dad.playAnim('singUP', true);
+							defaultCamZoom = 1.2;
+
+						case 536:
+							defaultCamZoom = 0.7;
+					}
+			}
+			
 		switch (curStage)
 		{
 			case 'subway':
@@ -4660,15 +4653,6 @@ class PlayState extends MusicBeatState
 		{
 			lightningStrikeShit();
 		}
-		if (curBeat == 2127 && curSong.toLowerCase() == "salvation")
-			{
-				dad.playAnim('singUP', true);
-			}
-	
-			if (curBeat == 2149 && curSong.toLowerCase() == "salvation")
-			{
-				dad.playAnim('idle', true);
-			}
 	}
 	
 

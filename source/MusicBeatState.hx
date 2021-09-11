@@ -48,6 +48,9 @@ class MusicBeatState extends FlxUIState
 
 	var skippedFrames = 0;
 
+	public function setChrome(daChrome:Float):Void
+		ShadersHandler.setChrome(daChrome);
+
 	override function update(elapsed:Float)
 	{
 		//everyStep();
