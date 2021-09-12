@@ -226,6 +226,12 @@ class PlayState extends MusicBeatState
 
 	public static var timeCurrently:Float = 0;
 	public static var timeCurrentlyR:Float = 0;
+
+	public static var dadnoteMovementXoffset:Int = 0;
+	public static var dadnoteMovementYoffset:Int = 0;
+
+	public static var bfnoteMovementXoffset:Int = 0;
+	public static var bfnoteMovementYoffset:Int = 0;
 	
 	// Will fire once to prevent debug spam messages and broken animations
 	private var triggeredAlready:Bool = false;
@@ -456,6 +462,12 @@ class PlayState extends MusicBeatState
 
 		swagShader = new ColorSwap(); //shamelessly took this from physche engine, credits to shadowmario <3
 		swagShader.hue = 0;
+
+		dadnoteMovementXoffset = 0;
+		dadnoteMovementYoffset = 0;
+
+		bfnoteMovementXoffset = 0;
+		bfnoteMovementYoffset = 0;
 
 		#if sys
 		executeModchart = FileSystem.exists(Paths.lua(PlayState.SONG.song.toLowerCase()  + "/modchart"));
@@ -2275,7 +2287,7 @@ class PlayState extends MusicBeatState
 			{
 				if (debugCommandsText.visible = true)
 					debugCommandsText.visible = false;
-				else
+				else if (!debugCommandsText.visible)
 					debugCommandsText.visible = true;
 			}
 
@@ -2370,14 +2382,14 @@ class PlayState extends MusicBeatState
 
 		maxhealth = 2 - healthcap;
 
-		if (SONG.player2 != 'mami-tetris'){
-			if (healthBar.percent < 20)
-				iconP1.animation.curAnim.curFrame = 1;
-			else if (healthBar.percent > 80)
-				iconP1.animation.curAnim.curFrame = 2;
-			else
-				iconP1.animation.curAnim.curFrame = 0;
+		if (healthBar.percent < 20)
+			iconP1.animation.curAnim.curFrame = 1;
+		else if (healthBar.percent > 80)
+			iconP1.animation.curAnim.curFrame = 2;
+		else
+			iconP1.animation.curAnim.curFrame = 0;
 
+		if (SONG.player2 != 'mami-tetris'){	
 			if (healthBar.percent > 80)
 				iconP2.animation.curAnim.curFrame = 1;
 			else if (healthBar.percent < 20)
@@ -2385,7 +2397,6 @@ class PlayState extends MusicBeatState
 			else
 				iconP2.animation.curAnim.curFrame = 0;
 		}
-
 
 		//anim 0 = normal, anim 1 = defeat, anim 2 = winning
 
@@ -2444,36 +2455,8 @@ class PlayState extends MusicBeatState
 			scrollSpeedAddictive += 0.01;
 			//trace(scrollSpeedAddictive);
 
-		if (FlxG.keys.pressed.C)
-			{
-			camHUD.angle += 0.02;
-			}
-
-		if (FlxG.keys.pressed.X)
-			{
-			camHUD.angle -= 0.02;
-			}
-
 		if (FlxG.keys.pressed.N || FlxG.keys.pressed.M || FlxG.keys.justPressed.B || FlxG.keys.justPressed.G || FlxG.keys.pressed.T || FlxG.keys.pressed.Y)
 			kadeEngineWatermark.color = FlxColor.YELLOW;
-
-		if (FlxG.keys.justPressed.C)
-			{
-			iconP2.animation.play("mami-holy-postsnap");
-
-			remove(dad);
-			dad = new Character(25, 100, "mami-holy-postsnap");
-			add(dad);
-			}
-
-		if (FlxG.keys.justPressed.X)
-			{
-			iconP2.animation.play("mami-holy");
-	
-			remove(dad);
-			dad = new Character(25, 100, "mami-holy");
-			add(dad);
-			}
 
 		if (FlxG.keys.justPressed.F)
 			ribbongrab(250, 999);
@@ -2634,9 +2617,13 @@ class PlayState extends MusicBeatState
 				}
 			}
 			
-			if (camFollow.x != dad.getMidpoint().x + 150 && !PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection)
+			if (camFollow.x != dad.getMidpoint().x + 150 + dadnoteMovementXoffset && !PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection)
 			{
+				if (FlxG.save.data.reducedMotion)
 				camFollow.setPosition(dad.getMidpoint().x + 150 + (lua != null ? getVar("followXOffset", "float") : 0), dad.getMidpoint().y - 100 + (lua != null ? getVar("followYOffset", "float") : 0));
+				else
+					camFollow.setPosition(dad.getMidpoint().x + 150 + dadnoteMovementXoffset + (lua != null ? getVar("followXOffset", "float") : 0), dad.getMidpoint().y - 100 + dadnoteMovementYoffset + (lua != null ? getVar("followYOffset", "float") : 0));
+				
 				// camFollow.setPosition(lucky.getMidpoint().x - 120, lucky.getMidpoint().y + 210);
 
 				switch (dad.curCharacter)
@@ -2662,7 +2649,10 @@ class PlayState extends MusicBeatState
 
 			if (PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection && camFollow.x != boyfriend.getMidpoint().x - 100)
 			{
-				camFollow.setPosition(boyfriend.getMidpoint().x - 100 + (lua != null ? getVar("followXOffset", "float") : 0), boyfriend.getMidpoint().y - 100 + (lua != null ? getVar("followYOffset", "float") : 0));
+				if (FlxG.save.data.reducedMotion)
+					camFollow.setPosition(boyfriend.getMidpoint().x - 100 + (lua != null ? getVar("followXOffset", "float") : 0), boyfriend.getMidpoint().y - 100 + (lua != null ? getVar("followYOffset", "float") : 0));
+				else
+					camFollow.setPosition(boyfriend.getMidpoint().x - 100 + bfnoteMovementXoffset + (lua != null ? getVar("followXOffset", "float") : 0), boyfriend.getMidpoint().y - 100 + bfnoteMovementYoffset + (lua != null ? getVar("followYOffset", "float") : 0));
 
 				switch (curStage)
 				{
@@ -2823,7 +2813,8 @@ class PlayState extends MusicBeatState
 
 								//trace (notehealthdmg);
 								//FlxG.camera.shake(0.005, 0.25);
-								camHUD.shake((notehealthdmg / 7.5), 0.25);
+								if (!FlxG.save.data.reducedMotion)
+									camHUD.shake((notehealthdmg / 7.5), 0.25);
 
 								if (storyDifficulty == 3)
 									switch(curSong)
@@ -2843,12 +2834,20 @@ class PlayState extends MusicBeatState
 						{
 							case 2:
 								dad.playAnim('singUP' + altAnim, true);
+								dadnoteMovementYoffset = -15;
+								dadnoteMovementXoffset = 0;
 							case 3:
 								dad.playAnim('singRIGHT' + altAnim, true);
+								dadnoteMovementXoffset = 15;
+								dadnoteMovementYoffset = 0;
 							case 1:
 								dad.playAnim('singDOWN' + altAnim, true);
+								dadnoteMovementYoffset = 15;
+								dadnoteMovementXoffset = 0;
 							case 0:
 								dad.playAnim('singLEFT' + altAnim, true);
+								dadnoteMovementXoffset = -15;
+								dadnoteMovementYoffset = 0;
 						}
 	
 						if (FlxG.save.data.cpuStrums)
@@ -4192,15 +4191,19 @@ class PlayState extends MusicBeatState
 						case 2:
 							allowBFanimupdate = true;
 							boyfriend.playAnim('singUP', true);
+							bfnoteMovementYoffset = -15;
 						case 3:
 							allowBFanimupdate = true;
 							boyfriend.playAnim('singRIGHT', true);
+							bfnoteMovementXoffset = 15;
 						case 1:
 							allowBFanimupdate = true;
 							boyfriend.playAnim('singDOWN', true);
+							bfnoteMovementYoffset = 15;
 						case 0:
 							allowBFanimupdate = true;
 							boyfriend.playAnim('singLEFT', true);
+							bfnoteMovementXoffset = -15;
 					}
 		
 					if (!loadRep)

@@ -480,7 +480,7 @@ class FreeplayState extends MusicBeatState
 
 		if (!selectedSong)
 			{
-				FlxTween.completeTweensOf(freeChar);
+				FlxTween.cancelTweensOf(freeChar);
 				freeChar.x = 1800;
 				freeChar.alpha = 0.0;
 				FlxTween.tween(freeChar, {x: 450, alpha: 1}, 0.5, {ease: FlxEase.quartOut});
@@ -501,7 +501,7 @@ class FreeplayState extends MusicBeatState
 						freeChar.y = -50;
 					case 4:
 						freeChar.animation.play('holy_mami');
-						freeChar.y = -50;
+						freeChar.y -= 165;
 				}
 			}
 

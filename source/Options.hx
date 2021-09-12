@@ -709,3 +709,24 @@ class CpuStrums extends Option
 	}
 
 }
+
+class ReducedMotion extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.reducedMotion = !FlxG.save.data.reducedMotion;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Reduced Motion " + (!FlxG.save.data.reducedMotion ? "Off" : "On");
+	}
+}
