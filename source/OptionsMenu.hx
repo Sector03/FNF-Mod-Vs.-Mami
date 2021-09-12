@@ -26,7 +26,8 @@ class OptionsMenu extends MusicBeatState
 			new FlashingLights("Remove effects for players that are epileptic."),
 			new GhostTapping("Allows you to tap when there is no notes and don't receive a miss."),
 			new HitSound("Plays a small sound to help indicate if you are too late or early."),
-			new CpuStrums("Shows the opponents strums light up or not.")
+			new CpuStrums("Shows the opponents strums light up or not."),
+			new NoteSplash("SPLOOOOOOOOOSH.")
 		]),
 
 		new OptionCatagory("Gameplay", [
