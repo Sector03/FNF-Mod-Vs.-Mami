@@ -45,6 +45,7 @@ class FreeplayState extends MusicBeatState
 	var menuLeftSide:FlxSprite;
 	var freePlaylock:FlxSprite;
 	var freePlaylock1:FlxSprite;
+	var freeChar:FlxSprite;
 
 	override function create()
 	{
@@ -81,6 +82,18 @@ class FreeplayState extends MusicBeatState
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
 		add(bg);
+
+		freeChar = new FlxSprite(450, -50);
+		freeChar.frames = Paths.getSparrowAtlas('freeplaymenu/freeplaycharacters');
+		freeChar.antialiasing = true;
+		freeChar.animation.addByPrefix('mami', 'playstate_mami', 24);
+		freeChar.animation.addByPrefix('holy_mami', 'playstate_holymami', 24);
+		freeChar.animation.addByPrefix('tetris_mami', 'playstate_tetrismami', 24); //forgot to export the tetris mami sprite.
+		freeChar.setGraphicSize(Std.int(freeChar.width * 1.25));
+		freeChar.animation.play('mami');
+		freeChar.updateHitbox();
+		freeChar.flipX = true;
+		add(freeChar);
 
 		menuLeftSide = new FlxSprite(0, 0).loadGraphic(Paths.image('freeplaymenu/left_section'));
 		menuLeftSide.scrollFactor.set(0, 0);
@@ -206,6 +219,7 @@ class FreeplayState extends MusicBeatState
 	{
 		super.update(elapsed);
 
+		#if debug
 		if (FlxG.keys.justPressed.Y)
 			{
 				FlxG.save.data.progressStoryClearHard = true;
@@ -225,6 +239,7 @@ class FreeplayState extends MusicBeatState
 			{
 				FlxG.save.data.progressStoryClearTetris = false;
 			}	
+		#end
 		
 
 		if (FlxG.save.data.progressStoryClearHard == false)
@@ -462,6 +477,33 @@ class FreeplayState extends MusicBeatState
 			curSelected = songs.length - 1;
 		if (curSelected >= songs.length)
 			curSelected = 0;
+
+		if (!selectedSong)
+			{
+				FlxTween.completeTweensOf(freeChar);
+				freeChar.x = 1800;
+				freeChar.alpha = 0.0;
+				FlxTween.tween(freeChar, {x: 450, alpha: 1}, 0.5, {ease: FlxEase.quartOut});
+
+				switch(curSelected)
+				{
+					case 0:
+						freeChar.animation.play('mami');
+						freeChar.y = -50;
+					case 1:
+						freeChar.animation.play('mami');
+						freeChar.y = -50;
+					case 2:
+						freeChar.animation.play('holy_mami');
+						freeChar.y -= 165;
+					case 3:
+						freeChar.animation.play('tetris_mami');
+						freeChar.y = -50;
+					case 4:
+						freeChar.animation.play('holy_mami');
+						freeChar.y = -50;
+				}
+			}
 
 		if (songPlaying && !selectedSong && curSelected <= 2)
 			{
