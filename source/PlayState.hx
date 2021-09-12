@@ -3348,8 +3348,8 @@ class PlayState extends MusicBeatState
 					if (FlxG.save.data.accuracyMod == 0)
 						totalNotesHit += 0.75;
 
-					//if (health < maxhealth)
-					//	health += 0.04;
+					if (health < maxhealth)
+						health += 0.01;
 
 				case 'sick':
 					if (FlxG.save.data.accuracyMod == 0)

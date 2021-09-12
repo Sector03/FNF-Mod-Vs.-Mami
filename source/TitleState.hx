@@ -263,10 +263,6 @@ class TitleState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		if (bgFlash.alpha >= .25)
-			bgFlash.alpha -= 0.0035;
-		//might actually make the alpha a tween so it would be better on pc AND look better
-
 		FlxG.camera.zoom = FlxMath.lerp(1, FlxG.camera.zoom, 0.95);
 
 		if (FlxG.sound.music != null)
@@ -350,21 +346,26 @@ class TitleState extends MusicBeatState
 					{
 						//trace('outdated lmao! ' + data.trim() + ' != ' + MainMenuState.kadeEngineVer);
 						OutdatedSubState.needVer = data;
-						#if windows //theres only a windows build
-						FlxG.switchState(new SpoilerState());
-						#end
+						if (FlxG.save.data.spoilerStartScreen)
+							FlxG.switchState(new SpoilerState());
+						else
+							FlxG.switchState(new MainMenuState());
 					}
 					else
 					{
-						#if windows
-						FlxG.switchState(new SpoilerState());
-						#end
+						if (FlxG.save.data.spoilerStartScreen)
+							FlxG.switchState(new SpoilerState());
+						else
+							FlxG.switchState(new MainMenuState());
 					}
 				}
 				
 				http.onError = function (error) {
 				  trace('error: $error');
-				  FlxG.switchState(new SpoilerState()); // fail but we go anyway
+				  if (FlxG.save.data.spoilerStartScreen)
+					FlxG.switchState(new SpoilerState());
+				else
+					FlxG.switchState(new MainMenuState()); // fail but we go anyway
 				}
 				
 				http.request();
@@ -417,7 +418,9 @@ class TitleState extends MusicBeatState
 
 		if (curBeat % 2 == 1)
 			{
-			bgFlash.alpha += 0.25;
+			FlxTween.cancelTweensOf(bgFlash);
+			bgFlash.alpha = 0.75;
+			FlxTween.tween(bgFlash, {alpha: 0.25}, 1, {ease: FlxEase.quadIn});
 			logoBl.animation.play('bump', true);
 			mamiTitle.animation.play('idle', true);
 			}

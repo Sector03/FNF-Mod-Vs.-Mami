@@ -24,6 +24,7 @@ class OptionsMenu extends MusicBeatState
 		new OptionCatagory("Vs Mami Settings", [
 			new CopyrightMusic("Use copyrighted music in Connect."),
 			new FlashingLights("Remove effects for players that are epileptic."),
+			new DisclaimerScreen("Shows the spoiler/flashing light screen on bootup."),
 			new ReducedMotion("Removed all camera related movement if you easily get sick."),
 			new GhostTapping("Allows you to tap when there is no notes and don't receive a miss."),
 			new HitSound("Plays a small sound to help indicate if you are too late or early."),

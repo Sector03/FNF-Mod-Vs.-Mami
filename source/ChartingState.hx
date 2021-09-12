@@ -1102,6 +1102,36 @@ class ChartingState extends MusicBeatState
 			note.x = Math.floor(daNoteInfo * GRID_SIZE);
 			note.y = Math.floor(getYfromStrum((daStrumTime - sectionStartTime()) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps)));
 
+			if (note.holy)
+				note.loadGraphic(Paths.image('holynote', 'shared'));
+
+			switch (daNoteInfo)
+				{
+					case 8:
+						note.x = Math.floor(0 * GRID_SIZE);
+					
+					case 9:
+						note.x = Math.floor(1 * GRID_SIZE);
+					
+					case 10:
+						note.x = Math.floor(2 * GRID_SIZE);
+					
+					case 11:
+						note.x = Math.floor(3 * GRID_SIZE);
+					
+					case 12:
+						note.x = Math.floor(4 * GRID_SIZE);
+					
+					case 13:
+						note.x = Math.floor(5 * GRID_SIZE);
+										
+					case 14:
+						note.x = Math.floor(6 * GRID_SIZE);
+						
+					case 15:
+						note.x = Math.floor(7 * GRID_SIZE);
+				}
+
 			if (curSelectedNote != null)
 				if (curSelectedNote[0] == note.strumTime)
 					lastNote = note;

@@ -730,3 +730,24 @@ class ReducedMotion extends Option
 		return "Reduced Motion " + (!FlxG.save.data.reducedMotion ? "Off" : "On");
 	}
 }
+
+class DisclaimerScreen extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.spoilerStartScreen = !FlxG.save.data.spoilerStartScreen;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Disclaimer Screen " + (!FlxG.save.data.spoilerStartScreen ? "Off" : "On");
+	}
+}

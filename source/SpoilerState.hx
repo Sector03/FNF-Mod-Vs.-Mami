@@ -35,10 +35,11 @@ class SpoilerState extends MusicBeatState
 		super.create();
 		
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
-			"THIS MOD CONTAINS SPOILERS\n"
-			+ "This mod has spoilers for the 'Madoka Magica' series\n"
-			+ "Press ENTER to proceed.\n"
-			+ "(You can toggle this warning in the settings)\n", //lol NO U CANT YET
+			"THIS MOD CONTAINS SPOILERS AND FLASHING LIGHTS\n"
+			+ "This mod has SPOILERS for the 'Madoka Magica' series.\n"
+			+ "\n"
+			+ "This mod also has FLASHING LIGHTS from additional content!\n"
+			+ "Press ENTER to go into the settings, or ESC to ingore this warning.\n",
 			32);
 		txt.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
 		txt.screenCenter();
@@ -51,9 +52,13 @@ class SpoilerState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		if (controls.ACCEPT)
-		{
-			FlxG.switchState(new MainMenuState());
-		}
+			{
+				FlxG.switchState(new OptionsMenu());
+			}
+		if (controls.BACK)
+			{
+				FlxG.switchState(new MainMenuState());
+			}
 
 		super.update(elapsed);
 	}

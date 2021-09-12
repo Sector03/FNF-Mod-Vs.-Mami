@@ -93,6 +93,9 @@ class KadeEngineData
 		if (FlxG.save.data.reducedMotion == null)
 			FlxG.save.data.reducedMotion = false;
 
+		if (FlxG.save.data.spoilerStartScreen == null)
+			FlxG.save.data.spoilerStartScreen = true;
+
 		if (FlxG.save.data.progressStoryClear == null)
 			FlxG.save.data.progressStoryClear = false;
 
