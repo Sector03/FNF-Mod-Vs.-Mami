@@ -90,6 +90,9 @@ class KadeEngineData
 		if (FlxG.save.data.hitSound == null)
 			FlxG.save.data.hitSound = false;
 
+		if (FlxG.save.data.reducedMotion == null)
+			FlxG.save.data.reducedMotion = false;
+
 		if (FlxG.save.data.progressStoryClear == null)
 			FlxG.save.data.progressStoryClear = false;
 
