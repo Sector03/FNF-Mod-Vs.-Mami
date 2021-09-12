@@ -687,6 +687,27 @@ class HitSound extends Option
 	}
 }
 
+class NoteSplash extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.noteSplash = !FlxG.save.data.noteSplash;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Note Splash " + (!FlxG.save.data.noteSplash ? "Off" : "On");
+	}
+}
+
 class CpuStrums extends Option
 {
 	public function new(desc:String)

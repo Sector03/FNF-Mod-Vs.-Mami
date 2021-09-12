@@ -3356,6 +3356,8 @@ class PlayState extends MusicBeatState
 						totalNotesHit += 1;
 					sicks++;
 
+					
+
 					if (health < maxhealth)
 						health += 0.04;
 
@@ -3364,7 +3366,37 @@ class PlayState extends MusicBeatState
 					if (FlxG.save.data.accuracyMod == 0)
 						totalNotesHit += 1;
 					sicks++;
+
+					
 			}
+			if (FlxG.save.data.noteSplash)
+				{
+					var sploosh:FlxSprite = new FlxSprite(daNote.x, playerStrums.members[daNote.noteData].y);
+					if (!curStage.startsWith('school'))
+					{
+						var tex:flixel.graphics.frames.FlxAtlasFrames = Paths.getSparrowAtlas('noteSplashes', 'shared');
+						sploosh.frames = tex;
+						sploosh.animation.addByPrefix('splash 0 0', 'note impact 1 purple', 24, false);
+						sploosh.animation.addByPrefix('splash 0 1', 'note impact 1 blue', 24, false);
+						sploosh.animation.addByPrefix('splash 0 2', 'note impact 1 green', 24, false);
+						sploosh.animation.addByPrefix('splash 0 3', 'note impact 1 red', 24, false);
+						sploosh.animation.addByPrefix('splash 1 0', 'note impact 2 purple', 24, false);
+						sploosh.animation.addByPrefix('splash 1 1', 'note impact 2 blue', 24, false);
+						sploosh.animation.addByPrefix('splash 1 2', 'note impact 2 green', 24, false);
+						sploosh.animation.addByPrefix('splash 1 3', 'note impact 2 red', 24, false);
+						if (daRating == 'sick')
+						{
+							add(sploosh);
+							sploosh.cameras = [camHUD];
+							sploosh.animation.play('splash ' + FlxG.random.int(0, 1) + " " + daNote.noteData);
+							sploosh.alpha = 0.6;
+							sploosh.offset.x += 90;
+							sploosh.offset.y += 80;
+							sploosh.animation.finishCallback = function(name) sploosh.kill();
+						}
+					}
+				}
+		
 
 			// trace('Wife accuracy loss: ' + wife + ' | Rating: ' + daRating + ' | Score: ' + score + ' | Weight: ' + (1 - wife));
 
