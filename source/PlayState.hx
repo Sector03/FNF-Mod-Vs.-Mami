@@ -1101,10 +1101,10 @@ class PlayState extends MusicBeatState
 		if (FlxG.save.data.downscroll)
 			kadeEngineWatermark.y = FlxG.height * 0.9 + 45;
 
-		scoreTxt = new FlxText(FlxG.width / 2 - 235, healthBarBG.y + 50, 0, "", 20);
+		scoreTxt = new FlxText(FlxG.width / 2 - 335, healthBarBG.y + 45, 0, "", 20);
 		if (!FlxG.save.data.accuracyDisplay)
 			scoreTxt.x = healthBarBG.x + healthBarBG.width / 2;
-		scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		scoreTxt.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		if (offsetTesting)
 			scoreTxt.x += 300;
@@ -3160,16 +3160,37 @@ class PlayState extends MusicBeatState
 			add(tetrisBlockagePiece);
 
 			if(!instant)
-				tetrisBlockagePiece.y = -1080;
+				if (FlxG.save.data.downscroll)
+					{
+						tetrisBlockagePiece.y = 1080;
+					}
+				else
+					{
+						tetrisBlockagePiece.y = -1080;
+					}
 				FlxG.sound.play(Paths.sound('tetris/hpblockage_spawn','shared'));
 				FlxFlicker.flicker(tetrisBlockagePiece, 1, 0.2, true);
 				new FlxTimer().start(1, function(tmr:FlxTimer) //ik this is ugly but it works lol
 					{
-						tetrisBlockagePiece.y += 75;
+						if (FlxG.save.data.downscroll)
+							{
+								tetrisBlockagePiece.y -= 75;
+							}
+						else
+							{
+								tetrisBlockagePiece.y += 75;
+							}
 						FlxG.sound.play(Paths.sound('tetris/hpblockage_move','shared'));
 						new FlxTimer().start(.15, function(tmr:FlxTimer)
 							{
-								tetrisBlockagePiece.y += 75;
+								if (FlxG.save.data.downscroll)
+									{
+										tetrisBlockagePiece.y -= 75;
+									}
+								else
+									{
+										tetrisBlockagePiece.y += 75;
+									}
 								FlxG.sound.play(Paths.sound('tetris/hpblockage_move','shared'));
 							},11);
 					},1);
@@ -3178,10 +3199,18 @@ class PlayState extends MusicBeatState
 						camHUD.shake(0.002, 0.5);
 						FlxG.sound.play(Paths.sound('tetris/hpblockage_thud','shared'));
 						healthcap = (percentageBlockage / 50);
-						tetrisBlockagePiece.y += 15;
+						if (FlxG.save.data.downscroll)
+							{
+								tetrisBlockagePiece.y -= 15;
+							}
+						else
+							{
+								tetrisBlockagePiece.y += 15;
+							}
 						//tetrisBlockagePiece.y = -100;
 					},1);
-
+			
+			trace(tetrisBlockagePiece);
 
 			if(!instant)
 				new FlxTimer().start(duration + 2.65, function(tmr:FlxTimer)
