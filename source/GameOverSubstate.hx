@@ -75,7 +75,8 @@ class GameOverSubstate extends MusicBeatSubstate
 				if (!isEnding)
 					{
 					add(deathlineSubtitle);
-					FlxG.sound.play(Paths.sound('deathlines/' + daOpponent + "-" + numBah));
+					//FlxG.sound.play(Paths.sound('deathlines/' + daOpponent + "-" + numBah));
+					FlxG.sound.play(Paths.sound('deathlines/mami-' + numBah));
 
 					switch (numBah)
 						{

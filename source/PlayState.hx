@@ -188,6 +188,7 @@ class PlayState extends MusicBeatState
 	var gorls:FlxSprite;
 	var holyHomura:FlxSprite;
 	var connectLight:FlxSprite;
+	var lampsLeft:FlxSprite;
 	var gunSwarm:FlxSprite;
 
 	//tetris
@@ -610,19 +611,18 @@ class PlayState extends MusicBeatState
 						stageFront.active = false;
 						add(stageFront);
 
-						var lampsSubway:FlxSprite = new FlxSprite(-500, -400).loadGraphic(Paths.image('mami/BG/BGLamps', 'shared'));
+						var lampsSubway:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('mami/BG/BGLamps', 'shared'));
 						lampsSubway.updateHitbox();
 						lampsSubway.antialiasing = true;
 						lampsSubway.scrollFactor.set(0.9, 0.9);
 						lampsSubway.active = false;
 						add(lampsSubway);
 
-						var lampsLeft:FlxSprite = new FlxSprite(-500, -400).loadGraphic(Paths.image('mami/BG/BGLampLights', 'shared'));
+						lampsLeft = new FlxSprite(-500, -300).loadGraphic(Paths.image('mami/BG/BGLampLights', 'shared'));
 						lampsLeft.updateHitbox();
 						lampsLeft.antialiasing = true;
 						lampsLeft.scrollFactor.set(0.9, 0.9);
 						lampsLeft.active = false;
-						add(lampsLeft);
 
 						var weebGorl:FlxSprite = new FlxSprite(-530, -20).loadGraphic(Paths.image('mami/BG/BGYes', 'shared'));
 						weebGorl.updateHitbox();
@@ -684,7 +684,7 @@ class PlayState extends MusicBeatState
 						stageFront.shader = swagShader.shader;
 						add(stageFront);
 
-						var lampsSubway:FlxSprite = new FlxSprite(-500, -400).loadGraphic(Paths.image('mami/BG/BGLamps', 'shared'));
+						var lampsSubway:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('mami/BG/BGLamps', 'shared'));
 						lampsSubway.updateHitbox();
 						lampsSubway.antialiasing = true;
 						lampsSubway.scrollFactor.set(0.9, 0.9);
@@ -692,13 +692,11 @@ class PlayState extends MusicBeatState
 						lampsSubway.shader = swagShader.shader;
 						add(lampsSubway);
 
-						var lampsLeft:FlxSprite = new FlxSprite(-500, -400).loadGraphic(Paths.image('mami/BG/BGLampLights', 'shared'));
+						lampsLeft = new FlxSprite(-500, -300).loadGraphic(Paths.image('mami/BG/BGLampLights', 'shared'));
 						lampsLeft.updateHitbox();
 						lampsLeft.antialiasing = true;
 						lampsLeft.scrollFactor.set(0.9, 0.9);
 						lampsLeft.active = false;
-						lampsLeft.shader = swagShader.shader;
-						add(lampsLeft);
 
 						var weebGorl:FlxSprite = new FlxSprite(-530, -20).loadGraphic(Paths.image('mami/BG/BGYes', 'shared'));
 						weebGorl.updateHitbox();
@@ -790,19 +788,18 @@ class PlayState extends MusicBeatState
 					stageFront.active = false;
 					add(stageFront);
 
-					var lampsSubway:FlxSprite = new FlxSprite(-500, -400).loadGraphic(Paths.image('mami/BG/BGLamps', 'shared'));
+					var lampsSubway:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('mami/BG/BGLamps', 'shared'));
 					lampsSubway.updateHitbox();
 					lampsSubway.antialiasing = true;
 					lampsSubway.scrollFactor.set(0.9, 0.9);
 					lampsSubway.active = false;
 					add(lampsSubway);
 
-					var lampsLeft:FlxSprite = new FlxSprite(-500, -400).loadGraphic(Paths.image('mami/BG/BGLampLights', 'shared'));
+					lampsLeft = new FlxSprite(-500, -300).loadGraphic(Paths.image('mami/BG/BGLampLights', 'shared'));
 					lampsLeft.updateHitbox();
 					lampsLeft.antialiasing = true;
 					lampsLeft.scrollFactor.set(0.9, 0.9);
 					lampsLeft.active = false;
-					add(lampsLeft);
 
 					var otherBGStuff:FlxSprite = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/HOLY/HOLY_objects', 'shared'));
 					otherBGStuff.updateHitbox();
@@ -986,11 +983,15 @@ class PlayState extends MusicBeatState
 
 		if (curStage == 'subway')
 			{
+			add(lampsLeft);
+
 			add(connectLight);
 			}
 
 		if (curStage == 'subway-tetris')
 			{
+			add(lampsLeft);
+
 			add(tetrisCrowd);
 			add(tetrisLight);
 			tetrisCrowd.animation.play('cheer', true);
@@ -998,6 +999,8 @@ class PlayState extends MusicBeatState
 
 		if (curStage == 'subway-holy')
 			{
+			add(lampsLeft);
+			
 			add(gunSwarm);
 			}
 
@@ -1073,7 +1076,7 @@ class PlayState extends MusicBeatState
 				songName.cameras = [camHUD];
 			}
 
-		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('healthBar'));
+		healthBarBG = new FlxSprite(0, FlxG.height * 0.88).loadGraphic(Paths.image('healthBar'));
 		if (FlxG.save.data.downscroll)
 			healthBarBG.y = 50;
 		healthBarBG.screenCenter(X);
@@ -2459,7 +2462,7 @@ class PlayState extends MusicBeatState
 			kadeEngineWatermark.color = FlxColor.YELLOW;
 
 		if (FlxG.keys.justPressed.F)
-			ribbongrab(250, 999);
+			ribbongrab(65, 7);
 		#end
 
 		if (!latched && camHUD.angle >= -0.005)
@@ -2795,7 +2798,7 @@ class PlayState extends MusicBeatState
 								if (health > 0.2) //do normal notehealthdmg if you are above 20% health (defeat icon starts at 20% for reference btw)
 									if (daNote.isSustainNote)
 										{
-											health -= notehealthdmg / 1.1;
+											health -= notehealthdmg / 2;
 										}
 									else
 										{
@@ -3246,13 +3249,13 @@ class PlayState extends MusicBeatState
 						ribbongrab.animation.play('latch', true);
 					});
 
-				new FlxTimer().start(1.5, function(tmr:FlxTimer)
+				new FlxTimer().start(1.35, function(tmr:FlxTimer)
 					{
 						FlxG.sound.play(Paths.sound('salvation/ribbonpull_grab','shared'));
-						new FlxTimer().start(.05, function(tmr:FlxTimer)
+						new FlxTimer().start(.035, function(tmr:FlxTimer)
 							{
 								ribbongrab.animation.play('pulling');
-								camHUD.angle += 0.035;
+								camHUD.angle += 0.05;
 							},tiltpower);
 					});
 
@@ -3268,6 +3271,7 @@ class PlayState extends MusicBeatState
 							{
 								remove(ribbongrab);
 								latched = false;
+								canPause = true;
 							});
 					});
 			}
@@ -4399,7 +4403,7 @@ class PlayState extends MusicBeatState
 			// dad.dance();
 		}
 
-		health -= (camHUD.angle * 0.0025);
+		health -= (camHUD.angle * 0.0010);
 
 		// yes this updates every step.
 		// yes this is bad
@@ -4472,6 +4476,12 @@ class PlayState extends MusicBeatState
 
 		iconP1.setGraphicSize(Std.int(iconP1.width + 30));
 		iconP2.setGraphicSize(Std.int(iconP2.width + 30));
+
+		if (curBeat % 4 == 3)
+			{
+				iconP1.setGraphicSize(Std.int(iconP1.width + 20));
+				iconP2.setGraphicSize(Std.int(iconP2.width + 20));
+			}
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
