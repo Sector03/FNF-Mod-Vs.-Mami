@@ -764,7 +764,7 @@ class PlayState extends MusicBeatState
 						add(tetrisLight);
 					}		
 					
-			case 'salvation' | 'mamigation': //added some shit cuz yes, Sector gaming B))
+			case 'salvation': //added some shit cuz yes, Sector gaming B))
 			{
 					defaultCamZoom = 0.7;
 					curStage = 'subway-holy';
@@ -859,6 +859,24 @@ class PlayState extends MusicBeatState
 					add(tetrisLight);
 				}
 
+			case 'mamigation': //added some shit cuz yes, Sector gaming B))
+			{
+					defaultCamZoom = 0.7;
+					curStage = 'mamigation';
+					var bg:FlxSprite = new FlxSprite(-500, -500).loadGraphic(Paths.image('mami/BG/MAMIGATION/BGSky', 'shared'));
+					bg.antialiasing = true;
+					bg.scrollFactor.set(0.9, 0.9);
+					bg.active = false;
+					add(bg);
+
+					var placeholder:FlxSprite = new FlxSprite(-500, -100).loadGraphic(Paths.image('mami/BG/MAMIGATION/placeholder', 'shared'));
+					placeholder.updateHitbox();
+					placeholder.antialiasing = true;
+					placeholder.scrollFactor.set(0.9, 0.9);
+					placeholder.active = false;
+					add(placeholder);
+				}
+
 			default:
 			{
 					defaultCamZoom = 0.9;
@@ -934,6 +952,9 @@ class PlayState extends MusicBeatState
 			case 'mami-tetris':
 				dad.x -= 75;
 			case 'mami-holy':
+				dad.x -= 350;
+				dad.y += 15;
+			case 'mami-mamigation':
 				dad.x -= 350;
 				dad.y += 15;
 		}
@@ -1090,6 +1111,8 @@ class PlayState extends MusicBeatState
 			healthBar.createFilledBar(0xFFFFF6B3, 0xFF36A1BC);
 		else if (SONG.player2 == "mami-holy")
 			healthBar.createFilledBar(0xFFFDFFCF, 0xFF36A1BC);
+		else if (SONG.player2 == "mami-mamigation")
+			healthBar.createFilledBar(0xFFFF3027, 0xFF36A1BC);
 		else
 			healthBar.createFilledBar(0xFF969696, 0xFF36A1BC);
 		// healthBar
@@ -1128,6 +1151,12 @@ class PlayState extends MusicBeatState
 		iconP2 = new HealthIcon(SONG.player2, false);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
+
+		if (SONG.player2 == 'mami-tetris')
+			{	
+			iconP2.setGraphicSize(Std.int(.77));
+			iconP2.y += 35;
+			}
 
 		#if debug
 		debugCommandsText = new FlxText(4, 4, 320, "DEBUG COMMANDS\n" + "N - Gain Health\n" + "M - Drain Health\n" + "B - Hit Holy Note\n" + "G - Toggle God Mode\n" + "T - Lower Scroll Speed\n" + "Y - Raise Scroll Speed\n" + "V - Hide Debug Menu\n");
@@ -2367,7 +2396,15 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 
 		iconP1.setGraphicSize(Std.int(FlxMath.lerp(iconP1.width, 150, 0.25)));
-		iconP2.setGraphicSize(Std.int(FlxMath.lerp(iconP1.width, 150, 0.25)));
+
+		if (SONG.player2 != 'mami-tetris')
+			{	
+			iconP2.setGraphicSize(Std.int(FlxMath.lerp(iconP1.width, 150, 0.25)));
+			}
+		else
+			{
+			iconP2.setGraphicSize(Std.int(FlxMath.lerp(iconP1.width - 50, 100, 0.25)));
+			}
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
@@ -2375,7 +2412,15 @@ class PlayState extends MusicBeatState
 		var iconOffset:Int = 26;
 
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
-		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
+		
+		if (SONG.player2 != 'mami-tetris')
+			{	
+				iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
+			}
+		else
+			{
+				iconP2.x = (healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset)) - 25;
+			}
 
 		if (health > maxhealth)
 			health = maxhealth;
@@ -2793,9 +2838,26 @@ class PlayState extends MusicBeatState
 								altAnim = '-alt';
 						}
 	
-						if (curSong == 'Tetris' || storyDifficulty == 3)
+						if (curSong == 'Tetris')
 							{
-								if (health > 0.2) //do normal notehealthdmg if you are above 20% health (defeat icon starts at 20% for reference btw)
+								if (daNote.isSustainNote)
+									{
+										health -= notehealthdmg / 4;
+									}
+								else
+									{
+										health -= notehealthdmg;
+									}
+
+								if (!FlxG.save.data.reducedMotion)
+									camHUD.shake((notehealthdmg / 7.5), 0.25);
+							}
+
+						if (curSong == 'Mamigation')
+							{
+								notehealthdmg = 0.0175;
+
+								if (health > 0.2)
 									if (daNote.isSustainNote)
 										{
 											health -= notehealthdmg / 2;
@@ -2804,33 +2866,9 @@ class PlayState extends MusicBeatState
 										{
 											health -= notehealthdmg;
 										}
-								else if (health < 0.20 || storyDifficulty == 0) //EASY near death resistance / damage divided by 1.30
-									if (health > 0.02) //makes it where the player cannot die from the health drain
-										health -= notehealthdmg / 1.30;
-								else if (health < 0.20 || storyDifficulty == 1) //NORMAL near death resistance / damage divided by 1.15
-									health -= notehealthdmg / 1.15;
-								else if (health < 0.20 || storyDifficulty == 2) //HARD near death resistance / damage divided by 1.02
-									health -= notehealthdmg / 1.02;
-								else if (health < 0.20 || storyDifficulty == 3) //HOLY no near death resistance
-									health -= notehealthdmg;
-
-								//trace (notehealthdmg);
-								//FlxG.camera.shake(0.005, 0.25);
+		
 								if (!FlxG.save.data.reducedMotion)
-									camHUD.shake((notehealthdmg / 7.5), 0.25);
-
-								if (storyDifficulty == 3)
-									switch(curSong)
-										{
-											case 'Connect':
-												notehealthdmg = 0.01;
-												
-											case 'Reminisce':
-												notehealthdmg = 0.012;
-
-											case 'Salvation':
-												notehealthdmg = 0.012;
-										}
+									camHUD.shake((notehealthdmg / 15), 0.25);
 							}
 
 						switch (Math.abs(daNote.noteData))
@@ -4476,12 +4514,6 @@ class PlayState extends MusicBeatState
 
 		iconP1.setGraphicSize(Std.int(iconP1.width + 30));
 		iconP2.setGraphicSize(Std.int(iconP2.width + 30));
-
-		if (curBeat % 4 == 3)
-			{
-				iconP1.setGraphicSize(Std.int(iconP1.width + 20));
-				iconP2.setGraphicSize(Std.int(iconP2.width + 20));
-			}
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();

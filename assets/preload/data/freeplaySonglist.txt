@@ -2,4 +2,4 @@ Connect:mami:1
 Reminisce:mami:1
 Salvation:mami-holy:1
 Tetris:mami-tetris:1
-Mamigation:mami-holy:1
+Mamigation:mami-mamigation:1

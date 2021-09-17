@@ -33,7 +33,7 @@ class HealthIcon extends FlxSprite
 				animation.add('mami-holy', [12, 13, 14], 0, false, isPlayer);
 				animation.add('mami-holy-postsnap', [12, 26, 12], 0, false, isPlayer);
 				animation.add('dad', [18, 19, 20], 0, false, isPlayer);
-				animation.add('gf', [21, 22, 23], 0, false, isPlayer);
+				animation.add('mami-mamigation', [21, 22, 23], 0, false, isPlayer);
 				
 		
 				animation.play(char);
