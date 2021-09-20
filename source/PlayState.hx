@@ -192,13 +192,14 @@ class PlayState extends MusicBeatState
 	var gunSwarm:FlxSprite;
 
 	//tetris
-	
 	var tetrisLight:FlxSprite;
 	var colorCycle:Int = 0;
 
 	var latched:Bool = false;
 
 	var tetrisCrowd:FlxSprite;
+
+	//mamigation
 
 	var fc:Bool = true;
 
@@ -861,15 +862,15 @@ class PlayState extends MusicBeatState
 
 			case 'mamigation': //added some shit cuz yes, Sector gaming B))
 			{
-					defaultCamZoom = 0.7;
+					defaultCamZoom = 0.75;
 					curStage = 'mamigation';
-					var bg:FlxSprite = new FlxSprite(-500, -500).loadGraphic(Paths.image('mami/BG/MAMIGATION/BGSky', 'shared'));
+					var bg:FlxSprite = new FlxSprite(-500, -250).loadGraphic(Paths.image('mami/BG/MAMIGATION/BGSky', 'shared'));
 					bg.antialiasing = true;
 					bg.scrollFactor.set(0.9, 0.9);
 					bg.active = false;
 					add(bg);
 
-					var placeholder:FlxSprite = new FlxSprite(-500, -100).loadGraphic(Paths.image('mami/BG/MAMIGATION/placeholder', 'shared'));
+					var placeholder:FlxSprite = new FlxSprite(-650, -250).loadGraphic(Paths.image('mami/BG/MAMIGATION/placeholder', 'shared'));
 					placeholder.updateHitbox();
 					placeholder.antialiasing = true;
 					placeholder.scrollFactor.set(0.9, 0.9);
@@ -957,6 +958,7 @@ class PlayState extends MusicBeatState
 			case 'mami-mamigation':
 				dad.x -= 350;
 				dad.y += 15;
+				FlxTween.tween(dad, {y: dad.y - 60}, 3, {type: FlxTweenType.PINGPONG, ease: FlxEase.quadInOut});
 		}
 
 
@@ -991,6 +993,15 @@ class PlayState extends MusicBeatState
 				boyfriend.x += 80;
 				boyfriend.y += 40;
 				gf.y -= 50;
+
+			case 'mamigation':
+				boyfriend.y += 40;
+
+				var evilTrail = new FlxTrail(dad, null, 4, 24, 0.3, 0.069);
+				// evilTrail.changeValuesEnabled(false, false, false, false);
+				// evilTrail.changeGraphic()
+				add(evilTrail);
+				// evilTrail.scrollFactor.set(1.1, 1.1);
 		}
 
 		add(gf);
@@ -1192,6 +1203,11 @@ class PlayState extends MusicBeatState
 		// cameras = [FlxG.cameras.list[1]];
 		startingSong = true;
 		
+		if (curSong == 'Mamigation')
+			{
+				camHUD.alpha = 0.0;
+			}
+
 		new FlxTimer().start(1.15, function(tmr:FlxTimer)
 			{
 				if (healthBar.percent < 20 && !paused)
@@ -1637,6 +1653,11 @@ class PlayState extends MusicBeatState
 					altSuffix = '-pixel';
 				}
 			}
+
+			if (curSong == 'Mamigation')
+				{
+					swagCounter = 4;
+				}
 
 			switch (swagCounter)
 
@@ -2474,6 +2495,18 @@ class PlayState extends MusicBeatState
 					}	
 			}
 
+		if (curSong == 'Mamigation')
+			{
+				var chromeOffset:Float = ((2 - ((health / 0.5))));
+				chromeOffset /= 600;
+				if (chromeOffset <= 0)
+					setChrome(0.0);
+				else
+					{
+					setChrome(chromeOffset);
+					}	
+			}	
+
 		if (FlxG.keys.pressed.R)
 			if (FlxG.save.data.resetButton)
 				health -= 2;
@@ -2855,7 +2888,7 @@ class PlayState extends MusicBeatState
 
 						if (curSong == 'Mamigation')
 							{
-								notehealthdmg = 0.0175;
+								notehealthdmg = 0.02;
 
 								if (health > 0.2)
 									if (daNote.isSustainNote)
@@ -4800,6 +4833,9 @@ class PlayState extends MusicBeatState
 			{
 				switch (curBeat)
 					{
+						case 16:
+							camHUD.alpha = 1.0;
+
 						case 532:
 							dad.playAnim('singUP', true);
 							defaultCamZoom = 1.2;

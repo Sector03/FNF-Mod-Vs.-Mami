@@ -267,17 +267,17 @@ class Character extends FlxSprite
 			case 'mami-mamigation':
 				tex = Paths.getSparrowAtlas('characters/Mami Mamigation','shared');
 				frames = tex;
-				animation.addByPrefix('idle', 'IDLE', 24);
-				animation.addByPrefix('singUP', 'UP', 24);
-				animation.addByPrefix('singRIGHT', 'RIGHT', 24);
-				animation.addByPrefix('singDOWN', 'DOWN', 24);
-				animation.addByPrefix('singLEFT', 'LEFT', 24);
+				animation.addByPrefix('idle', 'MAMIGATION_IDLE', 24);
+				animation.addByPrefix('singUP', 'MAMIGATION_IDLE', 24);
+				animation.addByPrefix('singRIGHT', 'MAMIGATION_IDLE', 24);
+				animation.addByPrefix('singDOWN', 'MAMIGATION_IDLE', 24);
+				animation.addByPrefix('singLEFT', 'MAMIGATION_IDLE', 24);
 
 				addOffset('idle', -69, 126); //24
-				addOffset("singUP", 150, 145); //-5
-				addOffset("singRIGHT", 40, 115); //-35
-				addOffset("singLEFT", -10, 115); //-35
-				addOffset("singDOWN", 50, 85); //-65
+				addOffset("singUP", -69, 126); //-5
+				addOffset("singRIGHT", -69, 126); //-35
+				addOffset("singLEFT", -69, 126); //-35
+				addOffset("singDOWN", -69, 126); //-65
 	
 				playAnim('idle');	
 
