@@ -40,7 +40,7 @@ class FreeplayState extends MusicBeatState
 
 	private var iconArray:Array<HealthIcon> = [];
 
-	var songPlaying:Bool = false;
+	var songPlaying:Bool = true;
 	var playingSongText:FlxText;
 	var menuLeftSide:FlxSprite;
 	var freePlaylock:FlxSprite;
@@ -57,11 +57,11 @@ class FreeplayState extends MusicBeatState
 			songs.push(new SongMetadata(data[0], Std.parseInt(data[2]), data[1]));
 		}
 
-		 
-		if (FlxG.sound.music != null)
+		songPlaying = true; 
+
+		if (FlxG.sound.music != null && !songPlaying)
 			{
-				if (!FlxG.sound.music.playing)
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			}
 		 
 
@@ -161,8 +161,12 @@ class FreeplayState extends MusicBeatState
 		changeSelection();
 		changeDiff();
 
-		playingSongText = new FlxText(FlxG.width * 0.1, 32, 0, "Press P to toggle song previews. (OFF)", 32);
-		playingSongText.setFormat("VCR OSD Mono", 32, FlxColor.GRAY, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		//playingSongText = new FlxText(FlxG.width * 0.1, 32, 0, "Press P to toggle song previews. (OFF)", 32);
+		//playingSongText.setFormat("VCR OSD Mono", 32, FlxColor.GRAY, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		//add(playingSongText);
+
+		playingSongText = new FlxText(FlxG.width * 0.1, 32, 0, "Press P to toggle song previews. (ON)", 32);
+		playingSongText.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(playingSongText);
 
 		// FlxG.sound.playMusic(Paths.music('title'), 0);
@@ -271,7 +275,29 @@ class FreeplayState extends MusicBeatState
 				FlxTween.completeTweensOf(playingSongText);
 				FlxTween.color(playingSongText, .5, FlxColor.GRAY, FlxColor.WHITE, {ease: FlxEase.quadOut});
 
-				if (curSelected <= 2)
+				if (curSelected <= 2 || curSelected >= 5)
+					{
+						if (FlxG.save.data.copyrightedMusic && curSelected == 0)
+							{
+							FlxG.sound.playMusic(Paths.instcr(songs[curSelected].songName), 0);
+							}
+						else
+							{
+								FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+							}
+					}
+				else if (curSelected == 3 || FlxG.save.data.progressStoryClearHard)
+					{
+						if (FlxG.save.data.copyrightedMusic && curSelected == 0)
+							{
+							FlxG.sound.playMusic(Paths.instcr(songs[curSelected].songName), 0);
+							}
+						else
+							{
+								FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+							}
+					}
+				else if (curSelected == 4 || FlxG.save.data.progressStoryClearTetris)
 					{
 						if (FlxG.save.data.copyrightedMusic && curSelected == 0)
 							{
@@ -378,7 +404,7 @@ class FreeplayState extends MusicBeatState
 								LoadingState.loadAndSwitchState(new PlayState());
 							});
 					}
-				else if (curSelected <= 2)
+				else if (curSelected <= 2 || curSelected >= 5)
 					{
 						FlxG.sound.music.stop();
 						FlxG.sound.play(Paths.sound('confirmMenu'));
@@ -465,13 +491,29 @@ class FreeplayState extends MusicBeatState
 
 		curSelected += change;
 
-		if (curSelected >= 3 && curDifficulty <= 2)
+		if (curSelected >= 3 && curDifficulty <= 2 && curSelected <= 4)
 			{
 			if (curDifficulty < 2)
 				curDifficulty = 3;
 			if (curDifficulty > 3) //curdiff 4 for master
 				curDifficulty = 2;
 			}
+
+		switch (curDifficulty)
+		{
+			case 0:
+				diffText.text = "EASY";
+				diffText.color = FlxColor.LIME;
+			case 1:
+				diffText.text = 'NORMAL';
+				diffText.color = FlxColor.YELLOW;
+			case 2:
+				diffText.text = "HARD";
+				diffText.color = FlxColor.RED;
+			case 3:
+				diffText.text = "HOLY";
+				diffText.color = 0xFFFEE897;
+		}
 
 		if (curSelected < 0)
 			curSelected = songs.length - 1;
@@ -502,20 +544,64 @@ class FreeplayState extends MusicBeatState
 					case 4:
 						freeChar.animation.play('holy_mami');
 						freeChar.y -= 165;
+					case 5:
+						freeChar.animation.play('mami');
+						freeChar.y = -50;
 				}
+				if (curSelected == 3 && !FlxG.save.data.progressStoryClearHard)
+					{
+						freeChar.animation.play('mami');
+						freeChar.y = -50;
+					}
+				else if (curSelected == 4 && !FlxG.save.data.progressStoryClearTetris)
+					{
+						freeChar.animation.play('mami');
+						freeChar.y = -50;
+					}
 			}
 
-		if (songPlaying && !selectedSong && curSelected <= 2)
+		if (songPlaying && !selectedSong)
 			{
-				if (curSelected == 0 && FlxG.save.data.copyrightedMusic)
+				if (curSelected <= 2 || curSelected >= 5)
 					{
-					FlxG.sound.playMusic(Paths.instcr(songs[curSelected].songName), 0);
+						if (FlxG.save.data.copyrightedMusic && curSelected == 0)
+							{
+							FlxG.sound.playMusic(Paths.instcr(songs[curSelected].songName), 0);
+							}
+						else
+							{
+								FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+							}
 					}
-				else
+				else if (curSelected == 3 && FlxG.save.data.progressStoryClearHard)
 					{
-						FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+						if (FlxG.save.data.copyrightedMusic && curSelected == 0)
+							{
+							FlxG.sound.playMusic(Paths.instcr(songs[curSelected].songName), 0);
+							}
+						else
+							{
+								FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+							}
+					}
+				else if (curSelected == 4 && FlxG.save.data.progressStoryClearTetris)
+					{
+						if (FlxG.save.data.copyrightedMusic && curSelected == 0)
+							{
+							FlxG.sound.playMusic(Paths.instcr(songs[curSelected].songName), 0);
+							}
+						else
+							{
+								FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+							}
 					}
 			}
+
+
+
+
+
+			
 
 		// selector.y = (70 * curSelected) + 30;
 

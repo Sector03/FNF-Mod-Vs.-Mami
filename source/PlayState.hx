@@ -588,7 +588,7 @@ class PlayState extends MusicBeatState
 
 		switch(SONG.song.toLowerCase())
 		{
-			case 'connect' | 'reminisce':
+			case 'connect' | 'reminisce' | 'connect-k-side':
 				{
 						defaultCamZoom = 0.7;
 						curStage = 'subway';
@@ -817,15 +817,6 @@ class PlayState extends MusicBeatState
 					holyHomura.updateHitbox();
 					holyHomura.active = true;
 					add(holyHomura);
-
-					connectLight = new FlxSprite(0, 0).loadGraphic(Paths.image('mami/BG/connect_flash', 'shared'));
-					connectLight.setGraphicSize(Std.int(connectLight.width * 1));
-					connectLight.updateHitbox();
-					connectLight.antialiasing = true;
-					connectLight.scrollFactor.set(0, 0);
-					connectLight.active = false;
-					connectLight.alpha = 0.0;
-					connectLight.cameras = [camOVERLAY];
 
 					gunSwarm = new FlxSprite(-1000, 0).loadGraphic(Paths.image('mami/BG/HOLY/HOLY_guns', 'shared'));
 					gunSwarm.setGraphicSize(Std.int(gunSwarm.width * 1));

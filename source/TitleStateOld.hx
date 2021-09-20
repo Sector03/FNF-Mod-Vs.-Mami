@@ -80,9 +80,15 @@ class TitleStateOld extends FlxTransitionableState
 			transitioning = true;
 			FlxG.sound.music.stop();
 
+			PlayState.SONG = Song.loadFromJson("connect-k-side", "connect-k-side");
+			PlayState.isStoryMode = false;
+			PlayState.storyDifficulty = 2;
+			PlayState.storyWeek = -1;
+
 			new FlxTimer().start(2, function(tmr:FlxTimer)
 			{
-				FlxG.switchState(new MainMenuState());
+				LoadingState.loadAndSwitchState(new PlayState());
+				//FlxG.switchState(new MainMenuState());
 			});
 			FlxG.sound.play(Paths.sound('easteregg/titleShoot'), 0.7);
 		}
