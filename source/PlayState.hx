@@ -2329,14 +2329,6 @@ class PlayState extends MusicBeatState
 					iconP1.animation.play('bf-old');
 			}
 
-		if (FlxG.keys.justPressed.V) //why the fuck doesn't it come backbruh
-			{
-				if (debugCommandsText.visible = true)
-					debugCommandsText.visible = false;
-				else if (!debugCommandsText.visible)
-					debugCommandsText.visible = true;
-			}
-
 		switch (curStage)
 		{
 			case 'philly':
@@ -2534,6 +2526,14 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.keys.justPressed.F)
 			ribbongrab(65, 7);
+
+		if (FlxG.keys.justPressed.V) //why the fuck doesn't it come backbruh
+			{
+				if (debugCommandsText.visible = true)
+					debugCommandsText.visible = false;
+				else if (!debugCommandsText.visible)
+					debugCommandsText.visible = true;
+			}
 
 		if(FlxG.keys.justPressed.TWO) //also from shadowmario, really neat debug for skipping parts of a song
 			{
