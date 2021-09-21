@@ -223,7 +223,7 @@ class FreeplayState extends MusicBeatState
 	{
 		super.update(elapsed);
 
-		#if debug
+		//#if debug
 		if (FlxG.keys.justPressed.Y)
 			{
 				FlxG.save.data.progressStoryClearHard = true;
@@ -243,7 +243,7 @@ class FreeplayState extends MusicBeatState
 			{
 				FlxG.save.data.progressStoryClearTetris = false;
 			}	
-		#end
+		//#end
 		
 
 		if (FlxG.save.data.progressStoryClearHard == false)

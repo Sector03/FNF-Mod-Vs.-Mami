@@ -2534,12 +2534,6 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.keys.justPressed.F)
 			ribbongrab(65, 7);
-		#end
-
-		if (!latched && camHUD.angle >= -0.005)
-			camHUD.angle /= 1.25;
-		else if (camHUD.angle <= -0.005)
-			camHUD.angle = 0;
 
 		if(FlxG.keys.justPressed.TWO) //also from shadowmario, really neat debug for skipping parts of a song
 			{
@@ -2583,6 +2577,12 @@ class PlayState extends MusicBeatState
 		}
 
 
+		#end
+
+		if (!latched && camHUD.angle >= -0.005)
+			camHUD.angle /= 1.25;
+		else if (camHUD.angle <= -0.005)
+			camHUD.angle = 0;
 
 		#if debug
 		if (FlxG.keys.justPressed.EIGHT)
