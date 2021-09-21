@@ -191,6 +191,10 @@ class PlayState extends MusicBeatState
 	var lampsLeft:FlxSprite;
 	var gunSwarm:FlxSprite;
 
+	//salvation
+	var blackOverlay:FlxSprite;
+	var darknessOverlay:FlxSprite;
+
 	//tetris
 	var tetrisLight:FlxSprite;
 	var colorCycle:Int = 0;
@@ -588,7 +592,7 @@ class PlayState extends MusicBeatState
 
 		switch(SONG.song.toLowerCase())
 		{
-			case 'connect' | 'reminisce' | 'connect-k-side':
+			case 'connect' | 'reminisce' | 'konnect':
 				{
 						defaultCamZoom = 0.7;
 						curStage = 'subway';
@@ -796,7 +800,7 @@ class PlayState extends MusicBeatState
 					lampsSubway.active = false;
 					add(lampsSubway);
 
-					lampsLeft = new FlxSprite(-500, -300).loadGraphic(Paths.image('mami/BG/BGLampLights', 'shared'));
+					lampsLeft = new FlxSprite(-500, -300).loadGraphic(Paths.image('mami/BG/HOLY/HOLY_BGLampLights', 'shared'));
 					lampsLeft.updateHitbox();
 					lampsLeft.antialiasing = true;
 					lampsLeft.scrollFactor.set(0.9, 0.9);
@@ -825,30 +829,22 @@ class PlayState extends MusicBeatState
 					gunSwarm.updateHitbox();
 					gunSwarm.active = true;
 
-					connectLight = new FlxSprite(0, 0).loadGraphic(Paths.image('mami/BG/connect_flash', 'shared'));
-					connectLight.setGraphicSize(Std.int(connectLight.width * 1));
-					connectLight.updateHitbox();
-					connectLight.antialiasing = true;
-					connectLight.scrollFactor.set(0, 0);
-					connectLight.active = false;
-					connectLight.alpha = 0.0;
-					connectLight.cameras = [camOVERLAY];
+					darknessOverlay = new FlxSprite(-480, -480).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), 0xFF3E0B5E);
+					darknessOverlay.updateHitbox();
+					darknessOverlay.antialiasing = true;
+					darknessOverlay.scrollFactor.set(0, 0);
+					darknessOverlay.active = false;
+					darknessOverlay.alpha = 0.5;
+					//darknessOverlay.cameras = [camOVERLAY];
+					darknessOverlay.blend = MULTIPLY;
 
-					tetrisLight = new FlxSprite(0, 0);
-					tetrisLight.frames = Paths.getSparrowAtlas('tetris/connect_flash', 'shared');
-					tetrisLight.animation.addByPrefix('red', "RED instance 1", 24, true);
-					tetrisLight.animation.addByPrefix('yellow', "YEL instance 1", 24, true);
-					tetrisLight.animation.addByPrefix('blue', "BLU instance 1", 24, true);
-					tetrisLight.animation.addByPrefix('green', "GRN instance 1", 24, true);
-					tetrisLight.animation.addByPrefix('pink', "PNK instance 1", 24, true);
-					tetrisLight.setGraphicSize(Std.int(tetrisLight.width * 1));
-					tetrisLight.antialiasing = true;
-					tetrisLight.scrollFactor.set(1, 1);
-					tetrisLight.updateHitbox();
-					tetrisLight.active = false;
-					tetrisLight.alpha = 0.0;
-					tetrisLight.cameras = [camOVERLAY];
-					add(tetrisLight);
+					blackOverlay = new FlxSprite(-480, -480).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
+					blackOverlay.updateHitbox();
+					blackOverlay.antialiasing = true;
+					blackOverlay.scrollFactor.set(0, 0);
+					blackOverlay.active = false;
+					blackOverlay.alpha = 1;
+					//darknessOverlay.cameras = [camOVERLAY];
 				}
 
 			case 'mamigation': //added some shit cuz yes, Sector gaming B))
@@ -946,6 +942,9 @@ class PlayState extends MusicBeatState
 			case 'mami-holy':
 				dad.x -= 350;
 				dad.y += 15;
+			case 'mami-holypostsnap':
+				dad.x -= 350;
+				dad.y += 15;
 			case 'mami-mamigation':
 				dad.x -= 350;
 				dad.y += 15;
@@ -1025,6 +1024,10 @@ class PlayState extends MusicBeatState
 			add(lampsLeft);
 			
 			add(gunSwarm);
+
+			add(darknessOverlay);
+
+			add(blackOverlay);
 			}
 
 		var doof:DialogueBox = new DialogueBox(false, dialogue);
@@ -1194,7 +1197,7 @@ class PlayState extends MusicBeatState
 		// cameras = [FlxG.cameras.list[1]];
 		startingSong = true;
 		
-		if (curSong == 'Mamigation')
+		if (curSong == 'Mamigation' || curSong == 'Salvation')
 			{
 				camHUD.alpha = 0.0;
 			}
@@ -1645,7 +1648,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 
-			if (curSong == 'Mamigation')
+			if (curSong == 'Mamigation' || curSong == 'Salvation')
 				{
 					swagCounter = 4;
 				}
@@ -1720,7 +1723,6 @@ class PlayState extends MusicBeatState
 	var previousFrameTime:Int = 0;
 	var lastReportedPlayheadPosition:Int = 0;
 	var songTime:Float = 0;
-
 
 	var songStarted = false;
 
@@ -2539,6 +2541,47 @@ class PlayState extends MusicBeatState
 		else if (camHUD.angle <= -0.005)
 			camHUD.angle = 0;
 
+		if(FlxG.keys.justPressed.TWO) //also from shadowmario, really neat debug for skipping parts of a song
+			{
+			FlxG.sound.music.pause();
+			vocals.pause();
+			lowhpmusic.pause();
+			Conductor.songPosition += 10000;
+			notes.forEachAlive(function(daNote:Note)
+			{
+				if(daNote.strumTime + 800 < Conductor.songPosition) {
+					daNote.active = false;
+					daNote.visible = false;
+
+					daNote.kill();
+					notes.remove(daNote, true);
+					daNote.destroy();
+				}
+			});
+			for (i in 0...unspawnNotes.length) {
+				var daNote:Note = unspawnNotes[0];
+				if(daNote.strumTime + 800 >= Conductor.songPosition) {
+					break;
+				}
+
+				daNote.active = false;
+				daNote.visible = false;
+
+				daNote.kill();
+				unspawnNotes.splice(unspawnNotes.indexOf(daNote), 1);
+				daNote.destroy();
+			}
+
+			FlxG.sound.music.time = Conductor.songPosition;
+			FlxG.sound.music.play();
+
+			vocals.time = Conductor.songPosition;
+			vocals.play();
+
+			lowhpmusic.time = Conductor.songPosition;
+			lowhpmusic.play();
+		}
+
 
 
 		#if debug
@@ -3286,6 +3329,11 @@ class PlayState extends MusicBeatState
 						canPause = true; //temp(hopefully) solution to people avoiding tetris blocking mechanic 
 					},1);
 		}
+
+		public function salvationLightFlicker()
+			{
+				lampsLeft.visible = !lampsLeft.visible;
+			}
 
 		public function ribbongrab(tiltpower:Int, duration:Int)
 			{
@@ -4465,7 +4513,55 @@ class PlayState extends MusicBeatState
 			// dad.dance();
 		}
 
-		health -= (camHUD.angle * 0.0010);
+		if (FlxG.random.bool(15) && curSong == 'Salvation')
+			{
+				salvationLightFlicker();
+			}
+
+		if (curSong == 'Salvation')
+			{
+				switch (curStep)
+				{
+					case 34:
+						salvationLightFlicker();
+
+					case 36: 
+						salvationLightFlicker();
+
+					case 46: 
+						salvationLightFlicker();
+
+					case 51: 
+						salvationLightFlicker();
+
+					case 52: 
+						salvationLightFlicker();
+
+					case 58: 
+						salvationLightFlicker();
+
+					case 74:
+						blackOverlay.visible = false;
+						camHUD.alpha = 1.0;
+				}
+			}
+
+		if (curStage == 'subway-holy')
+			{
+				if (lampsLeft.visible)
+					{
+						darknessOverlay.alpha = 0.3;
+					}
+				else
+					{
+						darknessOverlay.alpha = 0.45;
+					}
+			}
+
+		if (latched) //salvation ribbon damage
+			{
+			health -= (camHUD.angle * 0.0010);
+			}
 
 		// yes this updates every step.
 		// yes this is bad
@@ -4617,24 +4713,83 @@ class PlayState extends MusicBeatState
 				}
 			}
 		*/
+			
+		//FlxTween.linearMotion(gunSwarm, -1500, -200, 2500, 1500, .5, true);
 
 		if (curSong == 'Salvation')
 			{
 				switch (curBeat)
 				{
-					case 2: //straight
-						FlxTween.linearMotion(gunSwarm, -500, 120, 1500, 120, .5, true);
+					case 14:
+						FlxG.sound.play(Paths.sound('intro3'), 0.6);
 
-					case 10: //downward right
-						gunSwarm.angle = -15;
-						FlxTween.linearMotion(gunSwarm, 1500, -200, 2500, -1500, .5, true);
+					case 15:
+						var salvationcountdownready:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ready', 'shared'));
+						FlxG.sound.play(Paths.sound('intro2'), 0.6);
+						salvationcountdownready.scrollFactor.set(0, 0);
+						salvationcountdownready.updateHitbox();
+						salvationcountdownready.cameras = [camOVERLAY];
 
-					case 18: //upward right
-					gunSwarm.angle = 15;
-					FlxTween.linearMotion(gunSwarm, -1500, -200, 2500, 1500, .5, true);
+						salvationcountdownready.screenCenter();
+						salvationcountdownready.y -= 100;
+						add(salvationcountdownready);
+						FlxTween.tween(salvationcountdownready, {y: salvationcountdownready.y += 100, alpha: 0}, Conductor.crochet / 1000, {
+							ease: FlxEase.cubeInOut,
+							onComplete: function(twn:FlxTween)
+							{
+								salvationcountdownready.destroy();
+							}
+						});
+
+					case 16:
+						var salvationcountdownset:FlxSprite = new FlxSprite().loadGraphic(Paths.image('set', 'shared'));
+						FlxG.sound.play(Paths.sound('intro1'), 0.6);
+						salvationcountdownset.scrollFactor.set(0, 0);
+						salvationcountdownset.updateHitbox();
+						salvationcountdownset.cameras = [camOVERLAY];
+
+						salvationcountdownset.screenCenter();
+						salvationcountdownset.y -= 100;
+						add(salvationcountdownset);
+						FlxTween.tween(salvationcountdownset, {y: salvationcountdownset.y += 100, alpha: 0}, Conductor.crochet / 1000, {
+							ease: FlxEase.cubeInOut,
+							onComplete: function(twn:FlxTween)
+							{
+								salvationcountdownset.destroy();
+							}
+						});
+
+
+					case 17:
+						blackOverlay.visible = false;
+						camHUD.alpha = 1.0;
+
+						var salvationcountdowngo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('go', 'shared'));
+						FlxG.sound.play(Paths.sound('introGo'), 0.6);
+						salvationcountdowngo.scrollFactor.set(0, 0);
+						salvationcountdowngo.updateHitbox();
+						salvationcountdowngo.cameras = [camOVERLAY];
+
+						salvationcountdowngo.screenCenter();
+						salvationcountdowngo.y -= 100;
+						add(salvationcountdowngo);
+						FlxTween.tween(salvationcountdowngo, {y: salvationcountdowngo.y += 100, alpha: 0}, Conductor.crochet / 1000, {
+							ease: FlxEase.cubeInOut,
+							onComplete: function(twn:FlxTween)
+							{
+								salvationcountdowngo.destroy();
+							}
+						});
+
+					case 853:
+						iconP2.animation.play("mami-holy-postsnap");
+
+						remove(dad);
+						dad = new Character(-250, 115, "mami-holy-postsnap");
+						add(dad);
 				}
 			}
-			
+
 		if (curSong == 'Tetris' && isDisco && FlxG.save.data.flashingLights) 
 			{
 				if (colorCycle <= 3)
@@ -4843,10 +4998,13 @@ class PlayState extends MusicBeatState
 					gorls.animation.play('move', true);
 
 			case 'subway-holy':
-				holyHomura.animation.play('move', true);
+				if(curBeat % 2 == 1)
+					holyHomura.animation.play('move', true);
 
 			case 'subway-tetris':
-				holyHomura.animation.play('move', true);
+				if(curBeat % 2 == 1)
+					holyHomura.animation.play('move', true);
+
 				tetrisCrowd.animation.play('cheer', true);
 
 			case 'school':

@@ -80,7 +80,7 @@ class TitleStateOld extends FlxTransitionableState
 			transitioning = true;
 			FlxG.sound.music.stop();
 
-			PlayState.SONG = Song.loadFromJson("connect-k-side", "connect-k-side");
+			PlayState.SONG = Song.loadFromJson("konnect", "konnect");
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = 2;
 			PlayState.storyWeek = -1;
