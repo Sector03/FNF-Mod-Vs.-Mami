@@ -416,7 +416,7 @@ class TitleState extends MusicBeatState
 	{
 		super.beatHit();
 
-		if (curBeat % 2 == 1)
+		if (curBeat % 2 == 1 && !transitioning)
 			{
 			FlxTween.cancelTweensOf(bgFlash);
 			bgFlash.alpha = 0.75;

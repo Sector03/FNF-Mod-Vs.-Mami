@@ -738,7 +738,7 @@ class PlayState extends MusicBeatState
 						holyHomura.shader = swagShader.shader;
 						add(holyHomura);
 
-						tetrisCrowd = new FlxSprite(-7, 920);
+						tetrisCrowd = new FlxSprite(-60, 920);
 						tetrisCrowd.frames = Paths.getSparrowAtlas('tetris/crowd', 'shared');
 						tetrisCrowd.animation.addByPrefix('cheer', "crowd", 24, true);
 						tetrisCrowd.setGraphicSize(Std.int(tetrisCrowd.width * 1));
@@ -4720,10 +4720,10 @@ class PlayState extends MusicBeatState
 			{
 				switch (curBeat)
 				{
-					case 14:
+					case 15:
 						FlxG.sound.play(Paths.sound('intro3'), 0.6);
 
-					case 15:
+					case 16:
 						var salvationcountdownready:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ready', 'shared'));
 						FlxG.sound.play(Paths.sound('intro2'), 0.6);
 						salvationcountdownready.scrollFactor.set(0, 0);
@@ -4741,7 +4741,7 @@ class PlayState extends MusicBeatState
 							}
 						});
 
-					case 16:
+					case 17:
 						var salvationcountdownset:FlxSprite = new FlxSprite().loadGraphic(Paths.image('set', 'shared'));
 						FlxG.sound.play(Paths.sound('intro1'), 0.6);
 						salvationcountdownset.scrollFactor.set(0, 0);
@@ -4760,7 +4760,7 @@ class PlayState extends MusicBeatState
 						});
 
 
-					case 17:
+					case 18:
 						blackOverlay.visible = false;
 						camHUD.alpha = 1.0;
 
