@@ -4815,8 +4815,6 @@ class PlayState extends MusicBeatState
 					tetrisLight.animation.play("pink", true);
 
 				tetrisLight.alpha = 1;
-
-				trace(swagShader.shader);
 			}
 		else
 			{
