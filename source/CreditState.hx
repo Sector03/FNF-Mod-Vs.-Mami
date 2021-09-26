@@ -23,6 +23,7 @@ using StringTools;
 class CreditState extends MusicBeatState
 {
 	var curSelected:Int = 0;
+	var onSpecial:Bool = false;
 	var credicons:FlxTypedGroup<FlxSprite>;
 	var menuRoles:FlxTypedGroup<FlxText>;
 	var menuItems:FlxTypedGroup<FlxSprite>;
@@ -36,7 +37,9 @@ class CreditState extends MusicBeatState
 		'sectortext', //Sector
 		'vidztext', //Vidz
 		'magbrostext', //Magbros
-		'ascentitext']; //Ascenti
+		'ascentitext', //Ascenti
+		'kayotext', //Cerbera
+		'cerberatext']; //Kayo
 	#else
 	var optionShit:Array<String> = [
 		'Fade Revamped', //Fade Revamped
@@ -46,7 +49,9 @@ class CreditState extends MusicBeatState
 		'Sector', //Sector
 		'Vidz', //Vidz
 		'Magbros', //Magbros
-		'Ascenti']; //Ascenti
+		'Ascenti',
+		'Kayo',
+		'Cerbera'];
 	#end
 	//ROLES
 	#if !switch
@@ -58,7 +63,9 @@ class CreditState extends MusicBeatState
 		'Coder, General Quality Assurance, Charter', //Sector
 		'Coder', //Vidz
 		'Musician', //Magbros
-		'Connect Cutscene Animator']; //Ascenti
+		'Connect Cutscene Animator', //Ascenti
+		'Musician', //Cerbera
+		'Charter']; //Kayo
 	#else
 	var credinfolist:Array<String> = [
 		'Lead Director, Charter, Vocalist', //Fade Revamped
@@ -68,7 +75,9 @@ class CreditState extends MusicBeatState
 		'Coder, General Quality Assurance, Charter', //Sector
 		'Coder', //Vidz
 		'Musician', //Magbros
-		'Connect Cutscene Animator']; //Ascenti
+		'Connect Cutscene Animator',
+		'Musician',
+		'Charter']
 	#end
 	//ICONS
 	#if !switch
@@ -80,7 +89,9 @@ class CreditState extends MusicBeatState
 		'sectoricon', //Sector
 		'vidzicon', //Vidz
 		'magbrosicon', //Magbros
-		'acentiicon']; //Ascenti
+		'acentiicon',
+		'kayoicon',
+		'cerberaicon'];	//Ascenti
 	#else
 	var crediconlist:Array<String> = [
 		'faderevampedicon', //Fade Revamped
@@ -90,9 +101,10 @@ class CreditState extends MusicBeatState
 		'sectoricon', //Sector
 		'vidzicon', //Vidz
 		'magbrosicon', //Magbros
-		'acentiicon']; //Ascenti
+		'acentiicon',
+		'cerberaicon',
+		'kayoicon']; //Ascenti
 	#end
-
 
 	var newGaming:FlxText;
 	var newGaming2:FlxText;
@@ -108,6 +120,7 @@ class CreditState extends MusicBeatState
 
 	var creditRoleText:FlxText;
 	var creditNameText:FlxText;
+	var creditSpecialChange:FlxText;
 
 	override function create()
 	{
@@ -154,7 +167,7 @@ class CreditState extends MusicBeatState
 		var tex = Paths.getSparrowAtlas('credits/names');
 		for (i in 0...optionShit.length)
 		{
-			var menuItem:FlxSprite = new FlxSprite(-250, 150 + (i * 60));
+			var menuItem:FlxSprite = new FlxSprite(-250, 80 + (i * 60));
 			menuItem.alpha = 0;
 			menuItem.frames = tex;
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
@@ -182,7 +195,7 @@ class CreditState extends MusicBeatState
 
 		for (i in 0...crediconlist.length)
 			{
-				var crediticon:FlxSprite = new FlxSprite(650, 150);
+				var crediticon:FlxSprite = new FlxSprite(650, 130);
 				crediticon.angle = -10;
 				crediticon.frames = tex;
 				crediticon.animation.addByPrefix('idle', crediconlist[i] + " basic", 24);
@@ -198,22 +211,34 @@ class CreditState extends MusicBeatState
 		
 		//ROLES
 		
-		creditRoleText = new FlxText(680, 550, 420, "Lead Director, Charter, Vocalist", 38);
+		creditRoleText = new FlxText(680, 530, 420, "Lead Director, Charter, Vocalist", 38);
 		creditRoleText.setFormat(Paths.font("vcr.ttf"), 38, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		creditRoleText.text = "Lead Director, Charter, Vocalist";
 		creditRoleText.scrollFactor.set();
+		creditRoleText.borderSize = 2;
 		add(creditRoleText);
 	
-		creditNameText = new FlxText(680, 100, 460, "Fade Revamped", 48);
+		creditNameText = new FlxText(680, 80, 460, "Fade Revamped", 48);
 		creditNameText.setFormat(Paths.font("vcr.ttf"), 48, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		creditNameText.text = "Fade Revamped";
 		creditNameText.scrollFactor.set();
+		creditNameText.borderSize = 2;
 		add(creditNameText);
+
+		creditSpecialChange = new FlxText(900, 680, 1000, "Press RIGHT to view Special Thanks ->", 32);
+		creditSpecialChange.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		creditSpecialChange.text = "Press RIGHT to view Special Thanks ->";
+		creditSpecialChange.scrollFactor.set();
+		creditSpecialChange.screenCenter(X);
+		creditSpecialChange.borderSize = 2;
+		add(creditSpecialChange);
 
 		if (FlxG.save.data.dfjk)
 			controls.setKeyboardScheme(KeyboardScheme.Solo, true);
 		else
 			controls.setKeyboardScheme(KeyboardScheme.Duo(true), true);
+
+		onSpecial = false;
 
 		changeItem();
 
@@ -247,6 +272,20 @@ class CreditState extends MusicBeatState
 			{
 				FlxG.switchState(new MainMenuState());
 			}
+
+			if (controls.RIGHT_P)
+				{
+					FlxG.sound.play(Paths.sound('scrollMenu'));
+					onSpecial = true;
+					updatepage();
+				}
+
+			if (controls.LEFT_P)
+				{
+					FlxG.sound.play(Paths.sound('scrollMenu'));
+					onSpecial = false;
+					updatepage();
+				}
 
 			if (controls.ACCEPT)
 			{
@@ -288,9 +327,9 @@ class CreditState extends MusicBeatState
 								#end
 							case 'boinkbonktext':
 								#if linux
-								Sys.command('/usr/bin/xdg-open', ["https://gamebanana.com/members/1784261", "&"]);
+								Sys.command('/usr/bin/xdg-open', ["https://twitter.com/BinkBoinkBonk", "&"]);
 								#else
-								FlxG.openURL('https://gamebanana.com/members/1784261');
+								FlxG.openURL('https://twitter.com/BinkBoinkBonk');
 								#end
 							case 'sectortext':
 								#if linux
@@ -311,6 +350,18 @@ class CreditState extends MusicBeatState
 								FlxG.openURL('https://gamebanana.com/members/1805209');
 								#end
 							case 'ascentitext':
+								#if linux
+								Sys.command('/usr/bin/xdg-open', ["https://gamebanana.com/members/", "&"]);
+								#else
+								FlxG.openURL('https://gamebanana.com/members/'); //idk it lol
+								#end
+							case 'kayotext':
+								#if linux
+								Sys.command('/usr/bin/xdg-open', ["https://gamebanana.com/members/", "&"]);
+								#else
+								FlxG.openURL('https://gamebanana.com/members/'); //idk it lol
+								#end
+							case 'cerberatext':
 								#if linux
 								Sys.command('/usr/bin/xdg-open', ["https://gamebanana.com/members/", "&"]);
 								#else
@@ -391,6 +442,30 @@ class CreditState extends MusicBeatState
 			case 7:
 				creditRoleText.text = "Connect Cutscene Animator";
 				creditNameText.text = "Ascenti";
+			case 8:
+				creditRoleText.text = "Musician"; //fix offsets later or smth idk
+				creditNameText.text = "Kayo";
+			case 9:
+				creditRoleText.text = "Charter";
+				creditNameText.text = "Cerbera";
 		}
+	}
+
+	function updatepage()
+	{
+		if (onSpecial)
+			{
+				creditRoleText.visible = false;
+				menuItems.visible = false;
+				creditNameText.visible = false;
+				credicons.visible = false;
+			}
+		else
+			{
+				creditRoleText.visible = true;
+				menuItems.visible = true;
+				creditNameText.visible = true;
+				credicons.visible = true;
+			}
 	}
 }

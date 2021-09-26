@@ -268,16 +268,16 @@ class Character extends FlxSprite
 				tex = Paths.getSparrowAtlas('characters/Mami Mamigation','shared');
 				frames = tex;
 				animation.addByPrefix('idle', 'MAMIGATION_IDLE', 24);
-				animation.addByPrefix('singUP', 'MAMIGATION_IDLE', 24);
-				animation.addByPrefix('singRIGHT', 'MAMIGATION_IDLE', 24);
-				animation.addByPrefix('singDOWN', 'MAMIGATION_IDLE', 24);
-				animation.addByPrefix('singLEFT', 'MAMIGATION_IDLE', 24);
+				animation.addByPrefix('singUP', 'MAMIGATION_UP', 24);
+				animation.addByPrefix('singRIGHT', 'MAMIGATION_RIGHT', 24);
+				animation.addByPrefix('singDOWN', 'MAMIGATION_DOWN', 24);
+				animation.addByPrefix('singLEFT', 'MAMIGATION_LEFT', 24);
 
-				addOffset('idle', -69, 126); //24
-				addOffset("singUP", -69, 126); //-5
-				addOffset("singRIGHT", -69, 126); //-35
-				addOffset("singLEFT", -69, 126); //-35
-				addOffset("singDOWN", -69, 126); //-65
+				addOffset('idle', -67, 126); //24
+				addOffset("singUP", -69, 66); //-5
+				addOffset("singRIGHT", -229, 126); //-35
+				addOffset("singLEFT", 81, 356); //-35
+				addOffset("singDOWN", 12, 66); //-65
 	
 				playAnim('idle');	
 

@@ -954,6 +954,7 @@ class PlayState extends MusicBeatState
 				dad.x -= 350;
 				dad.y += 15;
 				FlxTween.tween(dad, {y: dad.y - 60}, 3, {type: FlxTweenType.PINGPONG, ease: FlxEase.quadInOut});
+				dad.setGraphicSize(Std.int(dad.width * .6));
 		}
 
 
@@ -4725,10 +4726,10 @@ class PlayState extends MusicBeatState
 			{
 				switch (curBeat)
 				{
-					case 15:
+					case 12:
 						FlxG.sound.play(Paths.sound('intro3'), 0.6);
 
-					case 16:
+					case 13:
 						var salvationcountdownready:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ready', 'shared'));
 						FlxG.sound.play(Paths.sound('intro2'), 0.6);
 						salvationcountdownready.scrollFactor.set(0, 0);
@@ -4746,7 +4747,7 @@ class PlayState extends MusicBeatState
 							}
 						});
 
-					case 17:
+					case 14:
 						var salvationcountdownset:FlxSprite = new FlxSprite().loadGraphic(Paths.image('set', 'shared'));
 						FlxG.sound.play(Paths.sound('intro1'), 0.6);
 						salvationcountdownset.scrollFactor.set(0, 0);
@@ -4765,7 +4766,7 @@ class PlayState extends MusicBeatState
 						});
 
 
-					case 18:
+					case 15:
 						blackOverlay.visible = false;
 						camHUD.alpha = 1.0;
 
