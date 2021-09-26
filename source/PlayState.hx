@@ -183,6 +183,7 @@ class PlayState extends MusicBeatState
 	var upperBoppers:FlxSprite;
 	var bottomBoppers:FlxSprite;
 	var santa:FlxSprite;
+	var weebGorl:FlxSprite;
 
 	//subwayarea
 	var gorls:FlxSprite;
@@ -594,7 +595,7 @@ class PlayState extends MusicBeatState
 		{
 			case 'connect' | 'reminisce' | 'konnect':
 				{
-						defaultCamZoom = 0.7;
+						defaultCamZoom = 0.5;
 						curStage = 'subway';
 						var bg:FlxSprite = new FlxSprite(-500, -500).loadGraphic(Paths.image('mami/BG/BGSky'));
 						bg.antialiasing = true;
@@ -629,19 +630,23 @@ class PlayState extends MusicBeatState
 						lampsLeft.scrollFactor.set(0.9, 0.9);
 						lampsLeft.active = false;
 
-						var weebGorl:FlxSprite = new FlxSprite(-530, -20).loadGraphic(Paths.image('mami/BG/BGYes', 'shared'));
-						weebGorl.updateHitbox();
-						weebGorl.antialiasing = true;
-						weebGorl.scrollFactor.set(0.9, 0.9);
-						weebGorl.active = false;
-						add(weebGorl);	
-
+					
 						var otherBGStuff:FlxSprite = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/BGRandomshit', 'shared'));
 						otherBGStuff.updateHitbox();
 						otherBGStuff.antialiasing = true;
 						otherBGStuff.scrollFactor.set(0.9, 0.9);
 						otherBGStuff.active = false;
-						add(otherBGStuff);				
+						add(otherBGStuff);		
+						
+						weebGorl = new FlxSprite(1100, 0);
+						weebGorl.frames = Paths.getSparrowAtlas('mami/BG/BGyes', 'shared');
+						weebGorl.animation.addByPrefix('move', "Symbol 6 instance 1", 24, false);
+						weebGorl.antialiasing = true;
+						weebGorl.scrollFactor.set(0.9, 0.9);
+						weebGorl.updateHitbox();
+						weebGorl.active = true;
+						add(weebGorl);
+
 
 						gorls = new FlxSprite(-360, 150);
 						gorls.frames = Paths.getSparrowAtlas('mami/BG/BGGirlsDance', 'shared');
@@ -4994,6 +4999,8 @@ class PlayState extends MusicBeatState
 			case 'subway':
 				if(curBeat % 2 == 1)
 					gorls.animation.play('move', true);
+					weebGorl.animation.play('move', true);
+
 
 			case 'subway-holy':
 				if(curBeat % 2 == 1)
