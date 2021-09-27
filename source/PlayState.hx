@@ -145,6 +145,8 @@ class PlayState extends MusicBeatState
 	public var scrollSpeedAddictive:Float = 0;
 	public var deathByHolyNote:Bool = false;
 
+	public var cameraZoomrate:Int = 4;
+
 	public var debugCommandsText:FlxText;
 	private var holyMisses:Int = 1;
 	public var godmodecheat:Bool = false;
@@ -193,13 +195,16 @@ class PlayState extends MusicBeatState
 	var holyHomura:FlxSprite;
 	var connectLight:FlxSprite;
 	var lampsLeft:FlxSprite;
+
+	//salvation
+	var flashOverlay:FlxSprite;
+	var blackOverlay:FlxSprite;
+	var darknessOverlay:FlxSprite;
+
 	var gunSwarm:FlxSprite;
 	var gunSwarmBack:FlxBackdrop;
 	var gunSwarmFront:FlxBackdrop;
-
-	//salvation
-	var blackOverlay:FlxSprite;
-	var darknessOverlay:FlxSprite;
+	var thisBitchSnapped:Bool = false;
 
 	//tetris
 	var tetrisLight:FlxSprite;
@@ -470,6 +475,9 @@ class PlayState extends MusicBeatState
 		notehealthdmg = 0;
 		tetrisZoom = 0.00;
 		scrollSpeedAddictive = 0;
+		isDisco = false;
+		thisBitchSnapped = false;
+		cameraZoomrate = 4;
 		setChrome(0.0);
 
 		songCleared = false;
@@ -792,6 +800,7 @@ class PlayState extends MusicBeatState
 					gunSwarmBack.scrollFactor.set(0.8, 0);
 					add(gunSwarmBack);
 					gunSwarmBack.velocity.set(-8500, 1500);
+					gunSwarmBack.alpha = 0.0;
 
 					var stageFront:FlxSprite = new FlxSprite(-500, 600).loadGraphic(Paths.image('mami/BG/HOLY/HOLY_floor', 'shared'));
 					stageFront.updateHitbox();
@@ -855,6 +864,13 @@ class PlayState extends MusicBeatState
 					blackOverlay.active = false;
 					blackOverlay.alpha = 1;
 					//darknessOverlay.cameras = [camOVERLAY];
+
+					flashOverlay = new FlxSprite(-480, -480).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.WHITE);
+					flashOverlay.updateHitbox();
+					flashOverlay.antialiasing = true;
+					flashOverlay.scrollFactor.set(0, 0);
+					flashOverlay.alpha = 0;
+					flashOverlay.cameras = [camOVERLAY];
 				}
 
 			case 'mamigation': //added some shit cuz yes, Sector gaming B))
@@ -1038,6 +1054,7 @@ class PlayState extends MusicBeatState
 
 			add(gunSwarmFront);
 			gunSwarmFront.velocity.set(8500, -1500);
+			gunSwarmFront.alpha = 0.0;
 
 			add(darknessOverlay);
 
@@ -2547,6 +2564,11 @@ class PlayState extends MusicBeatState
 					debugCommandsText.visible = false;
 				else if (!debugCommandsText.visible)
 					debugCommandsText.visible = true;
+			}
+
+		if (FlxG.keys.justPressed.SPACE)
+			{
+				thisBitchSnapped = !thisBitchSnapped;
 			}
 
 		if(FlxG.keys.justPressed.TWO) //also from shadowmario, really neat debug for skipping parts of a song
@@ -4641,7 +4663,7 @@ class PlayState extends MusicBeatState
 				camHUD.zoom += tetrisZoom; //0.05
 			}
 
-		if (camZooming && FlxG.camera.zoom < 1.35 && curBeat % 4 == 0)
+		if (camZooming && FlxG.camera.zoom < 1.35 && curBeat % cameraZoomrate == 0)
 		{
 			FlxG.camera.zoom += 0.015;
 			camHUD.zoom += 0.03;
@@ -4730,6 +4752,41 @@ class PlayState extends MusicBeatState
 		*/
 			
 		//FlxTween.linearMotion(gunSwarm, -1500, -200, 2500, 1500, .5, true);
+
+		if (thisBitchSnapped)
+			{
+				if (gunSwarmFront.alpha <= 0.0)
+					{
+
+					flashOverlay.color = FlxColor.WHITE;
+					if(FlxG.save.data.flashingLights)
+						flashOverlay.alpha = 1.0;
+
+					new FlxTimer().start(.035, function(tmr:FlxTimer)
+						{
+							flashOverlay.alpha -= .1;
+							gunSwarmFront.alpha += .1;
+							gunSwarmBack.alpha += .1;
+						},10);
+					}
+			}
+		else
+			{
+				if (gunSwarmFront.alpha >= 0.01)
+					{
+
+					flashOverlay.color = FlxColor.BLACK;	
+					if(FlxG.save.data.flashingLights)
+						flashOverlay.alpha = 1.0;
+
+					new FlxTimer().start(.035, function(tmr:FlxTimer)
+						{
+							flashOverlay.alpha -= .1;
+							gunSwarmFront.alpha -= .1;
+							gunSwarmBack.alpha -= .1;
+						},10);
+					}
+			}
 
 		if (curSong == 'Salvation' && !songCleared)
 			{
