@@ -81,6 +81,8 @@ class OptionsMenu extends MusicBeatState
 
 	override function create()
 	{
+		FlxG.sound.playMusic(Paths.music('freakyMenuCONFIGURATION'));
+
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image("menuDesat"));
 
 		menuBG.color = 0xFFea71fd;
@@ -126,7 +128,10 @@ class OptionsMenu extends MusicBeatState
 		super.update(elapsed);
 
 			if (controls.BACK && !isCat)
+				{
+				FlxG.sound.music.stop();
 				FlxG.switchState(new MainMenuState());
+				}
 			else if (controls.BACK)
 			{
 				isCat = false;

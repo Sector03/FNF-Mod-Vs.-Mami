@@ -168,6 +168,7 @@ class FreeplayState extends MusicBeatState
 		playingSongText = new FlxText(FlxG.width * 0.1, 32, 0, "Press P to toggle song previews. (ON)", 32);
 		playingSongText.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(playingSongText);
+		playingSongText.borderSize = 2;
 
 		// FlxG.sound.playMusic(Paths.music('title'), 0);
 		// FlxG.sound.music.fadeIn(2, 0, 0.8);
@@ -623,6 +624,7 @@ class FreeplayState extends MusicBeatState
 			}
 
 		iconArray[curSelected].alpha = 1;
+		iconArray[3].setGraphicSize(Std.int(iconArray[3].width * 0.74));
 
 		for (item in grpSongs.members)
 		{

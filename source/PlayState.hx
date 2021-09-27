@@ -44,6 +44,7 @@ import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.addons.display.FlxBackdrop;
 import flixel.ui.FlxBar;
 import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
@@ -149,6 +150,8 @@ class PlayState extends MusicBeatState
 	public var godmodecheat:Bool = false;
 	public var allowBFanimupdate = true;
 
+	public var songCleared = false;
+	
 	private var healthBarBG:FlxSprite;
 	private var healthBar:FlxBar;
 	private var songPositionBar:Float = 0;
@@ -191,6 +194,8 @@ class PlayState extends MusicBeatState
 	var connectLight:FlxSprite;
 	var lampsLeft:FlxSprite;
 	var gunSwarm:FlxSprite;
+	var gunSwarmBack:FlxBackdrop;
+	var gunSwarmFront:FlxBackdrop;
 
 	//salvation
 	var blackOverlay:FlxSprite;
@@ -467,6 +472,8 @@ class PlayState extends MusicBeatState
 		scrollSpeedAddictive = 0;
 		setChrome(0.0);
 
+		songCleared = false;
+
 		swagShader = new ColorSwap(); //shamelessly took this from physche engine, credits to shadowmario <3
 		swagShader.hue = 0;
 
@@ -595,7 +602,7 @@ class PlayState extends MusicBeatState
 		{
 			case 'connect' | 'reminisce' | 'konnect':
 				{
-						defaultCamZoom = 0.5;
+						defaultCamZoom = 0.7;
 						curStage = 'subway';
 						var bg:FlxSprite = new FlxSprite(-500, -500).loadGraphic(Paths.image('mami/BG/BGSky'));
 						bg.antialiasing = true;
@@ -630,16 +637,8 @@ class PlayState extends MusicBeatState
 						lampsLeft.scrollFactor.set(0.9, 0.9);
 						lampsLeft.active = false;
 
-					
-						var otherBGStuff:FlxSprite = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/BGRandomshit', 'shared'));
-						otherBGStuff.updateHitbox();
-						otherBGStuff.antialiasing = true;
-						otherBGStuff.scrollFactor.set(0.9, 0.9);
-						otherBGStuff.active = false;
-						add(otherBGStuff);		
-						
-						weebGorl = new FlxSprite(1100, 0);
-						weebGorl.frames = Paths.getSparrowAtlas('mami/BG/BGyes', 'shared');
+						weebGorl = new FlxSprite(1200, 0);
+						weebGorl.frames = Paths.getSparrowAtlas('mami/BG/BGbackgirl', 'shared');
 						weebGorl.animation.addByPrefix('move', "Symbol 6 instance 1", 24, false);
 						weebGorl.antialiasing = true;
 						weebGorl.scrollFactor.set(0.9, 0.9);
@@ -647,7 +646,13 @@ class PlayState extends MusicBeatState
 						weebGorl.active = true;
 						add(weebGorl);
 
-
+						var otherBGStuff:FlxSprite = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/BGRandomshit', 'shared'));
+						otherBGStuff.updateHitbox();
+						otherBGStuff.antialiasing = true;
+						otherBGStuff.scrollFactor.set(0.9, 0.9);
+						otherBGStuff.active = false;
+						add(otherBGStuff);		
+					
 						gorls = new FlxSprite(-360, 150);
 						gorls.frames = Paths.getSparrowAtlas('mami/BG/BGGirlsDance', 'shared');
 						gorls.animation.addByPrefix('move', "girls dancing instance 1", 24, false);
@@ -707,14 +712,6 @@ class PlayState extends MusicBeatState
 						lampsLeft.antialiasing = true;
 						lampsLeft.scrollFactor.set(0.9, 0.9);
 						lampsLeft.active = false;
-
-						var weebGorl:FlxSprite = new FlxSprite(-530, -20).loadGraphic(Paths.image('mami/BG/BGYes', 'shared'));
-						weebGorl.updateHitbox();
-						weebGorl.antialiasing = true;
-						weebGorl.scrollFactor.set(0.9, 0.9);
-						weebGorl.active = false;
-						weebGorl.shader = swagShader.shader;
-						add(weebGorl);	
 
 						var otherBGStuff:FlxSprite = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/BGRandomshit', 'shared'));
 						otherBGStuff.updateHitbox();
@@ -791,6 +788,11 @@ class PlayState extends MusicBeatState
 					trainSubway.active = false;
 					add(trainSubway);
 
+					gunSwarmBack = new FlxBackdrop(Paths.image('mami/BG/HOLY/HOLY_gunsbackconstant'), 1, 0, true, true);
+					gunSwarmBack.scrollFactor.set(0.8, 0);
+					add(gunSwarmBack);
+					gunSwarmBack.velocity.set(-8500, 1500);
+
 					var stageFront:FlxSprite = new FlxSprite(-500, 600).loadGraphic(Paths.image('mami/BG/HOLY/HOLY_floor', 'shared'));
 					stageFront.updateHitbox();
 					stageFront.antialiasing = true;
@@ -833,6 +835,9 @@ class PlayState extends MusicBeatState
 					gunSwarm.scrollFactor.set(0.9, 0.9);
 					gunSwarm.updateHitbox();
 					gunSwarm.active = true;
+
+					gunSwarmFront = new FlxBackdrop(Paths.image('mami/BG/HOLY/HOLY_gunsfrontconstant'), 1, 0, true, true);
+					gunSwarmFront.scrollFactor.set(1.1, 0);
 
 					darknessOverlay = new FlxSprite(-480, -480).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), 0xFF3E0B5E);
 					darknessOverlay.updateHitbox();
@@ -1029,7 +1034,10 @@ class PlayState extends MusicBeatState
 			{
 			add(lampsLeft);
 			
-			add(gunSwarm);
+			//add(gunSwarm);
+
+			add(gunSwarmFront);
+			gunSwarmFront.velocity.set(8500, -1500);
 
 			add(darknessOverlay);
 
@@ -3128,6 +3136,7 @@ class PlayState extends MusicBeatState
 			lua = null;
 		}
 
+		songCleared = true;
 		canPause = false;
 		FlxG.sound.music.volume = 0;
 		vocals.volume = 0;
@@ -4524,7 +4533,7 @@ class PlayState extends MusicBeatState
 				salvationLightFlicker();
 			}
 
-		if (curSong == 'Salvation')
+		if (curSong == 'Salvation' && !songCleared)
 			{
 				switch (curStep)
 				{
@@ -4666,7 +4675,7 @@ class PlayState extends MusicBeatState
 				dad.playAnim('cheer', true);
 			}
 
-		if (curSong == 'Connect') 
+		if (curSong == 'Connect' && !songCleared) 
 			{
 				switch (curBeat)
 				{
@@ -4722,7 +4731,7 @@ class PlayState extends MusicBeatState
 			
 		//FlxTween.linearMotion(gunSwarm, -1500, -200, 2500, 1500, .5, true);
 
-		if (curSong == 'Salvation')
+		if (curSong == 'Salvation' && !songCleared)
 			{
 				switch (curBeat)
 				{
@@ -4796,7 +4805,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 
-		if (curSong == 'Tetris' && isDisco && FlxG.save.data.flashingLights) 
+		if (curSong == 'Tetris' && isDisco && FlxG.save.data.flashingLights && !songCleared) 
 			{
 				if (colorCycle <= 3)
 					{
@@ -4827,38 +4836,7 @@ class PlayState extends MusicBeatState
 				swagShader.hue = 0;
 			}
 
-		if (curSong == 'Tetris' && storyDifficulty == 1) //Tetris NORMAL events
-			{
-				switch (curBeat)
-				{
-					case 0:
-						notehealthdmg = 0.0125;
-					case 1:
-						notehealthdmg = 0.01;
-					case 28:
-						tetrisblockage(50, 6, false);
-					case 96:
-						notehealthdmg = 0.0125;
-					case 111:
-						notehealthdmg = 0.01;
-					case 163:
-						notehealthdmg = 0.0125;
-					case 168:
-						notehealthdmg = 0.01;	
-					case 169:
-						tetrisblockage(30, 8, false);	
-					case 281:
-						tetrisblockage(45, 14, false);	
-					case 354:
-						notehealthdmg = 0.015;	
-					case 360:
-						notehealthdmg = 0.01;	
-					case 362:
-						tetrisblockage(50, 26, false);	
-				}
-			}
-
-		if (curSong == 'Tetris' && storyDifficulty == 2) //Tetris HARD events
+		if (curSong == 'Tetris' && storyDifficulty == 2 && !songCleared) //Tetris HARD events
 			{
 				switch (curBeat)
 				{
@@ -4889,7 +4867,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 
-		if (curSong == 'Tetris' && storyDifficulty == 3) //Tetris HOLY events
+		if (curSong == 'Tetris' && storyDifficulty == 3 && !songCleared) //Tetris HOLY events
 			{
 				switch (curBeat)
 				{
@@ -4920,7 +4898,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 
-		if (curSong == 'Tetris')
+		if (curSong == 'Tetris' && !songCleared)
 			{
 				switch (curBeat)
 					{
@@ -4979,7 +4957,7 @@ class PlayState extends MusicBeatState
 
 		//isDisco = true;
 
-		if (curSong == 'Mamigation')
+		if (curSong == 'Mamigation' && !songCleared)
 			{
 				switch (curBeat)
 					{
@@ -4999,8 +4977,10 @@ class PlayState extends MusicBeatState
 		{
 			case 'subway':
 				if(curBeat % 2 == 1)
+					{
 					gorls.animation.play('move', true);
 					weebGorl.animation.play('move', true);
+					}
 
 
 			case 'subway-holy':

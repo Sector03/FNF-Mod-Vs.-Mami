@@ -121,6 +121,7 @@ class CreditState extends MusicBeatState
 	var creditRoleText:FlxText;
 	var creditNameText:FlxText;
 	var creditSpecialChange:FlxText;
+	var specialThanksText:FlxText;
 
 	override function create()
 	{
@@ -182,7 +183,7 @@ class CreditState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, gameVer +  (Main.watermarks ? " FNF - " + kadeEngineVer + " Kade Engine" : ""), 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, 'Vs. Mami DEVELOPMENT BUILD 9/27/2021', 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -233,6 +234,19 @@ class CreditState extends MusicBeatState
 		creditSpecialChange.borderSize = 2;
 		add(creditSpecialChange);
 
+		specialThanksText = new FlxText(900, 680, 1280, "Special Thanks", 48);
+		specialThanksText.setFormat(Paths.font("vcr.ttf"), 48, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		specialThanksText.text = "Press RIGHT to view Special Thanks ->";
+		specialThanksText.scrollFactor.set();
+		specialThanksText.screenCenter(X);
+		specialThanksText.screenCenter(Y);
+		specialThanksText.borderSize = 3;
+		specialThanksText.visible = false;
+		specialThanksText.y -= 220;
+		add(specialThanksText);
+
+		specialThanksText.text = "SPECIAL THANKS TO THE FOLLOWING\n" + " \n" + "Kade Dev - Kade Engine\n" + "Lexicord - ???\n" + "Shadow Mario - ???\n" + "JADS - ???\n" + "BoinkBonk - Bug Testing\n" + "CaitlinDiVA - Voice Acting\n" + "G4bo - Salvation Cutscene\n" + "Develop Art - Russian Translations\n" + "GWebDev - Chromatic Aberration Filter\n";
+
 		if (FlxG.save.data.dfjk)
 			controls.setKeyboardScheme(KeyboardScheme.Solo, true);
 		else
@@ -256,13 +270,13 @@ class CreditState extends MusicBeatState
 
 		if (!selectedSomethin)
 		{
-			if (controls.UP_P)
+			if (controls.UP_P && !onSpecial)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(-1);
 			}
 
-			if (controls.DOWN_P)
+			if (controls.DOWN_P && !onSpecial)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(1);
@@ -273,104 +287,101 @@ class CreditState extends MusicBeatState
 				FlxG.switchState(new MainMenuState());
 			}
 
-			if (controls.RIGHT_P)
+			if (controls.RIGHT_P && !onSpecial)
 				{
 					FlxG.sound.play(Paths.sound('scrollMenu'));
 					onSpecial = true;
+					FlxTween.completeTweensOf(creditSpecialChange);
+					creditSpecialChange.x += 50;
+					FlxTween.tween(creditSpecialChange, {x: 160}, 0.15, {ease: FlxEase.quadOut});
+					creditSpecialChange.text = "<- Press LEFT to view Main Team";
 					updatepage();
 				}
 
-			if (controls.LEFT_P)
+			if (controls.LEFT_P && onSpecial)
 				{
 					FlxG.sound.play(Paths.sound('scrollMenu'));
 					onSpecial = false;
+					FlxTween.completeTweensOf(creditSpecialChange);
+					creditSpecialChange.x -= 50;
+					FlxTween.tween(creditSpecialChange, {x: 120}, 0.15, {ease: FlxEase.quadOut});
+					creditSpecialChange.text = "Press RIGHT to view Special Thanks ->";
 					updatepage();
 				}
 
-			if (controls.ACCEPT)
+			if (controls.ACCEPT && !onSpecial)
 			{
-				if (optionShit[curSelected] == 'donate')
-				{
-					#if linux
-					Sys.command('/usr/bin/xdg-open', ["https://ninja-muffin24.itch.io/funkin", "&"]);
-					#else
-					FlxG.openURL('https://ninja-muffin24.itch.io/funkin');
-					#end
-				}
-				else
-				{
-					FlxG.sound.play(Paths.sound('confirmMenu'));
+				FlxG.sound.play(Paths.sound('confirmMenu'));
 
-						var daChoice:String = optionShit[curSelected];
+					var daChoice:String = optionShit[curSelected];
 
-						switch (daChoice)
-						{
-							case 'faderevampedtext':
-								#if linux
-								Sys.command('/usr/bin/xdg-open', ["https://twitter.com/FadeRevamped", "&"]);
-								#else
-								FlxG.openURL('https://twitter.com/FadeRevamped');
-								#end
-							case 'eggoverlordtext':
-								#if linux
-								Sys.command('/usr/bin/xdg-open', ["https://gamebanana.com/members/1891017", "&"]);
-								#else
-								FlxG.openURL('https://gamebanana.com/members/1891017');
-								#end
-							case 'theawfulusernametext':
-								FlxG.openURL('https://www.youtube.com/channel/UCRnZRp-cIlnNfjmqxsk0dog');
+					switch (daChoice)
+					{
+						case 'faderevampedtext':
+							#if linux
+							Sys.command('/usr/bin/xdg-open', ["https://twitter.com/FadeRevamped", "&"]);
+							#else
+							FlxG.openURL('https://twitter.com/FadeRevamped');
+							#end
+						case 'eggoverlordtext':
+							#if linux
+							Sys.command('/usr/bin/xdg-open', ["https://gamebanana.com/members/1891017", "&"]);
+							#else
+							FlxG.openURL('https://gamebanana.com/members/1891017');
+							#end
+						case 'theawfulusernametext':
+							FlxG.openURL('https://www.youtube.com/channel/UCRnZRp-cIlnNfjmqxsk0dog');
 
-								#if linux
-								Sys.command('/usr/bin/xdg-open', ["https://www.youtube.com/channel/UCRnZRp-cIlnNfjmqxsk0dog", "&"]);
-								#else
-								FlxG.openURL('https://www.youtube.com/channel/UCRnZRp-cIlnNfjmqxsk0dog');
-								#end
-							case 'boinkbonktext':
-								#if linux
-								Sys.command('/usr/bin/xdg-open', ["https://twitter.com/BinkBoinkBonk", "&"]);
-								#else
-								FlxG.openURL('https://twitter.com/BinkBoinkBonk');
-								#end
-							case 'sectortext':
-								#if linux
-								Sys.command('/usr/bin/xdg-open', ["https://twitter.com/Sector0003", "&"]);
-								#else
-								FlxG.openURL('https://twitter.com/Sector0003');
-								#end
-							case 'vidztext':
-								#if linux
-								Sys.command('/usr/bin/xdg-open', ["https://twitter.com/ItsVidz3", "&"]);
-								#else
-								FlxG.openURL('https://twitter.com/ItsVidz3');
-								#end
-							case 'magbrostext':
-								#if linux
-								Sys.command('/usr/bin/xdg-open', ["https://gamebanana.com/members/1805209", "&"]);
-								#else
-								FlxG.openURL('https://gamebanana.com/members/1805209');
-								#end
-							case 'ascentitext':
-								#if linux
-								Sys.command('/usr/bin/xdg-open', ["https://gamebanana.com/members/", "&"]);
-								#else
-								FlxG.openURL('https://gamebanana.com/members/'); //idk it lol
-								#end
-							case 'kayotext':
-								#if linux
-								Sys.command('/usr/bin/xdg-open', ["https://gamebanana.com/members/", "&"]);
-								#else
-								FlxG.openURL('https://gamebanana.com/members/'); //idk it lol
-								#end
-							case 'cerberatext':
-								#if linux
-								Sys.command('/usr/bin/xdg-open', ["https://gamebanana.com/members/", "&"]);
-								#else
-								FlxG.openURL('https://gamebanana.com/members/'); //idk it lol
-								#end
-					};
+							#if linux
+							Sys.command('/usr/bin/xdg-open', ["https://www.youtube.com/channel/UCRnZRp-cIlnNfjmqxsk0dog", "&"]);
+							#else
+							FlxG.openURL('https://www.youtube.com/channel/UCRnZRp-cIlnNfjmqxsk0dog');
+							#end
+						case 'boinkbonktext':
+							#if linux
+							Sys.command('/usr/bin/xdg-open', ["https://twitter.com/BinkBoinkBonk", "&"]);
+							#else
+							FlxG.openURL('https://twitter.com/BinkBoinkBonk');
+							#end
+						case 'sectortext':
+							#if linux
+							Sys.command('/usr/bin/xdg-open', ["https://twitter.com/Sector0003", "&"]);
+							#else
+							FlxG.openURL('https://twitter.com/Sector0003');
+							#end
+						case 'vidztext':
+							#if linux
+							Sys.command('/usr/bin/xdg-open', ["https://twitter.com/ItsVidz3", "&"]);
+							#else
+							FlxG.openURL('https://twitter.com/ItsVidz3');
+							#end
+						case 'magbrostext':
+							#if linux
+							Sys.command('/usr/bin/xdg-open', ["https://gamebanana.com/members/1805209", "&"]);
+							#else
+							FlxG.openURL('https://gamebanana.com/members/1805209');
+							#end
+						case 'ascentitext':
+							#if linux
+							Sys.command('/usr/bin/xdg-open', ["https://gamebanana.com/members/", "&"]);
+							#else
+							FlxG.openURL('https://gamebanana.com/members/'); //idk it lol
+							#end
+						case 'kayotext':
+							#if linux
+							Sys.command('/usr/bin/xdg-open', ["https://twitter.com/zTam_", "&"]);
+							#else
+							FlxG.openURL('https://twitter.com/zTam_'); //idk it lol
+							#end
+						case 'cerberatext':
+							#if linux
+							Sys.command('/usr/bin/xdg-open', ["https://gamebanana.com/members/", "&"]);
+							#else
+							FlxG.openURL('https://gamebanana.com/members/'); //idk it lol
+							#end
+					}
 				}
 			}
-		}
 
 		super.update(elapsed);
 
@@ -459,6 +470,7 @@ class CreditState extends MusicBeatState
 				menuItems.visible = false;
 				creditNameText.visible = false;
 				credicons.visible = false;
+				specialThanksText.visible = true;
 			}
 		else
 			{
@@ -466,6 +478,7 @@ class CreditState extends MusicBeatState
 				menuItems.visible = true;
 				creditNameText.visible = true;
 				credicons.visible = true;
+				specialThanksText.visible = false;
 			}
 	}
 }

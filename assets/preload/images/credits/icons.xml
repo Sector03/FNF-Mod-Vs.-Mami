@@ -7,13 +7,13 @@
 	<SubTexture name="boinkbonkicon basic0000" x="926" y="32" width="450" height="450"/>
 	<SubTexture name="boinkbonkicon white0000" x="926" y="32" width="450" height="450"/>
 	<SubTexture name="cerberaicon basic0000" x="32" y="32" width="380" height="298"/>
-	<SubTexture name="cerberaicon white0000" x="32" y="32" width="380" height="298"/>
+	<SubTexture name="cerberaicon white0000" x="32" y="32" width="380" height="298" frameX="-80" frameY="-50" frameWidth="380" frameHeight="298"/>
 	<SubTexture name="eggoverlordicon basic0000" x="1408" y="32" width="513" height="450"/>
 	<SubTexture name="eggoverlordicon white0000" x="1408" y="32" width="513" height="450"/>
 	<SubTexture name="faderevampedicon basic0000" x="32" y="514" width="450" height="450"/>
 	<SubTexture name="faderevampedicon white0000" x="32" y="514" width="450" height="450"/>
 	<SubTexture name="kayoicon basic0000" x="514" y="514" width="353" height="333"/>
-	<SubTexture name="kayoicon white0000" x="514" y="514" width="353" height="333"/>
+	<SubTexture name="kayoicon white0000" x="514" y="514" width="353" height="333" frameX="-80" frameY="-40" frameWidth="353" frameHeight="333"/>
 	<SubTexture name="magbrosicon basic0000" x="899" y="514" width="450" height="450"/>
 	<SubTexture name="magbrosicon white0000" x="899" y="514" width="450" height="450"/>
 	<SubTexture name="sectoricon basic0000" x="1381" y="514" width="450" height="450"/>

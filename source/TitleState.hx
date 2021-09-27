@@ -164,7 +164,7 @@ class TitleState extends MusicBeatState
 			FlxG.sound.music.fadeIn(4, 0, 0.7);
 		}
 
-		Conductor.changeBPM(102);
+		Conductor.changeBPM(120);
 		persistentUpdate = true;
 
 		logoBl = new FlxSprite(-150, -45);
@@ -443,42 +443,55 @@ class TitleState extends MusicBeatState
 		{
 			case 1:
 				createCoolText(['a fnf mod']);
-			// credTextShit.visible = true;
+
 			case 3:
 				addMoreText('by these people');
 				ngSpr.visible = true;
-			// credTextShit.text += '\npresent...';
-			// credTextShit.addText();
+
 			case 6:
 				ngSpr.visible = false;
 				deleteCoolText();
-			// credTextShit.visible = false;
-			// credTextShit.text = 'In association \nwith';
-			// credTextShit.screenCenter();
-			// credTextShit.visible = false;
-			// credTextShit.text = 'Shoutouts Tom Fulp';
-			// credTextShit.screenCenter();
+
 			case 7:
 				createCoolText([curWacky[0]]);
-			// credTextShit.visible = true;
+
 			case 9:
 				addMoreText(curWacky[1]);
-			// credTextShit.text += '\nlmao';
+
 			case 12:
 				deleteCoolText();
-			// credTextShit.visible = false;
-			// credTextShit.text = "Friday";
-			// credTextShit.screenCenter();
-			case 13:
-				addMoreText('The full');
-			// credTextShit.visible = true;
-			case 14:
-				addMoreText('ass vs');
-			// credTextShit.text += '\nNight';
-			case 15:
-				addMoreText('Mami mod'); // credTextShit.text += '\nFunkin';
+				curWacky = FlxG.random.getObject(getIntroTextShit());
 
-			case 16:
+			case 13:
+				createCoolText([curWacky[0]]);
+
+			case 15:
+				addMoreText(curWacky[1]);
+
+			case 18:
+				deleteCoolText();
+				curWacky = FlxG.random.getObject(getIntroTextShit());
+
+			case 19:
+				createCoolText([curWacky[0]]);
+
+			case 21:
+				addMoreText(curWacky[1]);
+
+			case 25:
+				deleteCoolText();
+				curWacky = FlxG.random.getObject(getIntroTextShit());
+
+			case 26:
+				addMoreText('The full');
+
+			case 28:
+				addMoreText('ass vs');
+
+			case 30:
+				addMoreText('Mami mod');
+
+			case 32:
 				skipIntro();
 		}
 	}

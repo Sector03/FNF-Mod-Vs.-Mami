@@ -40,6 +40,7 @@ class MainMenuState extends MusicBeatState
 	var newInput:Bool = true;
 
 	var ticketsCount:FlxText;
+	var ticketIcon:FlxSprite;
 
 	public static var nightly:String = "";
 
@@ -59,6 +60,7 @@ class MainMenuState extends MusicBeatState
 	var menuBGNum:Int = 0;
 
 	var menuInfomation:FlxText;
+	var ticketText:FlxText;
 
 	var menuCharacterIcon:HealthIcon;
 
@@ -69,9 +71,9 @@ class MainMenuState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
-		Conductor.changeBPM(171);
+		Conductor.changeBPM(120);
 
-		if (!FlxG.sound.music.playing)
+		if (!FlxG.sound.music.playing && curSelected <= 4)
 		{
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 		}
@@ -177,8 +179,16 @@ class MainMenuState extends MusicBeatState
 		menuInfomation = new FlxText(110, 675, 1000, "Please select a option.", 28);
 		menuInfomation.setFormat("VCR OSD Mono", 28, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		menuInfomation.scrollFactor.set(0, 0);
+		menuInfomation.borderSize = 2;
 		add(menuInfomation);
 
+		ticketIcon = new FlxSprite(0, 0).loadGraphic(Paths.image('mainmenu/gacha_icon'));
+		ticketIcon.scrollFactor.set(0, 0);
+		ticketIcon.setGraphicSize(Std.int(ticketIcon.width * .100));
+		ticketIcon.updateHitbox();
+		ticketIcon.antialiasing = true;
+		add(ticketIcon);
+		
 		var tex = Paths.getSparrowAtlas('mainmenu/FNF_main_menu_assets');
 
 		for (i in 0...optionShit.length)
@@ -198,7 +208,7 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, gameVer +  (Main.watermarks ? " FNF - " + kadeEngineVer + " Kade Engine" : ""), 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, 'Vs. Mami DEVELOPMENT BUILD 9/27/2021', 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -219,7 +229,15 @@ class MainMenuState extends MusicBeatState
 		ticketsCount.alpha = 1;
 		ticketsCount.text = FlxG.save.data.tickets;
 		ticketsCount.scrollFactor.set(0, 0);
-		add(ticketsCount);
+		//add(ticketsCount);
+
+		ticketText = new FlxText(110, 675, 1000, "x0", 28);
+		ticketText.setFormat("VCR OSD Mono", 28, FlxColor.GRAY, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		ticketText.scrollFactor.set(0, 0);
+		ticketText.borderSize = 2;
+		add(ticketText);
+
+		ticketText.text = ("x" + FlxG.save.data.tickets);
 
 		new FlxTimer().start(2, function(tmr:FlxTimer)
 			{
@@ -237,6 +255,12 @@ class MainMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		ticketIcon.x = menuItems.members[2].x + 625;
+		ticketIcon.y = menuItems.members[2].y + 50;
+
+		ticketText.x = menuItems.members[2].x + 250;
+		ticketText.y = menuItems.members[2].y + 65;
+
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
 
@@ -274,10 +298,32 @@ class MainMenuState extends MusicBeatState
 					FlxG.openURL('https://ninja-muffin24.itch.io/funkin');
 					#end
 				}
+				else if (optionShit[curSelected] == 'gacha')
+					{
+						FlxG.sound.play(Paths.sound('errorMenu'));
+						//FlxG.switchState(new SummonState());
+					}
 				else
 				{
 					selectedSomethin = true;
 					FlxG.sound.play(Paths.sound('confirmMenu'));
+
+					FlxTween.tween(ticketIcon, {alpha: 0}, 1.3, {
+						ease: FlxEase.quadOut,
+						onComplete: function(twn:FlxTween)
+						{
+							ticketIcon.kill();
+						}
+					});
+
+
+					FlxTween.tween(ticketText, {alpha: 0}, 1.3, {
+						ease: FlxEase.quadOut,
+						onComplete: function(twn:FlxTween)
+						{
+							ticketText.kill();
+						}
+					});
 
 					//FlxFlicker.flicker(magenta, 1.1, 0.15, false);
 
@@ -309,13 +355,11 @@ class MainMenuState extends MusicBeatState
 
 										trace("Freeplay Menu Selected");
 
-									case 'gacha':
-										FlxG.switchState(new SummonState());
-
 									case 'credits':
 										FlxG.switchState(new CreditState());
 
 									case 'options':
+										FlxG.sound.music.stop();
 										FlxG.switchState(new OptionsMenu());
 								}
 							});
@@ -369,16 +413,22 @@ class MainMenuState extends MusicBeatState
 			{
 				case 0:
 					menuInfomation.text = "Play through the Story Mode!";
+					menuInfomation.color = FlxColor.WHITE;
 				case 1:
 					menuInfomation.text = "Play any song from the mod you'd like.";
+					menuInfomation.color = FlxColor.WHITE;
 				case 2:
-					menuInfomation.text = "Summon and view your collectable cards.";
+					menuInfomation.text = "[COMING IN VERSION 1.1]";
+					menuInfomation.color = FlxColor.GRAY;
 				case 3:
 					menuInfomation.text = "View the list of people who help created this mod.";
+					menuInfomation.color = FlxColor.WHITE;
 				case 4:
 					menuInfomation.text = "Donate to the OFFICAL Friday Night Funkin' team.";
+					menuInfomation.color = FlxColor.WHITE;
 				case 5:
 					menuInfomation.text = "Configure your settings here.";
+					menuInfomation.color = FlxColor.WHITE;
 			}
 
 		menuItems.forEach(function(spr:FlxSprite)
