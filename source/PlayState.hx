@@ -4753,7 +4753,7 @@ class PlayState extends MusicBeatState
 			
 		//FlxTween.linearMotion(gunSwarm, -1500, -200, 2500, 1500, .5, true);
 
-		if (thisBitchSnapped)
+		if (thisBitchSnapped && curSong == 'Salvation')
 			{
 				if (gunSwarmFront.alpha <= 0.0)
 					{
@@ -4770,7 +4770,7 @@ class PlayState extends MusicBeatState
 						},10);
 					}
 			}
-		else
+		else if (!thisBitchSnapped && curSong == 'Salvation')
 			{
 				if (gunSwarmFront.alpha >= 0.01)
 					{
