@@ -68,7 +68,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		FlxG.sound.play(Paths.sound('fnf_loss_sfx' + stageSuffix));
 		Conductor.changeBPM(100);
 
-		numBah = FlxG.random.int(1, 3);
+		/*numBah = FlxG.random.int(1, 3);
 
 		new FlxTimer().start(2, function(tmr:FlxTimer)
 			{
@@ -99,7 +99,8 @@ class GameOverSubstate extends MusicBeatSubstate
 							remove(deathlineSubtitle); //something is nulling here i think?
 						});	
 					}
-			});	
+		});	
+		*/
 
 		// FlxG.camera.followLerp = 1;
 		// FlxG.camera.focusOn(FlxPoint.get(FlxG.width / 2, FlxG.height / 2));

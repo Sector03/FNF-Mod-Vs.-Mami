@@ -721,7 +721,7 @@ class PlayState extends MusicBeatState
 						lampsLeft.scrollFactor.set(0.9, 0.9);
 						lampsLeft.active = false;
 
-						var otherBGStuff:FlxSprite = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/BGRandomshit', 'shared'));
+						var otherBGStuff:FlxSprite = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/HOLY/HOLY_objects', 'shared'));
 						otherBGStuff.updateHitbox();
 						otherBGStuff.antialiasing = true;
 						otherBGStuff.scrollFactor.set(0.9, 0.9);
@@ -3257,12 +3257,14 @@ class PlayState extends MusicBeatState
 			{
 				if (SONG.song.toLowerCase() == 'connect')
 					{
+						if (storyDifficulty == 1)
+							FlxG.save.data.tickets += 1;
 						if (storyDifficulty == 2)
 							FlxG.save.data.tickets += 2;
 						if (storyDifficulty == 3)
-							FlxG.save.data.tickets += 2;
+							FlxG.save.data.tickets += 3;
 					}
-				if (SONG.song.toLowerCase() == 'tetris')
+				if (SONG.song.toLowerCase() == 'reminisce')
 					{
 						if (storyDifficulty == 1)
 							FlxG.save.data.tickets += 2;
@@ -3271,6 +3273,30 @@ class PlayState extends MusicBeatState
 						if (storyDifficulty == 3)
 							FlxG.save.data.tickets += 4;
 					}
+				if (SONG.song.toLowerCase() == 'salvation')
+					{
+						if (storyDifficulty == 1)
+							FlxG.save.data.tickets += 3;
+						if (storyDifficulty == 2)
+							FlxG.save.data.tickets += 4;
+						if (storyDifficulty == 3)
+							FlxG.save.data.tickets += 5;
+					}
+				if (SONG.song.toLowerCase() == 'tetris')
+					{
+						if (storyDifficulty == 2)
+							FlxG.save.data.tickets += 4;
+						if (storyDifficulty == 3)
+							FlxG.save.data.tickets += 5;
+					}
+				if (SONG.song.toLowerCase() == 'mamigation')
+					{
+						if (storyDifficulty == 2)
+							FlxG.save.data.tickets += 4;
+						if (storyDifficulty == 3)
+							FlxG.save.data.tickets += 5;
+					}
+
 
 				trace('WENT BACK TO FREEPLAY??');
 				FlxG.switchState(new FreeplayState());
@@ -3293,7 +3319,7 @@ class PlayState extends MusicBeatState
 
 	public function tetrisblockage(percentageBlockage:Int, duration:Int, instant:Bool = false)
 		{
-			//canPause = false; //temp(hopefully) solution to people avoiding tetris blocking mechanic 
+			canPause = false; //temp(hopefully) solution to people avoiding tetris blocking mechanic 
 			var tetrisBlockagePiece:FlxSprite = new FlxSprite(0, -1080).loadGraphic(Paths.image('tetris/health_blockage'));
 			tetrisBlockagePiece.cameras = [camHUD];
 			tetrisBlockagePiece.antialiasing = false;
@@ -3307,11 +3333,13 @@ class PlayState extends MusicBeatState
 			if(!instant)
 				if (FlxG.save.data.downscroll)
 					{
-						tetrisBlockagePiece.y = 1080;
+						tetrisBlockagePiece.y = 150;
+						trace(tetrisBlockagePiece.y);
 					}
 				else
 					{
 						tetrisBlockagePiece.y = -1080;
+						trace(tetrisBlockagePiece.y);
 					}
 				FlxG.sound.play(Paths.sound('tetris/hpblockage_spawn','shared'));
 				FlxFlicker.flicker(tetrisBlockagePiece, 1, 0.2, true);
@@ -3320,10 +3348,12 @@ class PlayState extends MusicBeatState
 						if (FlxG.save.data.downscroll)
 							{
 								tetrisBlockagePiece.y -= 75;
+								trace(tetrisBlockagePiece.y);
 							}
 						else
 							{
 								tetrisBlockagePiece.y += 75;
+								trace(tetrisBlockagePiece.y);
 							}
 						FlxG.sound.play(Paths.sound('tetris/hpblockage_move','shared'));
 						new FlxTimer().start(.15, function(tmr:FlxTimer)
@@ -3331,10 +3361,12 @@ class PlayState extends MusicBeatState
 								if (FlxG.save.data.downscroll)
 									{
 										tetrisBlockagePiece.y -= 75;
+										trace(tetrisBlockagePiece.y);
 									}
 								else
 									{
 										tetrisBlockagePiece.y += 75;
+										trace(tetrisBlockagePiece.y);
 									}
 								FlxG.sound.play(Paths.sound('tetris/hpblockage_move','shared'));
 							},11);
@@ -3347,24 +3379,24 @@ class PlayState extends MusicBeatState
 						if (FlxG.save.data.downscroll)
 							{
 								tetrisBlockagePiece.y -= 15;
+								trace(tetrisBlockagePiece.y);
 							}
 						else
 							{
 								tetrisBlockagePiece.y += 15;
+								trace(tetrisBlockagePiece.y);
 							}
 						//tetrisBlockagePiece.y = -100;
 					},1);
-			
-			trace(tetrisBlockagePiece);
 
-			if(!instant)
-				new FlxTimer().start(duration + 2.65, function(tmr:FlxTimer)
-					{
-						FlxG.sound.play(Paths.sound('tetris/hpblockage_clear','shared'));
-						remove(tetrisBlockagePiece);
-						healthcap = 0;
-						canPause = true; //temp(hopefully) solution to people avoiding tetris blocking mechanic 
-					},1);
+				if(!instant)
+					new FlxTimer().start(duration + 2.65, function(tmr:FlxTimer)
+						{
+							FlxG.sound.play(Paths.sound('tetris/hpblockage_clear','shared'));
+							remove(tetrisBlockagePiece);
+							healthcap = 0;
+							canPause = true; //temp(hopefully) solution to people avoiding tetris blocking mechanic 
+						},1);
 		}
 
 		public function salvationLightFlicker()
@@ -3385,6 +3417,12 @@ class PlayState extends MusicBeatState
 				ribbongrab.animation.addByPrefix('unlatch', 'ribbon_ungrab', 24, false); //ribbon unlaches and leaves
 				ribbongrab.setGraphicSize(Std.int(ribbongrab.width * 1.0));
 				add(ribbongrab);
+				if (FlxG.save.data.downscroll)
+					{
+						ribbongrab.flipY = true;
+						ribbongrab.y = -115;
+					}
+
 				ribbongrab.animation.play('popout');
 				ribbongrab.updateHitbox();
 				ribbongrab.cameras = [camHUD];
@@ -3403,6 +3441,12 @@ class PlayState extends MusicBeatState
 							{
 								ribbongrab.animation.play('pulling');
 								camHUD.angle += 0.05;
+								
+								if (FlxG.save.data.downscroll)
+									{
+										ribbongrab.y = -20;
+									}
+
 							},tiltpower);
 					});
 
@@ -3570,8 +3614,8 @@ class PlayState extends MusicBeatState
 							sploosh.cameras = [camHUD];
 							sploosh.animation.play('splash ' + FlxG.random.int(0, 1) + " " + daNote.noteData);
 							sploosh.alpha = 0.6;
-							sploosh.offset.x += 90;
-							sploosh.offset.y += 80;
+							sploosh.offset.x += 60;
+							sploosh.offset.y += 60;
 							sploosh.animation.finishCallback = function(name) sploosh.kill();
 						}
 					}
@@ -4757,7 +4801,6 @@ class PlayState extends MusicBeatState
 			{
 				if (gunSwarmFront.alpha <= 0.0)
 					{
-
 					flashOverlay.color = FlxColor.WHITE;
 					if(FlxG.save.data.flashingLights)
 						flashOverlay.alpha = 1.0;
@@ -4774,7 +4817,6 @@ class PlayState extends MusicBeatState
 			{
 				if (gunSwarmFront.alpha >= 0.01)
 					{
-
 					flashOverlay.color = FlxColor.BLACK;	
 					if(FlxG.save.data.flashingLights)
 						flashOverlay.alpha = 1.0;
@@ -4786,6 +4828,12 @@ class PlayState extends MusicBeatState
 							gunSwarmBack.alpha -= .1;
 						},10);
 					}
+			}
+
+		if (thisBitchSnapped && curSong == 'Salvation')
+			{
+				camera.shake(0.005,0.25);
+				camHUD.shake(0.005,0.25);
 			}
 
 		if (curSong == 'Salvation' && !songCleared)
@@ -4852,6 +4900,16 @@ class PlayState extends MusicBeatState
 								salvationcountdowngo.destroy();
 							}
 						});
+
+					case 408:
+						thisBitchSnapped = true;
+						cameraZoomrate = 1;
+						defaultCamZoom = 0.85;
+
+					case 478:
+						thisBitchSnapped = false;
+						cameraZoomrate = 4;
+						defaultCamZoom = 0.7;
 
 					case 853:
 						iconP2.animation.play("mami-holy-postsnap");
