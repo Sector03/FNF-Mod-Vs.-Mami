@@ -197,7 +197,6 @@ class PlayState extends MusicBeatState
 	var lampsLeft:FlxSprite;
 
 	//salvation
-	var flashOverlay:FlxSprite;
 	var blackOverlay:FlxSprite;
 	var darknessOverlay:FlxSprite;
 
@@ -205,6 +204,11 @@ class PlayState extends MusicBeatState
 	var gunSwarmBack:FlxBackdrop;
 	var gunSwarmFront:FlxBackdrop;
 	var thisBitchSnapped:Bool = false;
+	var whiteBG:FlxSprite;
+
+	var otherBGStuff:FlxSprite;
+	var lampsSubway:FlxSprite;
+	var stageFront:FlxSprite;
 
 	//tetris
 	var tetrisLight:FlxSprite;
@@ -625,14 +629,14 @@ class PlayState extends MusicBeatState
 						trainSubway.active = false;
 						add(trainSubway);
 
-						var stageFront:FlxSprite = new FlxSprite(-500, 600).loadGraphic(Paths.image('mami/BG/BGFloor', 'shared'));
+						stageFront = new FlxSprite(-500, 600).loadGraphic(Paths.image('mami/BG/BGFloor', 'shared'));
 						stageFront.updateHitbox();
 						stageFront.antialiasing = true;
 						stageFront.scrollFactor.set(0.9, 0.9);
 						stageFront.active = false;
 						add(stageFront);
 
-						var lampsSubway:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('mami/BG/BGLamps', 'shared'));
+						lampsSubway = new FlxSprite(-500, -300).loadGraphic(Paths.image('mami/BG/BGLamps', 'shared'));
 						lampsSubway.updateHitbox();
 						lampsSubway.antialiasing = true;
 						lampsSubway.scrollFactor.set(0.9, 0.9);
@@ -654,7 +658,7 @@ class PlayState extends MusicBeatState
 						weebGorl.active = true;
 						add(weebGorl);
 
-						var otherBGStuff:FlxSprite = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/BGRandomshit', 'shared'));
+						otherBGStuff = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/BGRandomshit', 'shared'));
 						otherBGStuff.updateHitbox();
 						otherBGStuff.antialiasing = true;
 						otherBGStuff.scrollFactor.set(0.9, 0.9);
@@ -796,20 +800,28 @@ class PlayState extends MusicBeatState
 					trainSubway.active = false;
 					add(trainSubway);
 
+					whiteBG = new FlxSprite(-480, -480).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.WHITE);
+					whiteBG.updateHitbox();
+					whiteBG.antialiasing = true;
+					whiteBG.scrollFactor.set(0, 0);
+					whiteBG.active = false;
+					whiteBG.alpha = 0.0;
+					add(whiteBG);
+
 					gunSwarmBack = new FlxBackdrop(Paths.image('mami/BG/HOLY/HOLY_gunsbackconstant'), 1, 0, true, true);
 					gunSwarmBack.scrollFactor.set(0.8, 0);
 					add(gunSwarmBack);
 					gunSwarmBack.velocity.set(-8500, 1500);
 					gunSwarmBack.alpha = 0.0;
 
-					var stageFront:FlxSprite = new FlxSprite(-500, 600).loadGraphic(Paths.image('mami/BG/HOLY/HOLY_floor', 'shared'));
+					stageFront = new FlxSprite(-500, 600).loadGraphic(Paths.image('mami/BG/HOLY/HOLY_floor', 'shared'));
 					stageFront.updateHitbox();
 					stageFront.antialiasing = true;
 					stageFront.scrollFactor.set(0.9, 0.9);
 					stageFront.active = false;
 					add(stageFront);
 
-					var lampsSubway:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('mami/BG/BGLamps', 'shared'));
+					lampsSubway = new FlxSprite(-500, -300).loadGraphic(Paths.image('mami/BG/BGLamps', 'shared'));
 					lampsSubway.updateHitbox();
 					lampsSubway.antialiasing = true;
 					lampsSubway.scrollFactor.set(0.9, 0.9);
@@ -822,7 +834,7 @@ class PlayState extends MusicBeatState
 					lampsLeft.scrollFactor.set(0.9, 0.9);
 					lampsLeft.active = false;
 
-					var otherBGStuff:FlxSprite = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/HOLY/HOLY_objects', 'shared'));
+					otherBGStuff = new FlxSprite(-530, -50).loadGraphic(Paths.image('mami/BG/HOLY/HOLY_objects', 'shared'));
 					otherBGStuff.updateHitbox();
 					otherBGStuff.antialiasing = true;
 					otherBGStuff.scrollFactor.set(0.9, 0.9);
@@ -848,14 +860,14 @@ class PlayState extends MusicBeatState
 					gunSwarmFront = new FlxBackdrop(Paths.image('mami/BG/HOLY/HOLY_gunsfrontconstant'), 1, 0, true, true);
 					gunSwarmFront.scrollFactor.set(1.1, 0);
 
-					darknessOverlay = new FlxSprite(-480, -480).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), 0xFF3E0B5E);
+					darknessOverlay = new FlxSprite(-480, -480).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), 0xFF21102b);
 					darknessOverlay.updateHitbox();
 					darknessOverlay.antialiasing = true;
 					darknessOverlay.scrollFactor.set(0, 0);
 					darknessOverlay.active = false;
 					darknessOverlay.alpha = 0.5;
 					//darknessOverlay.cameras = [camOVERLAY];
-					darknessOverlay.blend = MULTIPLY;
+					//darknessOverlay.blend = MULTIPLY;
 
 					blackOverlay = new FlxSprite(-480, -480).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
 					blackOverlay.updateHitbox();
@@ -864,13 +876,6 @@ class PlayState extends MusicBeatState
 					blackOverlay.active = false;
 					blackOverlay.alpha = 1;
 					//darknessOverlay.cameras = [camOVERLAY];
-
-					flashOverlay = new FlxSprite(-480, -480).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.WHITE);
-					flashOverlay.updateHitbox();
-					flashOverlay.antialiasing = true;
-					flashOverlay.scrollFactor.set(0, 0);
-					flashOverlay.alpha = 0;
-					flashOverlay.cameras = [camOVERLAY];
 				}
 
 			case 'mamigation': //added some shit cuz yes, Sector gaming B))
@@ -972,8 +977,8 @@ class PlayState extends MusicBeatState
 				dad.x -= 350;
 				dad.y += 15;
 			case 'mami-mamigation':
-				dad.x -= 350;
-				dad.y += 15;
+				dad.x -= 450;
+				dad.y -= 500;
 				FlxTween.tween(dad, {y: dad.y - 60}, 3, {type: FlxTweenType.PINGPONG, ease: FlxEase.quadInOut});
 				dad.setGraphicSize(Std.int(dad.width * .6));
 		}
@@ -1014,10 +1019,10 @@ class PlayState extends MusicBeatState
 			case 'mamigation':
 				boyfriend.y += 40;
 
-				var evilTrail = new FlxTrail(dad, null, 4, 24, 0.3, 0.069);
+				//var evilTrail = new FlxTrail(dad, null, 4, 24, 0.3, 0.069);
 				// evilTrail.changeValuesEnabled(false, false, false, false);
 				// evilTrail.changeGraphic()
-				add(evilTrail);
+				//add(evilTrail);
 				// evilTrail.scrollFactor.set(1.1, 1.1);
 		}
 
@@ -2941,6 +2946,19 @@ class PlayState extends MusicBeatState
 								altAnim = '-alt';
 						}
 	
+						if (curSong == 'Salvation')
+							{
+								if (health > 0.05)
+									if (daNote.isSustainNote)
+										{
+											health -= notehealthdmg / 4;
+										}
+									else
+										{
+											health -= notehealthdmg;
+										}
+							}
+
 						if (curSong == 'Tetris')
 							{
 								if (daNote.isSustainNote)
@@ -4641,7 +4659,7 @@ class PlayState extends MusicBeatState
 
 		if (latched) //salvation ribbon damage
 			{
-			health -= (camHUD.angle * 0.0010);
+			health -= (camHUD.angle * 0.005);
 			}
 
 		// yes this updates every step.
@@ -4801,29 +4819,17 @@ class PlayState extends MusicBeatState
 			{
 				if (gunSwarmFront.alpha <= 0.0)
 					{
-					flashOverlay.color = FlxColor.WHITE;
-					if(FlxG.save.data.flashingLights)
-						flashOverlay.alpha = 1.0;
-
-					new FlxTimer().start(.035, function(tmr:FlxTimer)
-						{
-							flashOverlay.alpha -= .1;
-							gunSwarmFront.alpha += .1;
-							gunSwarmBack.alpha += .1;
-						},10);
+					gunSwarmFront.alpha += 1;
+					gunSwarmBack.alpha += 1;
+					FlxG.camera.flash(FlxColor.WHITE, 3);
 					}
-			}
+				}
 		else if (!thisBitchSnapped && curSong == 'Salvation')
 			{
 				if (gunSwarmFront.alpha >= 0.01)
 					{
-					flashOverlay.color = FlxColor.BLACK;	
-					if(FlxG.save.data.flashingLights)
-						flashOverlay.alpha = 1.0;
-
 					new FlxTimer().start(.035, function(tmr:FlxTimer)
 						{
-							flashOverlay.alpha -= .1;
 							gunSwarmFront.alpha -= .1;
 							gunSwarmBack.alpha -= .1;
 						},10);
@@ -4901,15 +4907,157 @@ class PlayState extends MusicBeatState
 							}
 						});
 
-					case 408:
+					case 148:
+						//thisBitchSnapped = true;
+						cameraZoomrate = 1;
+						defaultCamZoom = 0.85;
+						ribbongrab(90, 5);
+
+					case 176:
+						//thisBitchSnapped = false;
+						cameraZoomrate = 4;
+						defaultCamZoom = 0.7;
+
+					case 210:
+						cameraZoomrate = 4;
+						defaultCamZoom = 1;
+
+					case 218:
+						cameraZoomrate = 4;
+						defaultCamZoom = 0.7;
+
+					case 312:
+						cameraZoomrate = 4;
+						defaultCamZoom = 1.15;
+						camHUD.alpha = 0.0;
+						blackOverlay.visible = true;
+
+					case 316:
+						blackOverlay.alpha = 0.8;
+						FlxTween.tween(blackOverlay, {alpha: 1}, 2, {ease: FlxEase.quartOut});
+					
+					case 324:
+						blackOverlay.alpha = 0.8;
+						FlxTween.tween(blackOverlay, {alpha: 1}, 2, {ease: FlxEase.quartOut});
+
+					case 332:
+						blackOverlay.alpha = 0.8;
+						FlxTween.tween(blackOverlay, {alpha: 1}, 2, {ease: FlxEase.quartOut});
+
+					case 344:
+						blackOverlay.alpha = 1;
+						camHUD.alpha = 1.0;
+						defaultCamZoom = 0.7;
+						FlxTween.tween(blackOverlay, {alpha: 0}, 1.0, {ease: FlxEase.quartOut});
+
+					case 404:
+						var salvationcountdownready:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ready', 'shared'));
+						salvationcountdownready.scrollFactor.set(0, 0);
+						salvationcountdownready.updateHitbox();
+						salvationcountdownready.cameras = [camOVERLAY];
+
+						salvationcountdownready.screenCenter();
+						salvationcountdownready.y -= 100;
+						add(salvationcountdownready);
+						FlxTween.tween(salvationcountdownready, {y: salvationcountdownready.y += 100, alpha: 0}, Conductor.crochet / 1000, {
+							ease: FlxEase.cubeInOut,
+							onComplete: function(twn:FlxTween)
+							{
+								salvationcountdownready.destroy();
+							}
+						});
+
+					case 405:
+						var salvationcountdownset:FlxSprite = new FlxSprite().loadGraphic(Paths.image('set', 'shared'));
+						salvationcountdownset.scrollFactor.set(0, 0);
+						salvationcountdownset.updateHitbox();
+						salvationcountdownset.cameras = [camOVERLAY];
+
+						salvationcountdownset.screenCenter();
+						salvationcountdownset.y -= 100;
+						add(salvationcountdownset);
+						FlxTween.tween(salvationcountdownset, {y: salvationcountdownset.y += 100, alpha: 0}, Conductor.crochet / 1000, {
+							ease: FlxEase.cubeInOut,
+							onComplete: function(twn:FlxTween)
+							{
+								salvationcountdownset.destroy();
+							}
+						});
+
+
+					case 406:
+						blackOverlay.visible = false;
+						camHUD.alpha = 1.0;
+
+						var salvationcountdowngo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('go', 'shared'));
+						salvationcountdowngo.scrollFactor.set(0, 0);
+						salvationcountdowngo.updateHitbox();
+						salvationcountdowngo.cameras = [camOVERLAY];
+
+						salvationcountdowngo.screenCenter();
+						salvationcountdowngo.y -= 100;
+						add(salvationcountdowngo);
+						FlxTween.tween(salvationcountdowngo, {y: salvationcountdowngo.y += 100, alpha: 0}, Conductor.crochet / 1000, {
+							ease: FlxEase.cubeInOut,
+							onComplete: function(twn:FlxTween)
+							{
+								salvationcountdowngo.destroy();
+							}
+						});
+
+					case 407:
 						thisBitchSnapped = true;
 						cameraZoomrate = 1;
 						defaultCamZoom = 0.85;
+						notehealthdmg = 0.0125;
 
-					case 478:
+					case 472:
 						thisBitchSnapped = false;
 						cameraZoomrate = 4;
 						defaultCamZoom = 0.7;
+						notehealthdmg = 0.0;
+
+					case 512:
+						ribbongrab(90, 5);
+						
+					case 544:
+						FlxG.camera.flash(FlxColor.WHITE, 3);
+						boyfriend.color = FlxColor.BLACK;
+						gf.color = FlxColor.BLACK;
+						dad.color = FlxColor.BLACK;
+						holyHomura.color = FlxColor.BLACK;
+						otherBGStuff.color = FlxColor.BLACK;
+						lampsSubway.color = FlxColor.BLACK;
+						stageFront.color = FlxColor.BLACK;
+						whiteBG.alpha = 1.0;
+
+					case 608:
+						FlxG.camera.flash(FlxColor.WHITE, 3);
+						boyfriend.color = FlxColor.WHITE;
+						gf.color = FlxColor.WHITE;
+						dad.color = FlxColor.WHITE;
+						holyHomura.color = FlxColor.WHITE;
+						otherBGStuff.color = FlxColor.WHITE;
+						lampsSubway.color = FlxColor.WHITE;
+						stageFront.color = FlxColor.WHITE;
+						whiteBG.alpha = 0.0;	
+						thisBitchSnapped = true;
+						cameraZoomrate = 1;
+						defaultCamZoom = 0.85;
+						notehealthdmg = 0.01;
+
+					case 736:
+						FlxG.camera.flash(FlxColor.WHITE, 3);
+						thisBitchSnapped = false;
+						blackOverlay.visible = true;
+						camHUD.alpha = 0.0;
+						notehealthdmg = 0.00;
+
+						iconP2.animation.play("mami-holy-postsnap");
+
+						remove(dad);
+						dad = new Character(-250, 115, "mami-holy-postsnap");
+						add(dad);
 
 					case 853:
 						iconP2.animation.play("mami-holy-postsnap");
