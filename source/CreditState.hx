@@ -183,7 +183,7 @@ class CreditState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, 'Vs. Mami DEVELOPMENT BUILD 9/27/2021', 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, 'Vs. Mami DEVELOPMENT BUILD 10/3/2021', 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -245,7 +245,12 @@ class CreditState extends MusicBeatState
 		specialThanksText.y -= 220;
 		add(specialThanksText);
 
-		specialThanksText.text = "SPECIAL THANKS TO THE FOLLOWING\n" + " \n" + "Kade Dev - Kade Engine\n" + "Lexicord - ???\n" + "Shadow Mario - ???\n" + "JADS - ???\n" + "BoinkBonk - Bug Testing\n" + "CaitlinDiVA - Voice Acting\n" + "G4bo - Salvation Cutscene\n" + "Develop Art - Russian Translations\n" + "GWebDev - Chromatic Aberration Filter\n";
+		specialThanksText.text = "SPECIAL THANKS TO THE FOLLOWING\n" + " \n" + "Kade Dev - Kade Engine\n" + "Lexicord - ???\n" + "Shadow Mario - ???\n" + "JADS - ???\n" + "BoinkBonk - Bug Testing\n" + "CaitlinDiVA - Voice Acting\n" + "G4bo - Salvation Cutscene\n" + "Develop Art - Russian Translations\n" + "GWebDev - Chromatic Aberration Shader\n";
+		if (FlxG.save.data.progressStoryClearHard)
+			specialThanksText.text = "SPECIAL THANKS TO THE FOLLOWING\n" + " \n" + "Kade Dev - Kade Engine\n" + "Lexicord - Tetris Mami Icon\n" + "Shadow Mario - Color Swap Shader\n" + "JADS - ???\n" + "BoinkBonk - Bug Testing\n" + "CaitlinDiVA - Voice Acting\n" + "G4bo - Salvation Cutscene\n" + "Develop Art - Russian Translations\n" + "GWebDev - Chromatic Aberration Shader\n";
+		if (FlxG.save.data.progressStoryClearTetris)
+			specialThanksText.text = "SPECIAL THANKS TO THE FOLLOWING\n" + " \n" + "Kade Dev - Kade Engine\n" + "Lexicord - Tetris Mami Icon\n" + "Shadow Mario - Color Swap Shader\n" + "JADS - Expurgation Permission\n" + "BoinkBonk - Bug Testing\n" + "CaitlinDiVA - Voice Acting\n" + "G4bo - Salvation Cutscene\n" + "Develop Art - Russian Translations\n" + "GWebDev - Chromatic Aberration Shader\n";
+
 
 		if (FlxG.save.data.dfjk)
 			controls.setKeyboardScheme(KeyboardScheme.Solo, true);

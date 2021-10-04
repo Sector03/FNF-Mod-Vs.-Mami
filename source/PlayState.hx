@@ -977,8 +977,8 @@ class PlayState extends MusicBeatState
 				dad.x -= 350;
 				dad.y += 15;
 			case 'mami-mamigation':
-				dad.x -= 450;
-				dad.y -= 500;
+				dad.x -= 500;
+				dad.y -= 450;
 				FlxTween.tween(dad, {y: dad.y - 60}, 3, {type: FlxTweenType.PINGPONG, ease: FlxEase.quadInOut});
 				dad.setGraphicSize(Std.int(dad.width * .6));
 		}
