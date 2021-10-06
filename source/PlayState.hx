@@ -3478,6 +3478,7 @@ class PlayState extends MusicBeatState
 					if (SONG.song.toLowerCase() == 'salvation' && storyDifficulty >= 2)
 						{
 							FlxG.save.data.progressStoryClearHard = true;
+							FlxG.save.data.progressStoryClearTetris = true;
 						}
 				}
 			}
@@ -5333,9 +5334,17 @@ class PlayState extends MusicBeatState
 							{
 							notehealthdmg = 0.0165;
 							}
-						else
+						else if (storyDifficulty == 2)
 							{
 								notehealthdmg = 0.0125;
+							}
+						else if (storyDifficulty == 1)
+							{
+								notehealthdmg = 0.025;
+							}
+						else if (storyDifficulty == 0)
+							{
+								notehealthdmg = 0.0;
 							}
 
 					case 472:
@@ -5375,13 +5384,20 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 0.85;
 						if (storyDifficulty == 3)
 							{
-							notehealthdmg = 0.0170;
+								notehealthdmg = 0.0170;
 							}
-						else
+						else if (storyDifficulty == 2)
 							{
 								notehealthdmg = 0.0130;
 							}
-
+						else if (storyDifficulty == 1)
+							{
+								notehealthdmg = 0.025;
+							}
+						else if (storyDifficulty == 0)
+							{
+								notehealthdmg = 0.0;
+							}
 					case 736:
 						FlxG.camera.flash(FlxColor.WHITE, 3);
 						boyfriend.color = FlxColor.BLACK;
