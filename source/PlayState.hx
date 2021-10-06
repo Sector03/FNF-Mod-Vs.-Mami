@@ -5336,7 +5336,7 @@ class PlayState extends MusicBeatState
 							}
 						else if (storyDifficulty == 2)
 							{
-								notehealthdmg = 0.0125;
+								notehealthdmg = 0.075;
 							}
 						else if (storyDifficulty == 1)
 							{
@@ -5388,7 +5388,7 @@ class PlayState extends MusicBeatState
 							}
 						else if (storyDifficulty == 2)
 							{
-								notehealthdmg = 0.0130;
+								notehealthdmg = 0.075;
 							}
 						else if (storyDifficulty == 1)
 							{
