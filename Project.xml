@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin' Vs. Mami" file="Vs. Mami" packageName="com.sector03.mami" package="com.sector03.mami" main="Main" version="0.2.7.1" company="Sector03" />
+	<app title="Friday Night Funkin' Vs. Mami [FULL WEEK]" file="Vs. Mami [FULL WEEK]" packageName="com.sector03.mami" package="com.sector03.mami" main="Main" version="0.2.7.1" company="Sector03" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />

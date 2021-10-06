@@ -37,8 +37,12 @@ class DialogueBox extends FlxSpriteGroup
 	var portraitMamiHappy:FlxSprite;
 	var portraitHomuraTalk:FlxSprite;
 	var portraitMamiHoly:FlxSprite;
+	var portraitMamiHolyThreat:FlxSprite;
 	var portraitHomuraHurt:FlxSprite;
 	var portraitBoyfriendNormal:FlxSprite;
+	var portraitNemuPost:FlxSprite;
+	var portraitToukaPost:FlxSprite;
+	var portraitAlinaPost:FlxSprite;
 
 	var arrowShadow:FlxSprite;
 	var arrowDio:FlxSprite;
@@ -96,6 +100,10 @@ class DialogueBox extends FlxSpriteGroup
 			case 'reminisce':
 				hasDialog = true;
 				box.loadGraphic(Paths.image('cutscene/images/dialoguebox'));
+
+			case 'salvation':
+				hasDialog = true;
+				box.loadGraphic(Paths.image('cutscene/images/dialoguebox'));
 		}
 
 		this.dialogueList = dialogueList;
@@ -149,6 +157,15 @@ class DialogueBox extends FlxSpriteGroup
 		add(portraitMamiHoly);
 		portraitMamiHoly.visible = false;
 
+		portraitMamiHolyThreat = new FlxSprite(-50, 60);
+		portraitMamiHolyThreat.loadGraphic(Paths.image('cutscene/images/PORTRAITS/MAMI_somewhatHOLY'));
+		portraitMamiHolyThreat.setGraphicSize(Std.int(portraitMamiHolyThreat.width * 1.25));
+		portraitMamiHolyThreat.updateHitbox();
+		portraitMamiHolyThreat.scrollFactor.set();
+		portraitMamiHolyThreat.antialiasing = true;
+		add(portraitMamiHolyThreat);
+		portraitMamiHolyThreat.visible = false;
+
 		//HOMURA PORTRAITS
 
 		portraitHomuraHurt = new FlxSprite(-50, 60);
@@ -159,7 +176,6 @@ class DialogueBox extends FlxSpriteGroup
 		portraitHomuraHurt.antialiasing = true;
 		add(portraitHomuraHurt);
 		portraitHomuraHurt.visible = false;
-
 
 		portraitHomuraTalk = new FlxSprite(-50, 60);
 		if (bonk)
@@ -184,6 +200,35 @@ class DialogueBox extends FlxSpriteGroup
 		add(portraitBoyfriendNormal);
 		portraitBoyfriendNormal.visible = false;
 
+		//MAGIUS PORTRAITS
+
+		portraitAlinaPost = new FlxSprite(-50, 60);
+		portraitAlinaPost.loadGraphic(Paths.image('cutscene/images/PORTRAITS/ALINA_POST'));
+		portraitAlinaPost.setGraphicSize(Std.int(portraitAlinaPost.width * 1.25));
+		portraitAlinaPost.updateHitbox();
+		portraitAlinaPost.scrollFactor.set();
+		portraitAlinaPost.antialiasing = true;
+		add(portraitAlinaPost);
+		portraitAlinaPost.visible = false;
+
+		portraitNemuPost = new FlxSprite(-50, 60);
+		portraitNemuPost.loadGraphic(Paths.image('cutscene/images/PORTRAITS/NEMU_POST'));
+		portraitNemuPost.setGraphicSize(Std.int(portraitNemuPost.width * 1.25));
+		portraitNemuPost.updateHitbox();
+		portraitNemuPost.scrollFactor.set();
+		portraitNemuPost.antialiasing = true;
+		add(portraitNemuPost);
+		portraitNemuPost.visible = false;
+		
+		portraitToukaPost = new FlxSprite(-50, 60);
+		portraitToukaPost.loadGraphic(Paths.image('cutscene/images/PORTRAITS/TOUKA_POST'));
+		portraitToukaPost.setGraphicSize(Std.int(portraitToukaPost.width * 1.25));
+		portraitToukaPost.updateHitbox();
+		portraitToukaPost.scrollFactor.set();
+		portraitToukaPost.antialiasing = true;
+		add(portraitToukaPost);
+		portraitToukaPost.visible = false;
+		
 		add(box);
 
 		box.screenCenter(X);
@@ -198,13 +243,13 @@ class DialogueBox extends FlxSpriteGroup
 		FlxTween.tween(arrowDio, {y: 580}, 1, {type: FlxTweenType.PINGPONG, ease: FlxEase.quadInOut});
 		FlxTween.tween(arrowShadow, {alpha: 1}, 1, {type: FlxTweenType.PINGPONG, ease: FlxEase.quadInOut});
 
-		dropText = new FlxText(181, 501, Std.int(FlxG.width * 0.75), "", 39);
+		dropText = new FlxText(181, 501, Std.int(FlxG.width * 0.68), "", 39);
 		dropText.font = 'Koruri Regular';
 		dropText.setFormat(Paths.font("koruri.ttf"), 39);
 		dropText.color = 0xFFC59D4C;
 		add(dropText);
 
-		swagDialogue = new FlxTypeText(180, 500, Std.int(FlxG.width * 0.75), "", 39);
+		swagDialogue = new FlxTypeText(180, 500, Std.int(FlxG.width * 0.68), "", 39);
 		swagDialogue.font = 'Korui';
 		swagDialogue.setFormat(Paths.font("koruri.ttf"), 39);
 		swagDialogue.color = 0xFF3F2021;
@@ -260,7 +305,11 @@ class DialogueBox extends FlxSpriteGroup
 					portraitHomuraTalk.visible = false;
 					portraitBoyfriendNormal.visible = false;
 					portraitMamiHoly.visible = false;
+					portraitMamiHolyThreat.visible = false;
 					portraitHomuraHurt.visible = false;
+					portraitAlinaPost.visible = false;
+					portraitToukaPost.visible = false;
+					portraitNemuPost.visible = false;
 					arrowShadow.visible = false;
 					arrowDio.visible = false;
 					nameDialogue.visible = false;
@@ -305,7 +354,11 @@ class DialogueBox extends FlxSpriteGroup
 						portraitHomuraTalk.visible = false;
 						portraitBoyfriendNormal.visible = false;
 						portraitMamiHoly.visible = false;
+						portraitMamiHolyThreat.visible = false;
 						portraitHomuraHurt.visible = false;
+						portraitAlinaPost.visible = false;
+						portraitToukaPost.visible = false;
+						portraitNemuPost.visible = false;
 						arrowShadow.visible = false;
 						arrowDio.visible = false;
 						nameDialogue.visible = false;
@@ -354,7 +407,11 @@ class DialogueBox extends FlxSpriteGroup
 				portraitHomuraTalk.visible = false;
 				portraitBoyfriendNormal.visible = false;
 				portraitMamiHoly.visible = false;
+				portraitMamiHolyThreat.visible = false;
 				portraitHomuraHurt.visible = false;
+				portraitAlinaPost.visible = false;
+				portraitToukaPost.visible = false;
+				portraitNemuPost.visible = false;
 				if (!portraitMamiNormal.visible)
 				{
 					portraitMamiNormal.visible = true;
@@ -367,7 +424,11 @@ class DialogueBox extends FlxSpriteGroup
 				portraitHomuraTalk.visible = false;
 				portraitBoyfriendNormal.visible = false;
 				portraitMamiHoly.visible = false;
+				portraitMamiHolyThreat.visible = false;
 				portraitHomuraHurt.visible = false;
+				portraitAlinaPost.visible = false;
+				portraitToukaPost.visible = false;
+				portraitNemuPost.visible = false;
 				if (!portraitMamiAnnoyed.visible)
 				{
 					portraitMamiAnnoyed.visible = true;
@@ -380,7 +441,11 @@ class DialogueBox extends FlxSpriteGroup
 				portraitHomuraTalk.visible = false;
 				portraitBoyfriendNormal.visible = false;
 				portraitMamiHoly.visible = false;
+				portraitMamiHolyThreat.visible = false;
 				portraitHomuraHurt.visible = false;
+				portraitAlinaPost.visible = false;
+				portraitToukaPost.visible = false;
+				portraitNemuPost.visible = false;
 				if (!portraitMamiConcern.visible)
 				{
 					portraitMamiConcern.visible = true;
@@ -399,7 +464,11 @@ class DialogueBox extends FlxSpriteGroup
 				portraitHomuraTalk.visible = false;
 				portraitBoyfriendNormal.visible = false;
 				portraitMamiHoly.visible = false;
+				portraitMamiHolyThreat.visible = false;
 				portraitHomuraHurt.visible = false;
+				portraitAlinaPost.visible = false;
+				portraitToukaPost.visible = false;
+				portraitNemuPost.visible = false;
 				if (!portraitMamiHappy.visible)
 				{
 					portraitMamiHappy.visible = true;
@@ -412,7 +481,11 @@ class DialogueBox extends FlxSpriteGroup
 				portraitMamiHappy.visible = false;
 				portraitBoyfriendNormal.visible = false;
 				portraitMamiHoly.visible = false;
+				portraitMamiHolyThreat.visible = false;
 				portraitHomuraHurt.visible = false;
+				portraitAlinaPost.visible = false;
+				portraitToukaPost.visible = false;
+				portraitNemuPost.visible = false;
 				if (!portraitHomuraTalk.visible)
 				{
 					portraitHomuraTalk.visible = true;
@@ -427,20 +500,28 @@ class DialogueBox extends FlxSpriteGroup
 				portraitMamiHappy.visible = false;
 				portraitHomuraTalk.visible = false;
 				portraitMamiHoly.visible = false;
+				portraitMamiHolyThreat.visible = false;
 				portraitHomuraHurt.visible = false;
+				portraitAlinaPost.visible = false;
+				portraitToukaPost.visible = false;
+				portraitNemuPost.visible = false;
 				if (!portraitBoyfriendNormal.visible)
 				{
 					portraitBoyfriendNormal.visible = true;
 				}
 			case 'mami-holy':
-				nameDialogue.text = 'Mami';
+				nameDialogue.text = 'Holy Mami';
 				portraitMamiAnnoyed.visible = false;
 				portraitMamiConcern.visible = false;
 				portraitMamiHappy.visible = false;
 				portraitHomuraTalk.visible = false;
 				portraitBoyfriendNormal.visible = false;
 				portraitMamiHoly.visible = false;
+				portraitMamiHolyThreat.visible = false;
 				portraitHomuraHurt.visible = false;
+				portraitAlinaPost.visible = false;
+				portraitToukaPost.visible = false;
+				portraitNemuPost.visible = false;
 				if (!portraitMamiHoly.visible)
 				{
 					portraitMamiHoly.visible = true;
@@ -453,9 +534,76 @@ class DialogueBox extends FlxSpriteGroup
 				portraitMamiHappy.visible = false;
 				portraitBoyfriendNormal.visible = false;
 				portraitMamiHoly.visible = false;
+				portraitMamiHolyThreat.visible = false;
+				portraitAlinaPost.visible = false;
+				portraitToukaPost.visible = false;
+				portraitNemuPost.visible = false;
 				if (!portraitHomuraHurt.visible)
 				{
 					portraitHomuraHurt.visible = true;
+				}
+			case 'mami-holy-threat':
+				nameDialogue.text = 'Holy Mami';
+				portraitMamiAnnoyed.visible = false;
+				portraitMamiConcern.visible = false;
+				portraitMamiHappy.visible = false;
+				portraitHomuraTalk.visible = false;
+				portraitBoyfriendNormal.visible = false;
+				portraitMamiHoly.visible = false;
+				portraitHomuraHurt.visible = false;
+				portraitAlinaPost.visible = false;
+				portraitToukaPost.visible = false;
+				portraitNemuPost.visible = false;
+				if (!portraitMamiHolyThreat.visible)
+				{
+					portraitMamiHolyThreat.visible = true;
+				}
+			case 'alina-post':
+				nameDialogue.text = 'Alina';
+				portraitMamiAnnoyed.visible = false;
+				portraitMamiConcern.visible = false;
+				portraitMamiHappy.visible = false;
+				portraitHomuraTalk.visible = false;
+				portraitBoyfriendNormal.visible = false;
+				portraitMamiHoly.visible = false;
+				portraitHomuraHurt.visible = false;
+				portraitToukaPost.visible = false;
+				portraitNemuPost.visible = false;
+				if (!portraitAlinaPost.visible)
+				{
+					portraitAlinaPost.visible = true;
+				}
+
+			case 'touka-post':
+				nameDialogue.text = 'Touka';
+				portraitMamiAnnoyed.visible = false;
+				portraitMamiConcern.visible = false;
+				portraitMamiHappy.visible = false;
+				portraitHomuraTalk.visible = false;
+				portraitBoyfriendNormal.visible = false;
+				portraitMamiHoly.visible = false;
+				portraitHomuraHurt.visible = false;
+				portraitAlinaPost.visible = false;
+				portraitNemuPost.visible = false;
+				if (!portraitToukaPost.visible)
+				{
+					portraitToukaPost.visible = true;
+				}
+
+			case 'nemu-post':
+				nameDialogue.text = 'Nemu';
+				portraitMamiAnnoyed.visible = false;
+				portraitMamiConcern.visible = false;
+				portraitMamiHappy.visible = false;
+				portraitHomuraTalk.visible = false;
+				portraitBoyfriendNormal.visible = false;
+				portraitMamiHoly.visible = false;
+				portraitHomuraHurt.visible = false;
+				portraitAlinaPost.visible = false;
+				portraitToukaPost.visible = false;
+				if (!portraitNemuPost.visible)
+				{
+					portraitNemuPost.visible = true;
 				}
 		}
 		if (ohName)

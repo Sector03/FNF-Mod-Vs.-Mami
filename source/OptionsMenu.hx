@@ -29,7 +29,7 @@ class OptionsMenu extends MusicBeatState
 			new GhostTapping("Allows you to tap when there is no notes and don't receive a miss."),
 			new HitSound("Plays a small sound to help indicate if you are too late or early."),
 			new CpuStrums("Shows the opponents strums light up or not."),
-			new NoteSplash("SPLOOOOOOOOOSH.")
+			new NoteSplash("Shows a splashing animation when getting a SICK.")
 		]),
 
 		new OptionCatagory("Gameplay", [
@@ -57,9 +57,8 @@ class OptionsMenu extends MusicBeatState
 		]),
 
 		new OptionCatagory("Language", [
-			new LangoEnglish("Use ENGLISH as the in-game dialogue language."),
-			new LangoSpanish("Use SPANISH as the in-game dialogue language."),
-			new LangoRussian("Use RUSSIAN as the in-game dialogue language.")
+			new LangoEnglish("Use ENGLISH as the in-game dialogue language.")
+			//new LangoRussian("Use RUSSIAN as the in-game dialogue language.")
 		]),
 		
 		new OptionCatagory("Misc", [

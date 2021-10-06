@@ -109,8 +109,14 @@ class MainMenuState extends MusicBeatState
 		FlxTween.linearMotion(magenta, -80, -1280, -80, -80, 2, {ease: FlxEase.quadOut});
 
 		//random character code here
-		menuCharacterNum = FlxG.random.int(0, 1);
-		trace(menuCharacterNum);
+		if (FlxG.save.data.progressStoryClearHard)
+			{
+				menuCharacterNum = FlxG.random.int(0, 2);
+			}
+		else
+			{
+				menuCharacterNum = FlxG.random.int(0, 1);
+			}
 
 		titleCharacter = new FlxSprite(FlxG.width * 0.25, -50);
 		titleCharacter.frames = Paths.getSparrowAtlas('mainmenu/titlecharacter_' + menuCharacterNum);
@@ -152,12 +158,27 @@ class MainMenuState extends MusicBeatState
 		add(menuSlide);
 		FlxTween.linearMotion(menuSlide, 0, -1280, 0, 0, 2, {ease: FlxEase.quadOut});
 
-		switch (menuCharacterNum)
+		if (FlxG.save.data.progressStoryClearHard)
 			{
-				case 0:
-					menuCharacterIcon = new HealthIcon("bf", false);
-				case 1:
-					menuCharacterIcon = new HealthIcon("mami", false);
+			switch (menuCharacterNum)
+				{
+					case 0:
+						menuCharacterIcon = new HealthIcon("bf", false);
+					case 1:
+						menuCharacterIcon = new HealthIcon("mami", false);
+					case 2:
+						menuCharacterIcon = new HealthIcon("mami-holy", false);
+				}
+			}
+		else
+			{
+				switch (menuCharacterNum)
+				{
+					case 0:
+						menuCharacterIcon = new HealthIcon("bf", false);
+					case 1:
+						menuCharacterIcon = new HealthIcon("mami", false);
+				}	
 			}
 
 		menuCharacterIcon.x = 1100;
@@ -208,7 +229,7 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, 'Vs. Mami DEVELOPMENT BUILD 9/27/2021', 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, 'Vs. Mami FULL WEEK 1.0', 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);

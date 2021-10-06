@@ -445,11 +445,9 @@ class TitleState extends MusicBeatState
 				createCoolText(['a fnf mod']);
 
 			case 3:
-				addMoreText('by these people');
-				ngSpr.visible = true;
+				addMoreText('by a lot of people');
 
 			case 6:
-				ngSpr.visible = false;
 				deleteCoolText();
 
 			case 7:

@@ -124,6 +124,8 @@ class Character extends FlxSprite
 				animation.addByPrefix('deathLoop', "BF Dead Loop", 24, true);
 				animation.addByPrefix('deathConfirm', "BF Dead confirm", 24, false);
 
+				animation.addByPrefix('shot', "BF shotdeath", 24, false);
+
 				animation.addByPrefix('scared', 'BF idle shaking', 24);
 
 				animation.addByPrefix('dodge', 'boyfriend dodge', 24, false);
@@ -140,6 +142,7 @@ class Character extends FlxSprite
 				addOffset("singDOWNmiss", -11, -19);
 				addOffset("hey", 7, 4);
 				addOffset('firstDeath', 37, 11);
+				addOffset('shot', 37, 11);
 				addOffset('deathLoop', 37, 5);
 				addOffset('deathConfirm', 37, 69);
 				addOffset('scared', -4);
@@ -252,15 +255,16 @@ class Character extends FlxSprite
 				tex = Paths.getSparrowAtlas('characters/Holy Mami','shared');
 				frames = tex;
 				animation.addByPrefix('idle', 'altIDLE', 24);
-				animation.addByPrefix('singUP', 'altIDLE', 24);
-				animation.addByPrefix('singRIGHT', 'altIDLE', 24);
-				animation.addByPrefix('singDOWN', 'altIDLE', 24);
-				animation.addByPrefix('singLEFT', 'altIDLE', 24);
+				animation.addByPrefix('singUP', 'altUP', 24);
+				animation.addByPrefix('singRIGHT', 'altUP', 24);
+				animation.addByPrefix('singDOWN', 'altUP', 24);
+				animation.addByPrefix('singLEFT', 'altUP', 24);
 
 				addOffset('idle', -69, 126);
-				addOffset('singUP', -69, 126);
-				addOffset('singRIGHT', -69, 126);
-				addOffset('singDOWN', -69, 126);
+				addOffset('singUP', -94, 158);
+				addOffset('singRIGHT', -94, 158);
+				addOffset('singLEFT', -94, 158);
+				addOffset('singDOWN', -94, 158);
 	
 				playAnim('idle');	
 
@@ -274,10 +278,10 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', 'MAMIGATION_LEFT', 24);
 
 				addOffset('idle', -67, 126); //24
-				addOffset("singUP", -69, 66); //-5
+				addOffset("singUP", -69, 326); //-5
 				addOffset("singRIGHT", -229, 126); //-35
-				addOffset("singLEFT", 81, 356); //-35
-				addOffset("singDOWN", 12, 66); //-65
+				addOffset("singLEFT", 111, 246); //-35
+				addOffset("singDOWN", 12, 56); //-65
 	
 				playAnim('idle');	
 

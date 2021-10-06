@@ -37,6 +37,8 @@ class GameOverSubstate extends MusicBeatSubstate
 				daBf = 'bf';
 		}
 
+		var deathCause = PlayState.deathCause;
+
 		var daOpponent = PlayState.SONG.player2;
 
 		var numBah:Int = 0;
@@ -106,8 +108,14 @@ class GameOverSubstate extends MusicBeatSubstate
 		// FlxG.camera.focusOn(FlxPoint.get(FlxG.width / 2, FlxG.height / 2));
 		FlxG.camera.scroll.set();
 		FlxG.camera.target = null;
-
-		bf.playAnim('firstDeath');
+		
+		switch (deathCause)
+		{
+			case 'holynote':
+				bf.playAnim('shot');
+			default:
+				bf.playAnim('firstDeath');
+		}
 	}
 
 	override function update(elapsed:Float)
@@ -140,6 +148,16 @@ class GameOverSubstate extends MusicBeatSubstate
 			FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix), 0.5);
 		}
 
+		if (bf.animation.curAnim.name == 'shot' && bf.animation.curAnim.curFrame == 18)
+			{
+				FlxG.camera.follow(camFollow, LOCKON, 0.01);
+			}
+
+		if (bf.animation.curAnim.name == 'shot' && bf.animation.curAnim.curFrame == 56)
+			{
+				FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix), 0.5);
+			}
+
 		if (FlxG.sound.music.playing)
 		{
 			Conductor.songPosition = FlxG.sound.music.time;
@@ -160,7 +178,16 @@ class GameOverSubstate extends MusicBeatSubstate
 		if (!isEnding)
 		{
 			isEnding = true;
-			bf.playAnim('deathConfirm', true);
+
+			var deathCause = PlayState.deathCause;
+			switch (deathCause)
+			{
+				case 'holynote':
+					trace('nothing');
+				default:
+					bf.playAnim('deathConfirm');
+			}
+
 			FlxG.sound.music.stop();
 			FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix));
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)

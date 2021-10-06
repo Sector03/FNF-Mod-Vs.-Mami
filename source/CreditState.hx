@@ -183,7 +183,7 @@ class CreditState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, 'Vs. Mami DEVELOPMENT BUILD 10/3/2021', 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, 'Vs. Mami FULL WEEK 1.0', 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -245,11 +245,11 @@ class CreditState extends MusicBeatState
 		specialThanksText.y -= 220;
 		add(specialThanksText);
 
-		specialThanksText.text = "SPECIAL THANKS TO THE FOLLOWING\n" + " \n" + "Kade Dev - Kade Engine\n" + "Lexicord - ???\n" + "Shadow Mario - ???\n" + "JADS - ???\n" + "BoinkBonk - Bug Testing\n" + "CaitlinDiVA - Voice Acting\n" + "G4bo - Salvation Cutscene\n" + "Develop Art - Russian Translations\n" + "GWebDev - Chromatic Aberration Shader\n";
+		specialThanksText.text = "SPECIAL THANKS TO THE FOLLOWING\n" + " \n" + "Kade Dev - Kade Engine\n" + "Lexicord - ???\n" + "Shadow Mario - ???\n" + "JADS - ???\n" + "NonFlamingo - Bug Testing\n" + "CaitlinDiVA - Voice Acting\n" + "G4bo - Salvation Cutscene\n" + "GWebDev - Chromatic Aberration Shader\n";
 		if (FlxG.save.data.progressStoryClearHard)
-			specialThanksText.text = "SPECIAL THANKS TO THE FOLLOWING\n" + " \n" + "Kade Dev - Kade Engine\n" + "Lexicord - Tetris Mami Icon\n" + "Shadow Mario - Color Swap Shader\n" + "JADS - ???\n" + "BoinkBonk - Bug Testing\n" + "CaitlinDiVA - Voice Acting\n" + "G4bo - Salvation Cutscene\n" + "Develop Art - Russian Translations\n" + "GWebDev - Chromatic Aberration Shader\n";
+			specialThanksText.text = "SPECIAL THANKS TO THE FOLLOWING\n" + " \n" + "Kade Dev - Kade Engine\n" + "Lexicord - Tetris Mami Icon\n" + "Shadow Mario - Color Swap Shader\n" + "JADS - ???\n" + "NonFlamingo - Bug Testing\n" + "CaitlinDiVA - Voice Acting\n" + "G4bo - Salvation Cutscene\n" + "GWebDev - Chromatic Aberration Shader\n";
 		if (FlxG.save.data.progressStoryClearTetris)
-			specialThanksText.text = "SPECIAL THANKS TO THE FOLLOWING\n" + " \n" + "Kade Dev - Kade Engine\n" + "Lexicord - Tetris Mami Icon\n" + "Shadow Mario - Color Swap Shader\n" + "JADS - Expurgation Permission\n" + "BoinkBonk - Bug Testing\n" + "CaitlinDiVA - Voice Acting\n" + "G4bo - Salvation Cutscene\n" + "Develop Art - Russian Translations\n" + "GWebDev - Chromatic Aberration Shader\n";
+			specialThanksText.text = "SPECIAL THANKS TO THE FOLLOWING\n" + " \n" + "Kade Dev - Kade Engine\n" + "Lexicord - Tetris Mami Icon\n" + "Shadow Mario - Color Swap Shader\n" + "JADS - Expurgation Permission\n" + "NonFlamingo - Bug Testing\n" + "CaitlinDiVA - Voice Acting\n" + "G4bo - Salvation Cutscene\n" + "GWebDev - Chromatic Aberration Shader\n";
 
 
 		if (FlxG.save.data.dfjk)
@@ -368,21 +368,21 @@ class CreditState extends MusicBeatState
 							#end
 						case 'ascentitext':
 							#if linux
-							Sys.command('/usr/bin/xdg-open', ["https://gamebanana.com/members/", "&"]);
+							Sys.command('/usr/bin/xdg-open', ["https://www.youtube.com/channel/UCUNk1L-6cjZEA272msCNeUQ", "&"]);
 							#else
-							FlxG.openURL('https://gamebanana.com/members/'); //idk it lol
+							FlxG.openURL('https://www.youtube.com/channel/UCUNk1L-6cjZEA272msCNeUQ');
 							#end
 						case 'kayotext':
 							#if linux
 							Sys.command('/usr/bin/xdg-open', ["https://twitter.com/zTam_", "&"]);
 							#else
-							FlxG.openURL('https://twitter.com/zTam_'); //idk it lol
+							FlxG.openURL('https://twitter.com/zTam_');
 							#end
 						case 'cerberatext':
 							#if linux
-							Sys.command('/usr/bin/xdg-open', ["https://gamebanana.com/members/", "&"]);
+							Sys.command('/usr/bin/xdg-open', ["https://twitter.com/Cerbera_ssb", "&"]);
 							#else
-							FlxG.openURL('https://gamebanana.com/members/'); //idk it lol
+							FlxG.openURL('https://twitter.com/Cerbera_ssb');
 							#end
 					}
 				}

@@ -108,6 +108,9 @@ class KadeEngineData
 		if (FlxG.save.data.progressStoryClearMamigation == null)
 			FlxG.save.data.progressStoryClearMamigation = false;
 
+		if (FlxG.save.data.noteSplash == null)
+			FlxG.save.data.noteSplash = true;
+
 		if (FlxG.save.data.tickets == null)
 			FlxG.save.data.tickets = 0;
 

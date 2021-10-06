@@ -224,29 +224,20 @@ class FreeplayState extends MusicBeatState
 	{
 		super.update(elapsed);
 
-		//#if debug
+		#if debug
 		if (FlxG.keys.justPressed.Y)
 			{
 				FlxG.save.data.progressStoryClearHard = true;
+				FlxG.save.data.progressStoryClearTetris = true;
 			}
 		
 		if (FlxG.keys.justPressed.H)
 			{
 				FlxG.save.data.progressStoryClearHard = false;
-			}	
-
-		if (FlxG.keys.justPressed.U)
-			{
-				FlxG.save.data.progressStoryClearTetris = true;
-			}
-		
-		if (FlxG.keys.justPressed.J)
-			{
 				FlxG.save.data.progressStoryClearTetris = false;
 			}	
-		//#end
+		#end
 		
-
 		if (FlxG.save.data.progressStoryClearHard == false)
 			{
 			freePlaylock.x = grpSongs.members[3].x - 420;
