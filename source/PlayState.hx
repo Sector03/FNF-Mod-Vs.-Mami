@@ -5332,11 +5332,11 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 0.85;
 						if (storyDifficulty == 3)
 							{
-							notehealthdmg = 0.0165;
+							notehealthdmg = 0.0125;
 							}
 						else if (storyDifficulty == 2)
 							{
-								notehealthdmg = 0.075;
+								notehealthdmg = 0.0060;
 							}
 						else if (storyDifficulty == 1)
 							{
@@ -5384,11 +5384,11 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 0.85;
 						if (storyDifficulty == 3)
 							{
-								notehealthdmg = 0.0170;
+							notehealthdmg = 0.0125;
 							}
 						else if (storyDifficulty == 2)
 							{
-								notehealthdmg = 0.075;
+								notehealthdmg = 0.0060;
 							}
 						else if (storyDifficulty == 1)
 							{
