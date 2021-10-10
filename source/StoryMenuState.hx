@@ -39,7 +39,7 @@ class StoryMenuState extends MusicBeatState
 
 	var weekNames:Array<String> = [
 		"Mackingham Palace",
-		"???"
+		"??? (COMING SOON)"
 	];
 
 	var txtWeekTitle:FlxText;

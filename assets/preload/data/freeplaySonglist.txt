@@ -3,4 +3,3 @@ Reminisce:mami:1
 Salvation:mami-holy:1
 Tetris:mami-tetris:1
 Mamigation:mami-mamigation:1
-Konnect:mami:1

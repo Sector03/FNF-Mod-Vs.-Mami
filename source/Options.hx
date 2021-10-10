@@ -624,6 +624,27 @@ class FlashingLights extends Option
 	}
 }
 
+class UseShaders extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.useShaders = !FlxG.save.data.useShaders;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Shaders " + (!FlxG.save.data.useShaders ? "Off" : "On");
+	}
+}
+
 class GhostTapping extends Option
 {
 	public function new(desc:String)

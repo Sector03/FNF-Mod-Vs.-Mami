@@ -149,7 +149,7 @@ class PlayState extends MusicBeatState
 	public var cameraZoomrate:Int = 4;
 
 	public var debugCommandsText:FlxText;
-	private var holyMisses:Int = 1;
+	private var holyMisses:Float = 0.50;
 	public var godmodecheat:Bool = false;
 	public var allowBFanimupdate = true;
 
@@ -479,7 +479,7 @@ class PlayState extends MusicBeatState
 		repPresses = 0;
 		repReleases = 0;
 
-		holyMisses = 1;
+		holyMisses = 0.50;
 		notehealthdmg = 0;
 		tetrisZoom = 0.00;
 		scrollSpeedAddictive = 0;
@@ -1180,7 +1180,7 @@ class PlayState extends MusicBeatState
 		add(healthBar);
 
 		// Add Kade Engine watermark
-		kadeEngineWatermark = new FlxText(4,healthBarBG.y + 50,0,SONG.song + " " + (storyDifficulty == 3 ? "Holy" :storyDifficulty == 2 ? "Hard" : storyDifficulty == 1 ? "Normal" : "Easy"), 16);
+		kadeEngineWatermark = new FlxText(4,healthBarBG.y + 46,0,SONG.song + " " + (storyDifficulty == 3 ? "[Holy]" :storyDifficulty == 2 ? "[Hard]" : storyDifficulty == 1 ? "[Normal]" : "[Easy]") + " [v1.02]", 16);
 		kadeEngineWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		kadeEngineWatermark.scrollFactor.set();
 		add(kadeEngineWatermark);
@@ -1195,7 +1195,6 @@ class PlayState extends MusicBeatState
 		scoreTxt.scrollFactor.set();
 		if (offsetTesting)
 			scoreTxt.x += 300;
-		add(scoreTxt);
 
 		replayTxt = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 75, healthBarBG.y + (FlxG.save.data.downscroll ? 100 : -100), 0, "REPLAY", 20);
 		replayTxt.setFormat(Paths.font("vcr.ttf"), 42, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
@@ -1212,6 +1211,8 @@ class PlayState extends MusicBeatState
 		iconP2 = new HealthIcon(SONG.player2, false);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
+
+		add(scoreTxt);
 
 		if (SONG.player2 == 'mami-tetris')
 			{	
@@ -2507,7 +2508,10 @@ class PlayState extends MusicBeatState
 		{
 			if (FlxG.save.data.accuracyDisplay)
 			{
-				scoreTxt.text = (FlxG.save.data.npsDisplay ? "NPS: " + nps + " | " : "") + "Score:" + (Conductor.safeFrames != 10 ? songScore + " (" + songScoreDef + ")" : "" + songScore) + " | Combo Breaks:" + misses + " | Accuracy:" + truncateFloat(accuracy, 2) + "% | " + generateRanking();
+				if (curSong == 'Salvation')
+					scoreTxt.text = (FlxG.save.data.npsDisplay ? "NPS: " + nps + " | " : "") + "Score:" + (Conductor.safeFrames != 10 ? songScore + " (" + songScoreDef + ")" : "" + songScore) + " | Holy Power:" + (holyMisses * 50) + "% | Combo Breaks:" + misses + " | Accuracy:" + truncateFloat(accuracy, 2) + "% | " + generateRanking();
+				else
+					scoreTxt.text = (FlxG.save.data.npsDisplay ? "NPS: " + nps + " | " : "") + "Score:" + (Conductor.safeFrames != 10 ? songScore + " (" + songScoreDef + ")" : "" + songScore) + " | Combo Breaks:" + misses + " | Accuracy:" + truncateFloat(accuracy, 2) + "% | " + generateRanking();
 			}
 			else
 			{
@@ -2577,7 +2581,7 @@ class PlayState extends MusicBeatState
 			}
 		else
 			{
-				iconP2.x = (healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset)) - 25;
+				iconP2.x = (healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset)) - 24;
 			}
 
 		if (health > maxhealth)
@@ -3206,7 +3210,11 @@ class PlayState extends MusicBeatState
 					}
 	
 					if (FlxG.save.data.downscroll)
-						daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (-0.45 * FlxMath.roundDecimal(FlxG.save.data.scrollSpeed == 1 ? SONG.speed + scrollSpeedAddictive : FlxG.save.data.scrollSpeed, 2)));
+						{
+							daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (-0.45 * FlxMath.roundDecimal(FlxG.save.data.scrollSpeed == 1 ? SONG.speed + scrollSpeedAddictive : FlxG.save.data.scrollSpeed, 2)));
+							if (daNote.isSustainNote) //hotfix, will look into it mroe
+								daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (-0.45 * FlxMath.roundDecimal(FlxG.save.data.scrollSpeed == 1 ? SONG.speed + scrollSpeedAddictive : FlxG.save.data.scrollSpeed, 2)) - 175);
+						}
 					else
 						daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(FlxG.save.data.scrollSpeed == 1 ? SONG.speed + scrollSpeedAddictive : FlxG.save.data.scrollSpeed, 2)));
 
@@ -3231,6 +3239,7 @@ class PlayState extends MusicBeatState
 
 					if (daNote.isSustainNote)
 						daNote.x += daNote.width / 2 + 17;
+					
 					
 
 					//trace(daNote.y);
@@ -3304,7 +3313,7 @@ class PlayState extends MusicBeatState
 			allowBFanimupdate = false;
 			healthbarshake(3.0);
 			deathByHolyNote = true;
-			health -= 0.5 * holyMisses; //0.5 for first time, 1.0 for second time, 1.5 for third time, kinda like a strike system but with 4 strikes?
+			health -= holyMisses; //0.5 for first time, 1.0 for second time, 1.5 for third time, kinda like a strike system but with 4 strikes?
 			if (curSong == 'Tetris')
 				iconP1.animation.play('bf-tetris-shot');
 			else
@@ -3313,11 +3322,11 @@ class PlayState extends MusicBeatState
 			FlxG.sound.play(Paths.sound('MAMI_shoot','shared'));
 			FlxG.camera.shake(0.02, 0.2);
 			boyfriend.playAnim('hit', true);
-			holyMisses += 1; //start at 1
+			holyMisses += 0.5;
 			FlxTween.color(healthBar, .20, FlxColor.RED, FlxColor.WHITE, {ease: FlxEase.quadOut});
 			FlxTween.color(iconP1, .20, FlxColor.RED, FlxColor.WHITE, {ease: FlxEase.quadOut});
 			FlxTween.color(iconP2, .20, FlxColor.RED, FlxColor.WHITE, {ease: FlxEase.quadOut});
-			new FlxTimer().start(0.1, function(tmr:FlxTimer)
+			new FlxTimer().start(0.15, function(tmr:FlxTimer)
 				{
 					deathByHolyNote = false;
 				});
@@ -3478,66 +3487,84 @@ class PlayState extends MusicBeatState
 					if (SONG.song.toLowerCase() == 'salvation' && storyDifficulty >= 2)
 						{
 							FlxG.save.data.progressStoryClearHard = true;
+						}
+					if (SONG.song.toLowerCase() == 'tetris')
+						{
 							FlxG.save.data.progressStoryClearTetris = true;
 						}
 				}
 			}
 			else
 			{
-				if (SONG.song.toLowerCase() == 'connect')
+				switch(curSong)
 					{
-						if (storyDifficulty == 1)
-							FlxG.save.data.tickets += 1;
-						if (storyDifficulty == 2)
-							FlxG.save.data.tickets += 2;
-						if (storyDifficulty == 3)
-							FlxG.save.data.tickets += 3;
-					}
-				if (SONG.song.toLowerCase() == 'reminisce')
-					{
-						if (storyDifficulty == 1)
-							FlxG.save.data.tickets += 2;
-						if (storyDifficulty == 2)
-							FlxG.save.data.tickets += 3;
-						if (storyDifficulty == 3)
-							FlxG.save.data.tickets += 4;
-					}
-				if (SONG.song.toLowerCase() == 'salvation')
-					{
-						if (storyDifficulty == 1)
-							FlxG.save.data.tickets += 3;
-						if (storyDifficulty == 2)
-							FlxG.save.data.tickets += 4;
-						if (storyDifficulty == 3)
-							FlxG.save.data.tickets += 5;
-					}
-				if (SONG.song.toLowerCase() == 'tetris')
-					{
-						if (storyDifficulty == 2)
+						case 'Connect':
 							{
-							FlxG.save.data.tickets += 4;
-							FlxG.save.data.progressStoryClearTetris = true;
+								switch (storyDifficulty)
+								{
+									case 1:
+										FlxG.save.data.tickets += 1;
+									case 2:
+										FlxG.save.data.tickets += 2;
+									case 3:
+										FlxG.save.data.tickets += 3;
+								}
 							}
-						if (storyDifficulty == 3)
-							{
-							FlxG.save.data.tickets += 5;
-							FlxG.save.data.progressStoryClearTetris = true;
-							}
-					}
-				if (SONG.song.toLowerCase() == 'mamigation')
-					{
-						if (storyDifficulty == 2)
-							{
-							FlxG.save.data.tickets += 4;
-							FlxG.save.data.progressStoryClearMamigation = true;
-							}
-						if (storyDifficulty == 3)
-							{
-							FlxG.save.data.tickets += 5;
-							FlxG.save.data.progressStoryClearMamigation = true;
-							}
-					}
 
+						case 'Reminisce':
+							{
+								switch (storyDifficulty)
+								{
+									case 0:
+										FlxG.save.data.tickets += 1;
+									case 1:
+										FlxG.save.data.tickets += 2;
+									case 2:
+										FlxG.save.data.tickets += 3;
+									case 3:
+										FlxG.save.data.tickets += 4;
+								}
+							}
+
+						case 'Salvation':
+							{
+								switch (storyDifficulty)
+								{
+									case 0:
+										FlxG.save.data.tickets += 2;
+									case 1:
+										FlxG.save.data.tickets += 3;
+									case 2:
+										FlxG.save.data.tickets += 4;
+									case 3:
+										FlxG.save.data.tickets += 5;
+								}
+							}
+							
+						case 'Tetris':
+							{
+								FlxG.save.data.progressStoryClearTetris = true;
+								switch (storyDifficulty)
+								{
+									case 2:
+										FlxG.save.data.tickets += 4;
+									case 3:
+										FlxG.save.data.tickets += 5;
+								}
+							}
+
+						case 'Mamigation':
+							{
+								FlxG.save.data.progressStoryClearMamigation = true;
+								switch (storyDifficulty)
+								{
+									case 2:
+										FlxG.save.data.tickets += 4;
+									case 3:
+										FlxG.save.data.tickets += 5;
+								}
+							}
+					}
 
 				trace('WENT BACK TO FREEPLAY??');
 				FlxG.switchState(new FreeplayState());
@@ -3660,7 +3687,9 @@ class PlayState extends MusicBeatState
 				add(ribbongrab);
 				if (FlxG.save.data.downscroll)
 					{
+						ribbongrab.flipX = true;
 						ribbongrab.flipY = true;
+						ribbongrab.x = 100;
 						ribbongrab.y = -115;
 					}
 
@@ -4945,8 +4974,17 @@ class PlayState extends MusicBeatState
 	{
 		super.beatHit();
 
-		FlxG.camera.setFilters([ShadersHandler.chromaticAberration]);
-		camHUD.setFilters([ShadersHandler.chromaticAberration]);
+		if (curSong == 'Salvation' && storyDifficulty <= 2 && curBeat % 16 == 15)
+			{
+				if (holyMisses > 0.50)
+					holyMisses -= 0.01;
+			}
+
+		if (FlxG.save.data.useShaders)
+			{
+				FlxG.camera.setFilters([ShadersHandler.chromaticAberration]);
+				camHUD.setFilters([ShadersHandler.chromaticAberration]);
+			}
 
 		if (generatedMusic)
 		{
@@ -5079,16 +5117,17 @@ class PlayState extends MusicBeatState
 			
 		//FlxTween.linearMotion(gunSwarm, -1500, -200, 2500, 1500, .5, true);
 
-		if (thisBitchSnapped && curSong == 'Salvation')
+		if (thisBitchSnapped && curSong == 'Salvation' && !FlxG.save.data.reducedMotion)
 			{
 				if (gunSwarmFront.alpha <= 0.0)
 					{
 					gunSwarmFront.alpha += 1;
 					gunSwarmBack.alpha += 1;
-					FlxG.camera.flash(FlxColor.WHITE, 3);
+					if (FlxG.save.data.flashingLights)
+						FlxG.camera.flash(FlxColor.WHITE, 3);
 					}
 				}
-		else if (!thisBitchSnapped && curSong == 'Salvation')
+		else if (!thisBitchSnapped && curSong == 'Salvation' && !FlxG.save.data.reducedMotion)
 			{
 				if (gunSwarmFront.alpha >= 0.01)
 					{
@@ -5100,7 +5139,7 @@ class PlayState extends MusicBeatState
 					}
 			}
 
-		if (thisBitchSnapped && curSong == 'Salvation')
+		if (thisBitchSnapped && curSong == 'Salvation' && !FlxG.save.data.reducedMotion)
 			{
 				camera.shake(0.005,0.25);
 				camHUD.shake(0.005,0.25);
@@ -5179,7 +5218,17 @@ class PlayState extends MusicBeatState
 						camHUD.zoom += 0.06;
 
 					case 32:
-						ribbongrab(35, 8);
+						switch (storyDifficulty)
+						{
+							case 1:
+								ribbongrab(12, 4);
+
+							case 2:
+								ribbongrab(35, 8);
+
+							case 3:
+								ribbongrab(35, 8);
+						}
 
 					case 88:
 						FlxG.camera.zoom += 0.03;
@@ -5233,7 +5282,17 @@ class PlayState extends MusicBeatState
 						//thisBitchSnapped = true;
 						cameraZoomrate = 1;
 						defaultCamZoom = 0.85;
-						ribbongrab(90, 5);
+						switch (storyDifficulty)
+						{
+							case 1:
+								ribbongrab(40, 3);
+
+							case 2:
+								ribbongrab(90, 5);
+
+							case 3:
+								ribbongrab(90, 5);
+						}
 
 					case 176:
 						//thisBitchSnapped = false;
@@ -5354,11 +5413,22 @@ class PlayState extends MusicBeatState
 						notehealthdmg = 0.0;
 
 					case 512:
-						ribbongrab(90, 5);
+						switch (storyDifficulty)
+						{
+							case 1:
+								ribbongrab(40, 3);
+
+							case 2:
+								ribbongrab(90, 5);
+
+							case 3:
+								ribbongrab(90, 5);
+						}
 						
 					case 544:
 						lampsLeft.visible = false;
-						FlxG.camera.flash(FlxColor.WHITE, 3);
+						if (FlxG.save.data.flashingLights)
+							FlxG.camera.flash(FlxColor.WHITE, 3);
 						boyfriend.color = FlxColor.BLACK;
 						gf.color = FlxColor.BLACK;
 						dad.color = FlxColor.BLACK;
@@ -5370,7 +5440,8 @@ class PlayState extends MusicBeatState
 
 					case 608:
 						lampsLeft.visible = true;
-						FlxG.camera.flash(FlxColor.WHITE, 3);
+						if (FlxG.save.data.flashingLights)
+							FlxG.camera.flash(FlxColor.WHITE, 3);
 						boyfriend.color = FlxColor.WHITE;
 						gf.color = FlxColor.WHITE;
 						dad.color = FlxColor.WHITE;
@@ -5399,7 +5470,8 @@ class PlayState extends MusicBeatState
 								notehealthdmg = 0.0;
 							}
 					case 736:
-						FlxG.camera.flash(FlxColor.WHITE, 3);
+						if (FlxG.save.data.flashingLights)
+							FlxG.camera.flash(FlxColor.WHITE, 3);
 						boyfriend.color = FlxColor.BLACK;
 						gf.color = FlxColor.BLACK;
 						dad.color = FlxColor.BLACK;
@@ -5417,7 +5489,8 @@ class PlayState extends MusicBeatState
 						iconP2.animation.play("mami-holy-postsnap");
 
 					case 876:
-						FlxG.camera.flash(FlxColor.WHITE, 3);
+						if (FlxG.save.data.flashingLights)
+							FlxG.camera.flash(FlxColor.WHITE, 3);
 						cameraZoomrate = 128;
 
 						remove(dad);
@@ -5453,12 +5526,14 @@ class PlayState extends MusicBeatState
 				if (colorCycle <= 3)
 					{
 					colorCycle += 1;
-					swagShader.hue += .125;
+					if (FlxG.save.data.useShaders)
+						swagShader.hue += .125;
 					}
 				else
 					{
 					colorCycle = 0;
-					swagShader.hue = 0.20;
+					if (FlxG.save.data.useShaders)
+						swagShader.hue = 0.20;
 					}
 
 				if (colorCycle == 0)
@@ -5476,7 +5551,8 @@ class PlayState extends MusicBeatState
 			}
 		else
 			{
-				swagShader.hue = 0;
+				if (FlxG.save.data.useShaders)
+					swagShader.hue = 0;
 			}
 
 		if (curSong == 'Tetris' && storyDifficulty == 2 && !songCleared) //Tetris HARD events
