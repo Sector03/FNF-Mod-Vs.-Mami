@@ -3968,6 +3968,8 @@ class PlayState extends MusicBeatState
 					currentTimingShown.color = FlxColor.GREEN;
 				case 'sick':
 					currentTimingShown.color = FlxColor.CYAN;
+				case 'evade':
+					currentTimingShown.color = FlxColor.YELLOW;
 			}
 			currentTimingShown.borderStyle = OUTLINE;
 			currentTimingShown.borderSize = 1;
