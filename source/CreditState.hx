@@ -183,7 +183,7 @@ class CreditState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, 'Vs. Mami FULL WEEK [v1.02]', 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, 'Vs. Mami FULL WEEK [v1.03]', 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);

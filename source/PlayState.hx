@@ -149,7 +149,7 @@ class PlayState extends MusicBeatState
 	public var cameraZoomrate:Int = 4;
 
 	public var debugCommandsText:FlxText;
-	private var holyMisses:Float = 0.50;
+	private var holyMisses:Float = 0.40;
 	public var godmodecheat:Bool = false;
 	public var allowBFanimupdate = true;
 
@@ -479,7 +479,7 @@ class PlayState extends MusicBeatState
 		repPresses = 0;
 		repReleases = 0;
 
-		holyMisses = 0.50;
+		holyMisses = 0.40;
 		notehealthdmg = 0;
 		tetrisZoom = 0.00;
 		scrollSpeedAddictive = 0;
@@ -491,7 +491,7 @@ class PlayState extends MusicBeatState
 
 		songCleared = false;
 
-		swagShader = new ColorSwap(); //shamelessly took this from physche engine, credits to shadowmario <3
+		swagShader = new ColorSwap(); //shamelessly took this from psych engine, credits to shadowmario <3
 		swagShader.hue = 0;
 
 		dadnoteMovementXoffset = 0;
@@ -1180,7 +1180,7 @@ class PlayState extends MusicBeatState
 		add(healthBar);
 
 		// Add Kade Engine watermark
-		kadeEngineWatermark = new FlxText(4,healthBarBG.y + 46,0,SONG.song + " " + (storyDifficulty == 3 ? "[Holy]" :storyDifficulty == 2 ? "[Hard]" : storyDifficulty == 1 ? "[Normal]" : "[Easy]") + " [v1.02]", 16);
+		kadeEngineWatermark = new FlxText(4,healthBarBG.y + 46,0,SONG.song + " " + (storyDifficulty == 3 ? "[Holy]" :storyDifficulty == 2 ? "[Hard]" : storyDifficulty == 1 ? "[Normal]" : "[Easy]") + " [v1.03]", 16);
 		kadeEngineWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		kadeEngineWatermark.scrollFactor.set();
 		add(kadeEngineWatermark);
@@ -3142,7 +3142,7 @@ class PlayState extends MusicBeatState
 
 						if (curSong == 'Mamigation')
 							{
-								notehealthdmg = 0.02;
+								notehealthdmg = 0.010;
 
 								if (health > 0.2)
 									if (daNote.isSustainNote)
@@ -3211,10 +3211,7 @@ class PlayState extends MusicBeatState
 	
 					if (FlxG.save.data.downscroll)
 						{
-							daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (-0.45 * FlxMath.roundDecimal(FlxG.save.data.scrollSpeed == 1 ? SONG.speed + scrollSpeedAddictive : FlxG.save.data.scrollSpeed, 2)));
-							if (daNote.isSustainNote) //hotfix, will look into it mroe
-								daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (-0.45 * FlxMath.roundDecimal(FlxG.save.data.scrollSpeed == 1 ? SONG.speed + scrollSpeedAddictive : FlxG.save.data.scrollSpeed, 2)) - 175);
-						}
+							daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (-0.45 * FlxMath.roundDecimal(FlxG.save.data.scrollSpeed == 1 ? SONG.speed + scrollSpeedAddictive : FlxG.save.data.scrollSpeed, 2)));						}
 					else
 						daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(FlxG.save.data.scrollSpeed == 1 ? SONG.speed + scrollSpeedAddictive : FlxG.save.data.scrollSpeed, 2)));
 
@@ -3322,7 +3319,7 @@ class PlayState extends MusicBeatState
 			FlxG.sound.play(Paths.sound('MAMI_shoot','shared'));
 			FlxG.camera.shake(0.02, 0.2);
 			boyfriend.playAnim('hit', true);
-			holyMisses += 0.5;
+			holyMisses += 0.4;
 			FlxTween.color(healthBar, .20, FlxColor.RED, FlxColor.WHITE, {ease: FlxEase.quadOut});
 			FlxTween.color(iconP1, .20, FlxColor.RED, FlxColor.WHITE, {ease: FlxEase.quadOut});
 			FlxTween.color(iconP2, .20, FlxColor.RED, FlxColor.WHITE, {ease: FlxEase.quadOut});
@@ -4978,7 +4975,7 @@ class PlayState extends MusicBeatState
 
 		if (curSong == 'Salvation' && storyDifficulty <= 2 && curBeat % 16 == 15)
 			{
-				if (holyMisses > 0.50)
+				if (holyMisses > 0.40)
 					holyMisses -= 0.01;
 			}
 

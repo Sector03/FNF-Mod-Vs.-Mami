@@ -29,8 +29,6 @@ class Note extends FlxSprite
 
 	public var noteScore:Float = 1;
 
-	public var noteYOff:Int = 0;
-
 	public static var swagWidth:Float = 160 * 0.7;
 	public static var PURP_NOTE:Int = 0;
 	public static var GREEN_NOTE:Int = 2;
@@ -182,8 +180,6 @@ class Note extends FlxSprite
 		if (FlxG.save.data.downscroll && sustainNote) 
 			flipY = true;
 
-		var stepHeight = (((0.45 * Conductor.stepCrochet)) * FlxMath.roundDecimal(PlayState.SONG.speed == 1 ? PlayState.SONG.speed : PlayState.SONG.speed, 2));
-
 		if (isSustainNote && prevNote != null)
 		{
 			noteScore * 0.2;
@@ -206,17 +202,6 @@ class Note extends FlxSprite
 			updateHitbox();
 
 			x -= width / 2;
-
-			if (prevNote.isSustainNote)
-				{	
-					prevNote.scale.y *= (stepHeight + 1) / prevNote.height; // + 1 so that there's no odd gaps as the notes scroll
-					prevNote.updateHitbox();
-					prevNote.noteYOff = Math.round(-prevNote.offset.y);
-	
-					// prevNote.setGraphicSize();
-	
-					noteYOff = Math.round(-offset.y);
-				}
 
 			if (PlayState.curStage.startsWith('school'))
 				x += 30;
